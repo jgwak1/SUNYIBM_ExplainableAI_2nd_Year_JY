@@ -1,0 +1,462 @@
+
+Getting-entries - Start Time: 2023-10-29 22:15:54.853308
+1/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_12_01
+len(splunkd_and_descendents_log_entries): 26337
+2/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_11_59
+len(splunkd_and_descendents_log_entries): 49811
+3/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase3_pattern_1__both__2023-10-25-21_25_58
+len(splunkd_and_descendents_log_entries): 37785
+4/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_20_31
+len(splunkd_and_descendents_log_entries): 41145
+5/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_49
+len(splunkd_and_descendents_log_entries): 33467
+6/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_28
+len(splunkd_and_descendents_log_entries): 688
+7/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_16
+len(splunkd_and_descendents_log_entries): 352
+8/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_49
+len(splunkd_and_descendents_log_entries): 40133
+9/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_1__both__2023-10-25-21_23_09
+len(splunkd_and_descendents_log_entries): 28144
+10/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_51
+len(splunkd_and_descendents_log_entries): 32120
+Getting-entries - End Time: 2023-10-29 22:17:51.198711
+Getting-entries - Elapsed Time: 0:01:56.345403
+Seq2Pat start time: 2023-10-29 22:17:51.365738
+
+#sequence_DB: 10
+
+
+max_span (default 10): 10
+batch_size (default None): 3
+discount_factor (default 0.2): 0.2
+n_jobs (default 2): -1
+
+
+sub_min_frequency: 1
+
+Seq2Pat end time: 2023-10-29 22:24:24.033966
+Seq2Pat elapsed_time: 0:06:32.668228
+
+Dumped to /data/d1/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/Task_1__Behavior_identification_and_intention_learning/1_1__Sequential_pattern_mining/super_batch_spm_result_pickles_dir__2023-10-29 22:15:54/super_batch__0.pickle
+
+Memory usage: 24.9%
+Getting-entries - Start Time: 2023-10-29 22:24:33.237333
+1/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase3_pattern_1__both__2023-10-25-21_25_56
+len(splunkd_and_descendents_log_entries): 47628
+2/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase3_pattern_2__both__2023-10-25-21_26_49
+len(splunkd_and_descendents_log_entries): 29993
+3/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_20_08
+len(splunkd_and_descendents_log_entries): 43459
+4/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_22_07
+len(splunkd_and_descendents_log_entries): 41216
+5/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_11_51
+len(splunkd_and_descendents_log_entries): 27267
+6/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_39
+len(splunkd_and_descendents_log_entries): 48898
+7/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_3__both__2023-10-25-21_24_09
+len(splunkd_and_descendents_log_entries): 39784
+8/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_03
+len(splunkd_and_descendents_log_entries): 33605
+9/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_2__both__2023-10-25-21_23_32
+len(splunkd_and_descendents_log_entries): 54438
+
+1:  custom_adversary_profile__apt_3__apt3_phase2_pattern_1__both__2023-10-25-21_22_55  is skipped as Elasticsearch doesn't contain it
+
+Getting-entries - End Time: 2023-10-29 22:26:37.731557
+Getting-entries - Elapsed Time: 0:02:04.494224
+Seq2Pat start time: 2023-10-29 22:26:38.011627
+
+#sequence_DB: 9
+
+
+max_span (default 10): 10
+batch_size (default None): 3
+discount_factor (default 0.2): 0.2
+n_jobs (default 2): -1
+
+
+sub_min_frequency: 1
+
+Seq2Pat end time: 2023-10-29 22:35:55.165268
+Seq2Pat elapsed_time: 0:09:17.153641
+
+Dumped to /data/d1/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/Task_1__Behavior_identification_and_intention_learning/1_1__Sequential_pattern_mining/super_batch_spm_result_pickles_dir__2023-10-29 22:15:54/super_batch__1.pickle
+
+Memory usage: 25.3%
+Getting-entries - Start Time: 2023-10-29 22:36:03.988885
+
+2:  custom_adversary_profile__none__none__stockpile__2023-10-25-21_11_02  is skipped as Elasticsearch doesn't contain it
+
+1/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_47
+len(splunkd_and_descendents_log_entries): 39188
+2/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase3_pattern_2__both__2023-10-25-21_27_37
+len(splunkd_and_descendents_log_entries): 27879
+3/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_15
+len(splunkd_and_descendents_log_entries): 48671
+4/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_22_00
+len(splunkd_and_descendents_log_entries): 43563
+5/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_11
+len(splunkd_and_descendents_log_entries): 31093
+6/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_20_06
+len(splunkd_and_descendents_log_entries): 43386
+7/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_1__both__2023-10-25-21_23_21
+len(splunkd_and_descendents_log_entries): 13954
+8/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_45
+len(splunkd_and_descendents_log_entries): 24494
+9/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase3_pattern_2__both__2023-10-25-21_26_44
+len(splunkd_and_descendents_log_entries): 0
+
+3:  custom_adversary_profile__apt_3__apt3_phase3_pattern_2__both__2023-10-25-21_26_44  is skipped as Elasticsearch doesn't contain it
+
+Getting-entries - End Time: 2023-10-29 22:37:54.397299
+Getting-entries - Elapsed Time: 0:01:50.408414
+Seq2Pat start time: 2023-10-29 22:37:54.673273
+
+#sequence_DB: 8
+
+
+max_span (default 10): 10
+batch_size (default None): 3
+discount_factor (default 0.2): 0.2
+n_jobs (default 2): -1
+
+
+sub_min_frequency: 1
+
+Seq2Pat end time: 2023-10-29 22:52:46.752153
+Seq2Pat elapsed_time: 0:14:52.078880
+
+Dumped to /data/d1/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/Task_1__Behavior_identification_and_intention_learning/1_1__Sequential_pattern_mining/super_batch_spm_result_pickles_dir__2023-10-29 22:15:54/super_batch__2.pickle
+
+Memory usage: 24.8%
+Getting-entries - Start Time: 2023-10-29 22:52:54.146923
+1/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_23
+len(splunkd_and_descendents_log_entries): 31215
+2/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_20_58
+len(splunkd_and_descendents_log_entries): 38611
+3/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_25
+len(splunkd_and_descendents_log_entries): 584
+4/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase3_pattern_1__both__2023-10-25-21_26_11
+len(splunkd_and_descendents_log_entries): 33874
+5/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase3_pattern_1__both__2023-10-25-21_26_00
+len(splunkd_and_descendents_log_entries): 21436
+6/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_21
+len(splunkd_and_descendents_log_entries): 11577
+7/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_46
+len(splunkd_and_descendents_log_entries): 36414
+8/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase3_pattern_2__both__2023-10-25-21_26_37
+len(splunkd_and_descendents_log_entries): 44398
+9/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_11_09
+len(splunkd_and_descendents_log_entries): 25902
+
+4:  custom_adversary_profile__none__none__stockpile__2023-10-25-21_11_00  is skipped as Elasticsearch doesn't contain it
+
+Getting-entries - End Time: 2023-10-29 22:54:44.776797
+Getting-entries - Elapsed Time: 0:01:50.629874
+Seq2Pat start time: 2023-10-29 22:54:44.953605
+
+#sequence_DB: 9
+
+
+max_span (default 10): 10
+batch_size (default None): 3
+discount_factor (default 0.2): 0.2
+n_jobs (default 2): -1
+
+
+sub_min_frequency: 1
+
+Seq2Pat end time: 2023-10-29 23:01:28.332741
+Seq2Pat elapsed_time: 0:06:43.379136
+
+Dumped to /data/d1/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/Task_1__Behavior_identification_and_intention_learning/1_1__Sequential_pattern_mining/super_batch_spm_result_pickles_dir__2023-10-29 22:15:54/super_batch__3.pickle
+
+Memory usage: 25.1%
+Getting-entries - Start Time: 2023-10-29 23:01:35.686531
+1/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_2__both__2023-10-25-21_23_27
+len(splunkd_and_descendents_log_entries): 61709
+2/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_33
+len(splunkd_and_descendents_log_entries): 46104
+
+5:  custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_32  is skipped as Elasticsearch doesn't contain it
+
+3/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_11_54
+len(splunkd_and_descendents_log_entries): 0
+
+6:  custom_adversary_profile__none__none__stockpile__2023-10-25-21_11_54  is skipped as Elasticsearch doesn't contain it
+
+4/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_3__both__2023-10-25-21_24_17
+len(splunkd_and_descendents_log_entries): 46001
+5/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase3_pattern_1__both__2023-10-25-21_26_14
+len(splunkd_and_descendents_log_entries): 46726
+6/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_3__both__2023-10-25-21_24_19
+len(splunkd_and_descendents_log_entries): 51815
+7/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_2__both__2023-10-25-21_23_29
+len(splunkd_and_descendents_log_entries): 7006
+8/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_22_03
+len(splunkd_and_descendents_log_entries): 24572
+9/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_2__both__2023-10-25-21_23_44
+len(splunkd_and_descendents_log_entries): 29637
+Getting-entries - End Time: 2023-10-29 23:03:33.643118
+Getting-entries - Elapsed Time: 0:01:57.956587
+Seq2Pat start time: 2023-10-29 23:03:33.905500
+
+#sequence_DB: 8
+
+
+max_span (default 10): 10
+batch_size (default None): 3
+discount_factor (default 0.2): 0.2
+n_jobs (default 2): -1
+
+
+sub_min_frequency: 1
+
+Seq2Pat end time: 2023-10-29 23:12:34.574045
+Seq2Pat elapsed_time: 0:09:00.668545
+
+Dumped to /data/d1/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/Task_1__Behavior_identification_and_intention_learning/1_1__Sequential_pattern_mining/super_batch_spm_result_pickles_dir__2023-10-29 22:15:54/super_batch__4.pickle
+
+Memory usage: 25.6%
+Getting-entries - Start Time: 2023-10-29 23:12:43.492116
+1/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_1__both__2023-10-25-21_22_51
+len(splunkd_and_descendents_log_entries): 46299
+2/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_11
+len(splunkd_and_descendents_log_entries): 42110
+3/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_11_11
+len(splunkd_and_descendents_log_entries): 35658
+4/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_07
+len(splunkd_and_descendents_log_entries): 47139
+5/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_20_22
+len(splunkd_and_descendents_log_entries): 37366
+6/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_17
+len(splunkd_and_descendents_log_entries): 12215
+7/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_34
+len(splunkd_and_descendents_log_entries): 41924
+8/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_1__both__2023-10-25-21_23_03
+len(splunkd_and_descendents_log_entries): 26163
+9/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_38
+len(splunkd_and_descendents_log_entries): 36647
+10/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_41
+len(splunkd_and_descendents_log_entries): 26104
+Getting-entries - End Time: 2023-10-29 23:14:54.591867
+Getting-entries - Elapsed Time: 0:02:11.099751
+Seq2Pat start time: 2023-10-29 23:14:54.859365
+
+#sequence_DB: 10
+
+
+max_span (default 10): 10
+batch_size (default None): 3
+discount_factor (default 0.2): 0.2
+n_jobs (default 2): -1
+
+
+sub_min_frequency: 1
+
+Seq2Pat end time: 2023-10-29 23:22:30.957559
+Seq2Pat elapsed_time: 0:07:36.098194
+
+Dumped to /data/d1/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/Task_1__Behavior_identification_and_intention_learning/1_1__Sequential_pattern_mining/super_batch_spm_result_pickles_dir__2023-10-29 22:15:54/super_batch__5.pickle
+
+Memory usage: 25.5%
+Getting-entries - Start Time: 2023-10-29 23:22:40.828109
+1/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_1__both__2023-10-25-21_22_59
+len(splunkd_and_descendents_log_entries): 38647
+2/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_20_01
+len(splunkd_and_descendents_log_entries): 8748
+3/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_11_13
+len(splunkd_and_descendents_log_entries): 44150
+4/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase3_pattern_2__both__2023-10-25-21_27_28
+len(splunkd_and_descendents_log_entries): 22305
+5/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_13
+len(splunkd_and_descendents_log_entries): 33989
+6/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_42
+len(splunkd_and_descendents_log_entries): 26205
+7/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_30
+len(splunkd_and_descendents_log_entries): 38573
+8/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase3_pattern_1__both__2023-10-25-21_26_06
+len(splunkd_and_descendents_log_entries): 46866
+
+7:  custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_22_10  is skipped as Elasticsearch doesn't contain it
+
+9/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_20_13
+len(splunkd_and_descendents_log_entries): 31189
+Getting-entries - End Time: 2023-10-29 23:24:59.276927
+Getting-entries - Elapsed Time: 0:02:18.448818
+Seq2Pat start time: 2023-10-29 23:24:59.512771
+
+#sequence_DB: 9
+
+
+max_span (default 10): 10
+batch_size (default None): 3
+discount_factor (default 0.2): 0.2
+n_jobs (default 2): -1
+
+
+sub_min_frequency: 1
+
+Seq2Pat end time: 2023-10-29 23:31:28.976706
+Seq2Pat elapsed_time: 0:06:29.463935
+
+Dumped to /data/d1/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/Task_1__Behavior_identification_and_intention_learning/1_1__Sequential_pattern_mining/super_batch_spm_result_pickles_dir__2023-10-29 22:15:54/super_batch__6.pickle
+
+Memory usage: 25.3%
+Getting-entries - Start Time: 2023-10-29 23:31:36.830610
+1/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_3__both__2023-10-25-21_24_38
+len(splunkd_and_descendents_log_entries): 45094
+2/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_08
+len(splunkd_and_descendents_log_entries): 12207
+3/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_20_19
+len(splunkd_and_descendents_log_entries): 37728
+4/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_3__both__2023-10-25-21_24_12
+len(splunkd_and_descendents_log_entries): 48452
+5/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_20_26
+len(splunkd_and_descendents_log_entries): 35448
+6/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase3_pattern_2__both__2023-10-25-21_26_46
+len(splunkd_and_descendents_log_entries): 26507
+7/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_20_11
+len(splunkd_and_descendents_log_entries): 30010
+8/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_3__both__2023-10-25-21_24_33
+len(splunkd_and_descendents_log_entries): 35742
+9/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_54
+len(splunkd_and_descendents_log_entries): 26551
+10/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_2__both__2023-10-25-21_23_34
+len(splunkd_and_descendents_log_entries): 54957
+Getting-entries - End Time: 2023-10-29 23:33:59.780376
+Getting-entries - Elapsed Time: 0:02:22.949766
+Seq2Pat start time: 2023-10-29 23:34:00.103215
+
+#sequence_DB: 10
+
+
+max_span (default 10): 10
+batch_size (default None): 3
+discount_factor (default 0.2): 0.2
+n_jobs (default 2): -1
+
+
+sub_min_frequency: 1
+
+Seq2Pat end time: 2023-10-29 23:48:42.563096
+Seq2Pat elapsed_time: 0:14:42.459881
+
+Dumped to /data/d1/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/Task_1__Behavior_identification_and_intention_learning/1_1__Sequential_pattern_mining/super_batch_spm_result_pickles_dir__2023-10-29 22:15:54/super_batch__7.pickle
+
+Memory usage: 25.7%
+Getting-entries - Start Time: 2023-10-29 23:48:53.272996
+1/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_18
+len(splunkd_and_descendents_log_entries): 33707
+2/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase3_pattern_2__both__2023-10-25-21_26_39
+len(splunkd_and_descendents_log_entries): 26501
+3/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_11_18
+len(splunkd_and_descendents_log_entries): 35071
+4/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_11_04
+len(splunkd_and_descendents_log_entries): 12214
+
+8:  custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_35  is skipped as Elasticsearch doesn't contain it
+
+5/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_1__both__2023-10-25-21_23_05
+len(splunkd_and_descendents_log_entries): 27069
+6/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_20_24
+len(splunkd_and_descendents_log_entries): 49459
+7/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_26
+len(splunkd_and_descendents_log_entries): 23711
+8/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_51
+len(splunkd_and_descendents_log_entries): 0
+
+9:  custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_51  is skipped as Elasticsearch doesn't contain it
+
+9/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_24
+len(splunkd_and_descendents_log_entries): 24931
+Getting-entries - End Time: 2023-10-29 23:50:45.651167
+Getting-entries - Elapsed Time: 0:01:52.378171
+Seq2Pat start time: 2023-10-29 23:50:45.875661
+
+#sequence_DB: 8
+
+
+max_span (default 10): 10
+batch_size (default None): 3
+discount_factor (default 0.2): 0.2
+n_jobs (default 2): -1
+
+
+sub_min_frequency: 1
+
+Seq2Pat end time: 2023-10-29 23:59:13.705538
+Seq2Pat elapsed_time: 0:08:27.829877
+
+Dumped to /data/d1/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/Task_1__Behavior_identification_and_intention_learning/1_1__Sequential_pattern_mining/super_batch_spm_result_pickles_dir__2023-10-29 22:15:54/super_batch__8.pickle
+
+Memory usage: 25.2%
+Getting-entries - Start Time: 2023-10-29 23:59:19.984885
+1/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase3_pattern_1__both__2023-10-25-21_26_08
+len(splunkd_and_descendents_log_entries): 36907
+2/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_36
+len(splunkd_and_descendents_log_entries): 28140
+3/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_11_15
+len(splunkd_and_descendents_log_entries): 28889
+4/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_2__both__2023-10-25-21_23_41
+len(splunkd_and_descendents_log_entries): 38855
+5/102. -- es_index: custom_adversary_profile__none__survey_paper_apt_attack_six_phases__both__2023-10-25-21_21_57
+len(splunkd_and_descendents_log_entries): 40468
+6/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_3__both__2023-10-25-21_24_35
+len(splunkd_and_descendents_log_entries): 46162
+7/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_43
+len(splunkd_and_descendents_log_entries): 23515
+8/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_30
+len(splunkd_and_descendents_log_entries): 33356
+9/102. -- es_index: custom_adversary_profile__apt_3__apt3_phase2_pattern_2__both__2023-10-25-21_23_36
+len(splunkd_and_descendents_log_entries): 31255
+10/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_11_56
+len(splunkd_and_descendents_log_entries): 43475
+Getting-entries - End Time: 2023-10-30 00:01:47.185868
+Getting-entries - Elapsed Time: 0:02:27.200983
+Seq2Pat start time: 2023-10-30 00:01:47.453220
+
+#sequence_DB: 10
+
+
+max_span (default 10): 10
+batch_size (default None): 3
+discount_factor (default 0.2): 0.2
+n_jobs (default 2): -1
+
+
+sub_min_frequency: 1
+
+Seq2Pat end time: 2023-10-30 00:08:37.578974
+Seq2Pat elapsed_time: 0:06:50.125754
+
+Dumped to /data/d1/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/Task_1__Behavior_identification_and_intention_learning/1_1__Sequential_pattern_mining/super_batch_spm_result_pickles_dir__2023-10-29 22:15:54/super_batch__9.pickle
+
+Memory usage: 25.5%
+Getting-entries - Start Time: 2023-10-30 00:08:47.039252
+1/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_10_55
+len(splunkd_and_descendents_log_entries): 23693
+2/102. -- es_index: custom_adversary_profile__none__none__stockpile__2023-10-25-21_12_14
+len(splunkd_and_descendents_log_entries): 33422
+Getting-entries - End Time: 2023-10-30 00:09:15.492492
+Getting-entries - Elapsed Time: 0:00:28.453240
+Seq2Pat start time: 2023-10-30 00:09:15.572162
+
+#sequence_DB: 2
+
+
+max_span (default 10): 10
+batch_size (default None): 3
+discount_factor (default 0.2): 0.2
+n_jobs (default 2): -1
+
+
+sub_min_frequency: 1
+
+Seq2Pat end time: 2023-10-30 00:11:16.644152
+Seq2Pat elapsed_time: 0:02:01.071990
+
+Dumped to /data/d1/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/Task_1__Behavior_identification_and_intention_learning/1_1__Sequential_pattern_mining/super_batch_spm_result_pickles_dir__2023-10-29 22:15:54/super_batch__10.pickle
+
+Memory usage: 25.3%

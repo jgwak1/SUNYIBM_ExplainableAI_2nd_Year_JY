@@ -1,0 +1,48 @@
+start processing super_batch__0.pickle
+(Before del & gc.collect) -- Memory usage: 24.5%
+(After del & gc.collect) -- Memory usage: 24.0%
+elapsed time for processing super_batch__0.pickle: 0:00:17.994005
+start processing super_batch__1.pickle
+(Before del & gc.collect) -- Memory usage: 25.0%
+(After del & gc.collect) -- Memory usage: 24.5%
+elapsed time for processing super_batch__1.pickle: 0:00:24.050199
+start processing super_batch__2.pickle
+(Before del & gc.collect) -- Memory usage: 25.0%
+(After del & gc.collect) -- Memory usage: 24.7%
+elapsed time for processing super_batch__2.pickle: 0:00:21.662396
+start processing super_batch__3.pickle
+(Before del & gc.collect) -- Memory usage: 25.0%
+(After del & gc.collect) -- Memory usage: 24.8%
+elapsed time for processing super_batch__3.pickle: 0:00:23.225361
+start processing super_batch__4.pickle
+(Before del & gc.collect) -- Memory usage: 25.6%
+(After del & gc.collect) -- Memory usage: 25.3%
+elapsed time for processing super_batch__4.pickle: 0:00:30.249516
+start processing super_batch__5.pickle
+(Before del & gc.collect) -- Memory usage: 25.8%
+(After del & gc.collect) -- Memory usage: 25.4%
+elapsed time for processing super_batch__5.pickle: 0:00:33.004920
+start processing super_batch__6.pickle
+(Before del & gc.collect) -- Memory usage: 25.7%
+(After del & gc.collect) -- Memory usage: 25.5%
+elapsed time for processing super_batch__6.pickle: 0:00:29.720951
+start processing super_batch__7.pickle
+(Before del & gc.collect) -- Memory usage: 26.1%
+(After del & gc.collect) -- Memory usage: 25.7%
+elapsed time for processing super_batch__7.pickle: 0:00:41.697613
+start processing super_batch__8.pickle
+(Before del & gc.collect) -- Memory usage: 25.9%
+(After del & gc.collect) -- Memory usage: 25.7%
+elapsed time for processing super_batch__8.pickle: 0:00:29.035029
+start processing super_batch__9.pickle
+(Before del & gc.collect) -- Memory usage: 26.0%
+(After del & gc.collect) -- Memory usage: 25.8%
+elapsed time for processing super_batch__9.pickle: 0:00:35.396778
+start processing super_batch__10.pickle
+(Before del & gc.collect) -- Memory usage: 25.8%
+(After del & gc.collect) -- Memory usage: 25.8%
+elapsed time for processing super_batch__10.pickle: 0:00:14.579120
+elapsed time for entire-process for /data/d1/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/Task_1__Behavior_identification_and_intention_learning/1_1__Sequential_pattern_mining/super_batch_spm_result_pickles_dir__2023-10-29 22:15:54: 0:05:17.537545
+
+final-output saved to : /data/d1/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/Task_1__Behavior_identification_and_intention_learning/1_1__Sequential_pattern_mining/final_output_for__super_batch_spm_result_pickles_dir__2023-10-29 22:15:54
+
