@@ -151,6 +151,7 @@ def find_unsorted_elements_and_indices(lst, sorted_order = "ascending"):
       return unsorted_elements, unsorted_element_indices
 
 
+
 def group_log_entries_by_processThreads(log_entries : list) -> dict:
     
     # JY @ 2023-11-09: Correcntess of this function seems OK
@@ -182,19 +183,34 @@ def group_log_entries_by_processThreads(log_entries : list) -> dict:
         log_entry['_source']['@timestamp'] = str(log_entry['_source']['@timestamp']) # for json
 
 
+        # Following can serve as key-info for log-entry:
+        #  log_entry['PROVIDER_SPECIFIC_ENTITY']
+        #  log_entry['_source']['EventName']
+        #  log_entry['_source']['OpcodeName']
+        #  log_entry['_source']['TimeStamp']
+        #  log_entry['_source']['XmlEventData']
+        log_entry_key_info = {
+            "PROVIDER_SPECIFIC_ENTITY" : log_entry['PROVIDER_SPECIFIC_ENTITY'],
+            "EventName" : log_entry['_source']['EventName'],
+            "OpcodeName" : log_entry['_source']['OpcodeName'],
+            "TimeStamp": log_entry['_source']['TimeStamp'],
+            "XmlEventData": log_entry['_source']['XmlEventData']
+        }
+
+
         if log_entry_pid in processThread_to_logentries_dict: # if log-entry's pid exists as a key
 
            if log_entry_tid in processThread_to_logentries_dict[log_entry_pid]:
                # under this process, there exists a key for the thread,
                # so just append it 
 
-               processThread_to_logentries_dict[log_entry_pid][log_entry_tid].append(log_entry)
+               processThread_to_logentries_dict[log_entry_pid][log_entry_tid].append(log_entry_key_info)
 
            else:
                # under this process, first event for this process-thread
                # so create space for it, and append the first event
                processThread_to_logentries_dict[log_entry_pid][log_entry_tid] = list()
-               processThread_to_logentries_dict[log_entry_pid][log_entry_tid].append(log_entry)
+               processThread_to_logentries_dict[log_entry_pid][log_entry_tid].append(log_entry_key_info)
 
         else:
             # if log-entry's pid key is not populated yet,
@@ -202,7 +218,7 @@ def group_log_entries_by_processThreads(log_entries : list) -> dict:
             # so create the space and append the first log-entry for that process-thread             
             processThread_to_logentries_dict[log_entry_pid] = dict()
             processThread_to_logentries_dict[log_entry_pid][log_entry_tid] = list()
-            processThread_to_logentries_dict[log_entry_pid][log_entry_tid].append( log_entry )
+            processThread_to_logentries_dict[log_entry_pid][log_entry_tid].append( log_entry_key_info )
 
     # returns dict of dict 
     return processThread_to_logentries_dict
