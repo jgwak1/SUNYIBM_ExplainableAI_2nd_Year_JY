@@ -161,13 +161,26 @@ def group_log_entries_by_processThreads(log_entries : list) -> dict:
     # first group log-entries by process
     # then group log-entries by thread
 
+    ''' 
+    JY @ 2023-12-27:
+       Did not take into account cases where same process-id is re-used.
+       Did not take into account the cases where same thread-id is re-used under same process-id
+
+       Could later incorporate by processstart and threadstart
+       Not the highest priority since the goal here is to see ordered events of a thread to see if there is a pattern (identify artifactual threads?)
+       and it is more rare that a same thread-id is reused under the same re-used process-id
+    '''
+
+
 
     for log_entry in log_entries:
         
-        log_entry_pid = log_entry['_source']['ProcessID']
-        log_entry_tid = log_entry['_source']['ThreadID']
+        log_entry_pid = f"pid_{log_entry['_source']['ProcessID']}"
+        log_entry_tid = f"tid_{log_entry['_source']['ThreadID']}"
 
-        log_entry['_source']['@timestamp'] = str(log_entry['_source']['@timestamp']) # for pickling
+        log_entry['_source']['TimeStamp'] = str(log_entry['_source']['TimeStamp']) # for json
+        log_entry['_source']['@timestamp'] = str(log_entry['_source']['@timestamp']) # for json
+
 
         if log_entry_pid in processThread_to_logentries_dict: # if log-entry's pid exists as a key
 
@@ -193,6 +206,7 @@ def group_log_entries_by_processThreads(log_entries : list) -> dict:
 
     # returns dict of dict 
     return processThread_to_logentries_dict
+
 
 
 
