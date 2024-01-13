@@ -1,0 +1,35 @@
+<SilkServiceConfig>
+	<!--
+		This is a user collector
+		-> Microsoft-Windows-DotNETRuntime
+		-> GUID or string based name
+	-->
+	<ETWCollector>
+		<Guid>45c82358-c52d-4892-8237-ba001d396fb4</Guid>
+		<CollectorType>user</CollectorType>
+		<ProviderName>Microsoft-Windows-Kernel-Process</ProviderName>
+		<OutputType>url</OutputType>
+		<Path>http://localhost:5444</Path>
+	</ETWCollector>
+    <ETWCollector>
+		<Guid>45c82358-c52d-4892-8237-ba001d396fb4</Guid>
+		<CollectorType>user</CollectorType>
+		<ProviderName>Microsoft-Windows-Kernel-File</ProviderName>
+		<OutputType>url</OutputType>
+		<Path>http://localhost:5444</Path>
+	</ETWCollector>
+	<ETWCollector>
+		<Guid>45c82358-c52d-4892-8237-ba001d396fb4</Guid>
+		<CollectorType>user</CollectorType>
+		<ProviderName>Microsoft-Windows-Kernel-Registry</ProviderName>
+		<OutputType>url</OutputType>
+		<Path>http://localhost:5444</Path>
+	</ETWCollector>
+	<ETWCollector>
+		<Guid>45c82358-c52d-4892-8237-ba001d396fb4</Guid>
+		<CollectorType>user</CollectorType>
+		<ProviderName>Microsoft-Windows-Kernel-Network</ProviderName>
+		<OutputType>url</OutputType>
+		<Path>http://localhost:5444</Path>
+	</ETWCollector>
+</SilkServiceConfig>
