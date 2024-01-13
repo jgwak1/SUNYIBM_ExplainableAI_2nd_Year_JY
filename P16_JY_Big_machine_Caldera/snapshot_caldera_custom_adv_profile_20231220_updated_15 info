@@ -1,0 +1,8 @@
+streams out to ocelot elasticsearch
+'create silkservice' included in agent.p
+while-true loop for time resync (added netstart netsop; added resync attempt limits which is a temporary fix since when actual time and snapshot time difference gets large it just fails to resync and get stuck in while-true loop)
++ got rid of already set up silkservice through sc.exe delete SilkService
+while-true loop for Start-Service SilkService and Get-Service SilkService
+while-true loop for logstash 5444
+Updated to meng's logstash filter but got rid from pipelines.yml based on Priti's zip file (according to Priti it's fine since we use -f flag when running logstash)
+Also added 3600 seconds wait time after activity to give alot of time to streamout
