@@ -21,7 +21,13 @@ if __name__ == "__main__":
    index_list = [ # JY @ 2023-12-26: These are good indices to analyze threads, since we know key-entities
        "joonyoung_single_technique_profile_for_network_event_invoking_custom_technique__postwaitsecs_300",
        "joonyoung_single_technique_profile_for_registry_event_invoking_custom_technique__postwaitsecs_300",
-       "joonyoung_single_technique_profile_for_network_event_invoking_custom_technique__postwaitsecs_300",
+       "joonyoung_single_technique_profile_for_file_event_invoking_custom_technique__postwaitsecs_300",
+
+       "joonyoung_single_technique_profile_for_network_event_invoking_custom_technique__postwaitsecs_600",
+       "joonyoung_single_technique_profile_for_registry_event_invoking_custom_technique__postwaitsecs_600",
+       "joonyoung_single_technique_profile_for_file_event_invoking_custom_technique__postwaitsecs_600",
+
+
    ]
 
 
