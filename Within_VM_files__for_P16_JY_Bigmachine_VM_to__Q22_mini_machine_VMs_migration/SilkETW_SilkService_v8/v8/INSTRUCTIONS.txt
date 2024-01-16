@@ -1,0 +1,21 @@
+-=SilkETW & SilkService Installation Instructions=-
+
+//= Dependencies =//
+    - Install the VC++ 2015 x86 redistributable package
+      * Dependencies\vc2015_redist.x86.exe
+      * Or download: https://www.microsoft.com/en-ie/download/details.aspx?id=48145
+
+    - Install at least v4.5 of the .NET framework
+      * Dependencies\dotNetFx45_Full_setup.exe
+      * Or download: https://www.microsoft.com/en-ie/download/details.aspx?id=30653
+
+//= Extract =//
+Extract the SilkETW and/or SilkService folder to a location of your choosing. If you are upgrading from a previous version, simply remove the old version and extract the new one.
+
+//= Error =//
+On very old versions of Windows 7 you may encounter the following error:
+
+System.Runtime.InteropServices.COMException (0x80070008): Not enough storage is available to process this command
+
+If this is the case create the IRPStackSize registry entry as outlined in this post:
+https://support.microsoft.com/en-ie/help/106167/error-message-not-enough-server-storage-is-available-to-process-this-c

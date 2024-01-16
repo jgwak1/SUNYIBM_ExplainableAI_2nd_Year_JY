@@ -1,0 +1,138 @@
+[+] SilkService started at: 10/24/2023 5:14:03 PM
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Parameter validation success
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Parameter validation success
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Parameter validation success
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Parameter validation success
+[*] Starting collector threads: 10/24/2023 5:14:04 PM
+    [+] GUID:     45c82358-c52d-4892-8237-ba001d396fb4
+    [>] Type:     User
+    [>] Provider: Microsoft-Windows-Kernel-Process
+    [>] Out Type: url
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Starting trace collector
+    [+] GUID:     45c82358-c52d-4892-8237-ba001d396fb4
+    [>] Type:     User
+    [>] Provider: Microsoft-Windows-Kernel-File
+    [>] Out Type: url
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Starting trace collector
+    [+] GUID:     45c82358-c52d-4892-8237-ba001d396fb4
+    [>] Type:     User
+    [>] Provider: Microsoft-Windows-Kernel-Registry
+    [>] Out Type: url
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Starting trace collector
+    [+] GUID:     45c82358-c52d-4892-8237-ba001d396fb4
+    [>] Type:     User
+    [>] Provider: Microsoft-Windows-Kernel-Network
+    [>] Out Type: url
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Starting trace collector
+[!] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; The collector failed to POST the result
+[!] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; The collector failed to POST the result
+[!] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; The collector failed to POST the result
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] SilkService stopped at: 10/24/2023 5:14:08 PM
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[!] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; The collector failed to POST the result
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] SilkService stopped at: 10/24/2023 5:14:09 PM
+[+] SilkService started at: 10/24/2023 5:30:55 PM
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Parameter validation success
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Parameter validation success
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Parameter validation success
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Parameter validation success
+[*] Starting collector threads: 10/24/2023 5:30:55 PM
+    [+] GUID:     45c82358-c52d-4892-8237-ba001d396fb4
+    [>] Type:     User
+    [>] Provider: Microsoft-Windows-Kernel-Process
+    [>] Out Type: url
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Starting trace collector
+    [+] GUID:     45c82358-c52d-4892-8237-ba001d396fb4
+    [>] Type:     User
+    [>] Provider: Microsoft-Windows-Kernel-File
+    [>] Out Type: url
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Starting trace collector
+    [+] GUID:     45c82358-c52d-4892-8237-ba001d396fb4
+    [>] Type:     User
+    [>] Provider: Microsoft-Windows-Kernel-Registry
+    [>] Out Type: url
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Starting trace collector
+    [+] GUID:     45c82358-c52d-4892-8237-ba001d396fb4
+    [>] Type:     User
+    [>] Provider: Microsoft-Windows-Kernel-Network
+    [>] Out Type: url
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Starting trace collector
+[!] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; The collector failed to POST the result
+[!] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; The collector failed to POST the result
+[!] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; The collector failed to POST the result
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] SilkService stopped at: 10/24/2023 5:31:06 PM
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] SilkService stopped at: 10/24/2023 5:31:06 PM
+[!] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; The collector failed to POST the result
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] SilkService stopped at: 10/24/2023 5:31:07 PM
+[+] SilkService started at: 10/24/2023 5:37:53 PM
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Parameter validation success
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Parameter validation success
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Parameter validation success
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Parameter validation success
+[*] Starting collector threads: 10/24/2023 5:37:53 PM
+    [+] GUID:     45c82358-c52d-4892-8237-ba001d396fb4
+    [>] Type:     User
+    [>] Provider: Microsoft-Windows-Kernel-Process
+    [>] Out Type: url
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Starting trace collector
+    [+] GUID:     45c82358-c52d-4892-8237-ba001d396fb4
+    [>] Type:     User
+    [>] Provider: Microsoft-Windows-Kernel-File
+    [>] Out Type: url
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Starting trace collector
+    [+] GUID:     45c82358-c52d-4892-8237-ba001d396fb4
+    [>] Type:     User
+    [>] Provider: Microsoft-Windows-Kernel-Registry
+    [>] Out Type: url
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Starting trace collector
+    [+] GUID:     45c82358-c52d-4892-8237-ba001d396fb4
+    [>] Type:     User
+    [>] Provider: Microsoft-Windows-Kernel-Network
+    [>] Out Type: url
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Starting trace collector
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] SilkService stopped at: 10/24/2023 5:40:48 PM
+[+] SilkService started at: 10/24/2023 6:37:21 PM
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Parameter validation success
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Parameter validation success
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Parameter validation success
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Parameter validation success
+[*] Starting collector threads: 10/24/2023 6:37:21 PM
+    [+] GUID:     45c82358-c52d-4892-8237-ba001d396fb4
+    [>] Type:     User
+    [>] Provider: Microsoft-Windows-Kernel-Process
+    [>] Out Type: url
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Starting trace collector
+    [+] GUID:     45c82358-c52d-4892-8237-ba001d396fb4
+    [>] Type:     User
+    [>] Provider: Microsoft-Windows-Kernel-File
+    [>] Out Type: url
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Starting trace collector
+    [+] GUID:     45c82358-c52d-4892-8237-ba001d396fb4
+    [>] Type:     User
+    [>] Provider: Microsoft-Windows-Kernel-Registry
+    [>] Out Type: url
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Starting trace collector
+    [+] GUID:     45c82358-c52d-4892-8237-ba001d396fb4
+    [>] Type:     User
+    [>] Provider: Microsoft-Windows-Kernel-Network
+    [>] Out Type: url
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Starting trace collector
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] Collector ID: 45c82358-c52d-4892-8237-ba001d396fb4; Collector terminated
+[+] SilkService stopped at: 10/24/2023 6:46:21 PM
