@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
 
          # 2-2: Get the log-entries of the process-of-interest (and its descendents, if any)
-
+write
          process_of_interest_and_its_descendents_log_entries = \
             get_log_entries_of_process_of_interest_and_descendents( all_log_entries, 
                                                                     process_of_interest_and_its_descendents_dict )
