@@ -19,9 +19,9 @@ if __name__ == "__main__":
    ''' (1) Don't need to identify the ProcessID of "splunkd.exe" using Elasticsearch (PID may not be needed during execution)'''
 
    index_list = [ # JY @ 2023-12-26: These are good indices to analyze threads, since we know key-entities
-       "joonyoung_single_technique_profile_for_file_event_invoking_custom_technique",
-      #  "joonyoung_single_technique_profile_for_registry_event_invoking_custom_technique",
-      # "joonyoung_single_technique_profile_for_network_event_invoking_custom_technique"
+       "joonyoung_single_technique_profile_for_network_event_invoking_custom_technique__postwaitsecs_300",
+       "joonyoung_single_technique_profile_for_registry_event_invoking_custom_technique__postwaitsecs_300",
+       "joonyoung_single_technique_profile_for_network_event_invoking_custom_technique__postwaitsecs_300",
    ]
 
 
@@ -132,15 +132,16 @@ if __name__ == "__main__":
          summarized_caldera_technique_process_and_its_descendents_log_entries_SORTED = summarize_log_entires_by_entity_and_key_info( log_entries_of_caldera_technique_process_and_its_descendents__with_EntityInfo )
 
          indices__to__summarized_caldera_technique_process_and_its_descendents_log_entries_SORTED__dict[index] = \
-                                    {"event_summaries": summarized_caldera_technique_process_and_its_descendents_log_entries_SORTED,
-                                     "indices__to__caldera_technique_process_and_its_descendents__dict": indices__to__caldera_technique_process_and_its_descendents__dict[index]}
+                                    {     "event_summaries": summarized_caldera_technique_process_and_its_descendents_log_entries_SORTED,
+                                          "splunkd_and_descendent_pids_dict": indices__to__splunkd_and_descendent_pids__dict[index],
+                                          "indices__to__caldera_technique_process_and_its_descendents__dict": indices__to__caldera_technique_process_and_its_descendents__dict[index]}
 
 
 
 
    # ''' (7) Save the results '''
 
-   results_dirpath = "/data/d1/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/Task_1__Behavior_identification_and_intention_learning/1_0__Identify_Behavioral_Events/events_summary_results"
+   results_dirpath = "/data/d1/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/Task_1__Behavior_identification_and_intention_learning/1_0__Identify_Behavioral_Events/events_summary_results__from_20240115"
    if not os.path.exists(results_dirpath):
       raise RuntimeError(f"{results_dirpath} does not exist!")
 
@@ -149,10 +150,12 @@ if __name__ == "__main__":
 
 
       event_summaries = nested_dict["event_summaries"]
-      process_of_interest_and_its_descendents_dict = nested_dict["indices__to__caldera_technique_process_and_its_descendents__dict"]
+      caldera_technique_process_and_its_descendents__dict = nested_dict["indices__to__caldera_technique_process_and_its_descendents__dict"]
       splunkd_and_descendent_pids_dict = nested_dict["splunkd_and_descendent_pids_dict"]
+
       for pid in splunkd_and_descendent_pids_dict: # for better readability 
             splunkd_and_descendent_pids_dict[pid]['Timestamp'] = str( splunkd_and_descendent_pids_dict[pid]['Timestamp'] )
+            splunkd_and_descendent_pids_dict[pid]['@timestamp'] = str( splunkd_and_descendent_pids_dict[pid]['@timestamp'] )
 
 
 
@@ -160,18 +163,14 @@ if __name__ == "__main__":
       results_fpath = os.path.join(results_dirpath, f"events_summary__of__caldera_technique_and_descendent_procs__{index}__{datetime.now().strftime('%Y-%m-%d_%H_%M_%S')}.txt")
       
  
-
- 
-
-
       # TODO : [ JY @ 2023-12-28: Could write out to a txt file for more readability. ]
       
 
 
       with open( results_fpath , "w") as fp:
             
-            fp.write(f"[  {index}  ]\n-->  process-of-interest and its descendent processes (below)  events-summary (sorted by timestamp) / #events: {len(event_summaries)}\n\n")
-            # fp.write(f"\n{pprint.pformat(process_of_interest_and_its_descendents_dict)}\n")
+            fp.write(f"[  {index}  ]\n-->  caldera technique process and its descendents (Below)  events-summary (sorted by timestamp) / #events: {len(event_summaries)}\n\n")
+            fp.write(f"\n{pprint.pformat(caldera_technique_process_and_its_descendents__dict)}\n")
             fp.write("------------------------------------------------------------------\n")
             fp.write("< splunkd_and_descendent_pids_dict (for reference) -- single-technique process corresponds to the last spawned child of splunkd.exe >:\n\n")
             fp.write(f"\n{pprint.pformat(splunkd_and_descendent_pids_dict)}\n")
