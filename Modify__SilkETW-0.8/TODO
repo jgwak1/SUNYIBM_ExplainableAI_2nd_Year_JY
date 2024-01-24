@@ -1,0 +1,15 @@
+https://github.com/mandiant/SilkETW/releases
+
+
+1. Modify "https://github.com/mandiant/SilkETW/blob/093f57201525343d4ebd3d9be33f4c6a1a425ed5/SilkETW/ETWCollector.cs#L68" in "ETWCollector.cs".
+- Manipulate if-else statements to "filter-out" events with EventNames "OperationEnd", "NameDelete" (check if can find more) and ProcessNames of "java" and "SilkService".
+- Note that "SilkETW-0.8.zip" in is dir is the zip which contains the Source code.
+
+2. Recompile using "SilkETW.sln" , and zip it.
+- Make my own version of "SilkETW_SilkService_v8.zip", name it as "SilkETW_SilkService_v8___JY_Custom_Filter.zip"
+
+3. Utilize my version in VM, and take a snapshot.
+
+4. Run the agent file and confirm that those events are properly filtered (== not consumed at silkservice level ; probably the earlist at event-consumer side)
+
+5. End goal is to minimize the streaming overhead, and ensure that we get all log-entries that correspond to caldera-technique.
