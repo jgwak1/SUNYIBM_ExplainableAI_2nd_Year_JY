@@ -93,6 +93,14 @@ def get_splunkd_and_descendent_pids( es_index__all_log_entries : list ) -> dict:
          #                   Need to write code that first figures out the
          #                   dependencies (root == splunkd process and process-tree)
          #     First write a loop for identifying that.
+         
+         # Added by JY @ 2024-1-24
+         es_index__all_log_entries = sorted(es_index__all_log_entries, key=lambda log_entry: log_entry['_source']['TimeStamp']) # sort in ascending order by TimeStamp
+         def is_ascending(lst):
+               return all(lst[i] <= lst[i + 1] for i in range(len(lst) - 1))    
+
+         assert is_ascending( [ log_entry['_source']['TimeStamp'] for log_entry in es_index__all_log_entries ] ), "log_entries should be already sorted in ascending order"
+
 
 
          splunkd_and_descendent_pids = dict()
@@ -174,6 +182,13 @@ def get_splunkd_and_descendent_pids( es_index__all_log_entries : list ) -> dict:
 
 def get_log_entries_of_process_of_interest_and_descendents( es_index__all_log_entries : list,
                                                             process_of_interest_and_its_descendents ) -> list:
+
+         # Added by JY @ 2024-1-24
+         es_index__all_log_entries = sorted(es_index__all_log_entries, key=lambda log_entry: log_entry['_source']['TimeStamp']) # sort in ascending order by TimeStamp
+         def is_ascending(lst):
+               return all(lst[i] <= lst[i + 1] for i in range(len(lst) - 1))    
+
+         assert is_ascending( [ log_entry['_source']['TimeStamp'] for log_entry in es_index__all_log_entries ] ), "log_entries should be already sorted in ascending order"
 
 
          process_of_interest_and_descentdents_log_entries = []
@@ -277,6 +292,13 @@ def group_log_entries_by_processThreads(log_entries : list) -> dict:
        and it is more rare that a same thread-id is reused under the same re-used process-id
     '''
 
+   
+    # Added by JY @ 2024-01-24
+    log_entries = sorted(log_entries, key=lambda log_entry: log_entry['_source']['TimeStamp']) # sort in ascending order by TimeStamp
+    def is_ascending(lst):
+         return all(lst[i] <= lst[i + 1] for i in range(len(lst) - 1))    
+
+    assert is_ascending( [ log_entry['_source']['TimeStamp'] for log_entry in log_entries ] ), "log_entries should be already sorted in ascending order"
 
 
     for log_entry in log_entries:
@@ -415,7 +437,14 @@ def get_log_entries_with_entity_info( log_entries : list ) -> list:
    # refer to: /data/d1/jgwak1/tabby/STREAMLINED_DATA_GENERATION_MultiGraph/STEP_2_Benign_NON_TARGETTED_SUBGRAPH_GENERATION_GeneralLogCollection_subgraphs/model_v3_PW/FirstStep.py
    fileobject_to_filename_mapping = dict()
    keyobject_to_relativename_mapping = dict()
-   
+      
+   # Added by JY @ 2024-01-24
+   log_entries = sorted(log_entries, key=lambda log_entry: log_entry['_source']['TimeStamp']) # sort in ascending order by TimeStamp
+   def is_ascending(lst):
+         return all(lst[i] <= lst[i + 1] for i in range(len(lst) - 1))    
+
+   assert is_ascending( [ log_entry['_source']['TimeStamp'] for log_entry in log_entries ] ), "log_entries should be already sorted in ascending order"
+
 
 
    for log_entry in log_entries:
@@ -560,6 +589,15 @@ def summarize_log_entires_by_entity_and_key_info( log_entries__with_EntityInfo )
 
    summarized_log_entries = list()
 
+   
+   # Added by JY @ 2024-01-24
+   log_entries__with_EntityInfo = sorted(log_entries__with_EntityInfo, key=lambda log_entry: log_entry['_source']['TimeStamp']) # sort in ascending order by TimeStamp
+   def is_ascending(lst):
+         return all(lst[i] <= lst[i + 1] for i in range(len(lst) - 1))    
+
+   assert is_ascending( [ log_entry['_source']['TimeStamp'] for log_entry in log_entries__with_EntityInfo ] ), "log_entries should be already sorted in ascending order"
+
+
    for log_entry in log_entries__with_EntityInfo:
        
 
@@ -598,6 +636,14 @@ def summarize_log_entires_by_entity_and_key_info( log_entries__with_EntityInfo )
 def group_log_entries_by_entities( log_entries__with_EntityInfo : list):
     
    entity_to_logentries_dict = dict()
+
+   # Added by JY @ 2024-1-24
+   log_entries__with_EntityInfo = sorted(log_entries__with_EntityInfo, key=lambda log_entry: log_entry['_source']['TimeStamp']) # sort in ascending order by TimeStamp
+   def is_ascending(lst):
+         return all(lst[i] <= lst[i + 1] for i in range(len(lst) - 1))    
+
+   assert is_ascending( [ log_entry['_source']['TimeStamp'] for log_entry in log_entries__with_EntityInfo ] ), "log_entries should be already sorted in ascending order"
+
 
    for log_entry in log_entries__with_EntityInfo:
        
@@ -656,3 +702,89 @@ def group_log_entries_by_entities( log_entries__with_EntityInfo : list):
 
 
 
+
+
+def get__processThread_to_logentries__with_events_order_information( processThread_to_logentries_dict: dict ):
+    
+      ''' JY @ 2024-1-24:             
+            GET ORDER OF EVENTS OF LOG-ENTRIES ACROSS ALL TRHEADS IN THE PROCESS TREE 
+            (NOT THE ORDER OF EVENTS WITHIN THREADS)
+      
+            SIMILAR TO DINAL'S FOLLOWING FUNCTION 
+            WHICH GET ORDER OF EVENTS WITHIN THE SUBGRAPH TO PRODUCE CORRESPONDING PROCESSED PICKLE FILE
+
+               def get_events_order(self, edge_dict):
+
+                  Computes the ordering of all events
+                  1st event order-value = 1/(#events)
+                  last event order-value = #events / #events = 1.0
+            
+               https://github.com/SUNY-IBM-dev/graph_embedding_improvement/blob/c9f07a10c68bfedd2064f629f9611649601072cc/graph_embedding_improvement_efforts/Trial_4__Local_N_gram__standard_message_passing/STREAMLINED_DATA_GENERATION_SimpleGraph_silketw_version__JY/STEP_3_processdata_traintestsplit/data_preprocessing/dp_v2_ONLY_TASKNAME_EDGE_ATTR/data_processor_v2_MultiEdge_5BitNodeAttr.py#L272
+
+      '''
+
+      def is_ascending(lst):
+            return all(lst[i] <= lst[i + 1] for i in range(len(lst) - 1))    
+      
+      # first check if each thread's event-sequence is sorted in ascending order
+      for pid in processThread_to_logentries_dict.keys():
+         for tid in processThread_to_logentries_dict[pid]: # already sorted by list-length in ascending order.
+               assert is_ascending( [ log_entry['TimeStamp'] for log_entry in processThread_to_logentries_dict[pid][tid] ] ), "thread's log_entries should be already sorted in ascending order"
+
+      # first unpack all events
+      process_tree__log_entries = []
+      for pid in processThread_to_logentries_dict.keys():
+
+         for tid in processThread_to_logentries_dict[pid]: # already sorted by list-length in ascending order.
+               for log_entry in processThread_to_logentries_dict[pid][tid]:
+                  pid_tid_mapping = {'pid': pid, 'tid': tid} # for easier mapping latter
+                  process_tree__log_entries.append(log_entry | pid_tid_mapping)
+
+      # now sort
+      process_tree__log_entries__sorted = sorted(process_tree__log_entries, key=lambda log_entry: log_entry['TimeStamp']) # sort in ascending order by TimeStamp
+      assert is_ascending( [ log_entry['TimeStamp'] for log_entry in process_tree__log_entries__sorted ] ), "log_entries should be already sorted in ascending order"                     
+
+      # now give computing normalized ordering
+      _sz = len(process_tree__log_entries__sorted)
+      for i, log_entry in enumerate(process_tree__log_entries__sorted):
+          log_entry["normalized__event_order"] = (i + 1) / _sz
+
+      # now repack 'process_tree__log_entries__sorted' int 'processThread_to_logentries_dict' by timestamp
+      Processed__processThread_to_logentries_dict = dict()
+
+      for log_entry in process_tree__log_entries__sorted:
+          
+         if not log_entry['pid'] in Processed__processThread_to_logentries_dict:
+
+            Processed__processThread_to_logentries_dict[log_entry['pid']] = dict()
+            Processed__processThread_to_logentries_dict[log_entry['pid']][log_entry['tid']] = []
+            Processed__processThread_to_logentries_dict[log_entry['pid']][log_entry['tid']].append(log_entry) 
+         
+         else:
+
+            if log_entry['tid'] in Processed__processThread_to_logentries_dict[log_entry['pid']]:
+               Processed__processThread_to_logentries_dict[log_entry['pid']][log_entry['tid']].append(log_entry) 
+
+            else:
+               Processed__processThread_to_logentries_dict[log_entry['pid']][log_entry['tid']] = []               
+               Processed__processThread_to_logentries_dict[log_entry['pid']][log_entry['tid']].append(log_entry) 
+
+
+      # now verify whether 'processThread_to_logentries_dict' and 'Processed__processThread_to_logentries_dict' match in process-thread combination and order of events
+      for pid in processThread_to_logentries_dict.keys():
+
+         for tid in processThread_to_logentries_dict[pid]: # already sorted by list-length in ascending order.               
+             
+            # first check each if they are sorted.
+            assert is_ascending( [ log_entry['TimeStamp'] for log_entry in processThread_to_logentries_dict[pid][tid] ] ), "thread's log_entries should be already sorted in ascending order"
+            assert is_ascending( [ log_entry['TimeStamp'] for log_entry in Processed__processThread_to_logentries_dict[pid][tid] ] ), "Processed__processThread_to_logentries_dict: thread's log_entries should be already sorted in ascending order"            
+
+            assert len(Processed__processThread_to_logentries_dict[pid][tid]) == len( processThread_to_logentries_dict[pid][tid] ) , "length should exactly match"
+
+            for i in range(len(processThread_to_logentries_dict[pid][tid])):
+                assert processThread_to_logentries_dict[pid][tid][i]['EventName'] == Processed__processThread_to_logentries_dict[pid][tid][i]['EventName']
+                assert processThread_to_logentries_dict[pid][tid][i]['TimeStamp'] == Processed__processThread_to_logentries_dict[pid][tid][i]['TimeStamp']             
+                assert processThread_to_logentries_dict[pid][tid][i]['PROVIDER_SPECIFIC_ENTITY'] == Processed__processThread_to_logentries_dict[pid][tid][i]['PROVIDER_SPECIFIC_ENTITY']
+
+
+      return Processed__processThread_to_logentries_dict
