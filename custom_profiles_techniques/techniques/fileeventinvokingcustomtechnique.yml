@@ -1,0 +1,13 @@
+- description: File event invoking custom activity to investigate reason for only getting process events for caldera-technique process. References www.tutorialspoint.com/powershell/powershell_files_create_files.htm , www.itprotoday.com/powershell/how-write-powershell-output-file
+  id: fileeventinvokingcustomtechnique
+  name: Custom File event invoking technique
+  platforms:
+    windows:
+      psh:
+        cleanup: ''
+        command: New-Item -Path "joonyoung_custom_newfile.txt" -ItemType File; "I will be written to joonyoung_custom_newfile.txt" | Out-File -FilePath "joonyoung_custom_newfile.txt"; Get-Content "joonyoung_custom_newfile.txt"; Remove-Item "joonyoung_custom_newfile.txt"
+        payloads: []
+  tactic: credential-access
+  technique:
+    attack_id: JYFILEEVENTCUSTOM
+    name: 'File event invoking custom activity'

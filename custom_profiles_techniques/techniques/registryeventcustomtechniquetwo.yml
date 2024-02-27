@@ -1,0 +1,13 @@
+- description: Registry event invoking custom activity to investigate reason for only getting process events for caldera-technique process. References 
+  id: registryeventcustomtechniquetwo
+  name: Custom Registry event invoking technique two
+  platforms:
+    windows:
+      psh:
+        cleanup: ''
+        command: New-Item -Path 'Registry::HKEY_LOCAL_MACHINE\Software\JY_KEY_2'; Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\Software\JY_KEY_2' -Name 'JYPROPERTY_2' -Value 'JY'; Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\Software\JY_KEY_2'; Remove-Item -Path 'Registry::HKEY_LOCAL_MACHINE\Software\JY_KEY_2' -Recurse
+        payloads: []
+  tactic: credential-access
+  technique:
+    attack_id: JYREGISTRYEVENTCUSTOMTWO
+    name: 'Registry event invoking custom activity 2'

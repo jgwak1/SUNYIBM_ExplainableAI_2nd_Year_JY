@@ -1,0 +1,13 @@
+- description: Network event invoking custom activity to investigate reason for only getting process events for caldera-technique process. References www.techtarget.com/searchnetworking/tip/PowerShell-commands-for-network-troubleshooting
+  id: networkeventcustomtechnique
+  name: Custom Network event invoking technique
+  platforms:
+    windows:
+      psh:
+        cleanup: ''
+        command: ping ocelot.cs.binghamton.edu; Test-Connection ocelot.cs.binghamton.edu; Get-NetTCPConnection -LocalPort 135
+        payloads: []
+  tactic: credential-access
+  technique:
+    attack_id: JYNETWORKEVENTCUSTOM
+    name: 'Network event invoking custom activity'
