@@ -1,0 +1,15 @@
+adversary_id: joonyoung_multi_technique_profile_for_fileregnet_event_custom_techniques_nine
+name: Multiple Technique Simple Custom Adversary Profile Nine
+description: added nine file reg net abilities to atomic plugin
+atomic_ordering:
+- fileeventinvokingcustomtechnique
+- registryeventcustomtechnique
+- networkeventcustomtechnique
+- fileeventinvokingcustomtechniquetwo
+- registryeventcustomtechniquetwo
+- networkeventcustomtechniquetwo
+- fileeventinvokingcustomtechniquethree
+- registryeventcustomtechniquethree
+- networkeventcustomtechniquethree
+objective: 495a9828-cab1-44dd-a0ca-66e58177d8cc
+tags: []
