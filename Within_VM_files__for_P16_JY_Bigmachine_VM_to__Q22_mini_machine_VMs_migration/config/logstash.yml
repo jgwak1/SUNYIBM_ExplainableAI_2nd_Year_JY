@@ -31,23 +31,23 @@
 #
 # The ID of the pipeline.
 #
-# pipeline.id: main
+pipeline.id: main
 #
 # Set the number of workers that will, in parallel, execute the filters+outputs
 # stage of the pipeline.
 #
 # This defaults to the number of the host's CPU cores.
 #
-# pipeline.workers: 2
+pipeline.workers: 1
 #
 # How many events to retrieve from inputs before sending to filters+workers
 #
-# pipeline.batch.size: 125
+pipeline.batch.size: 1
 #
 # How long to wait in milliseconds while polling for the next event
 # before dispatching an undersized batch to filters+outputs
 #
-# pipeline.batch.delay: 50
+pipeline.batch.delay: 50
 #
 # Force Logstash to exit during shutdown even if there are still inflight
 # events in memory. By default, logstash will refuse to quit until all
@@ -55,7 +55,7 @@
 #
 # WARNING: Enabling this can lead to data loss during shutdown
 #
-# pipeline.unsafe_shutdown: false
+pipeline.unsafe_shutdown: false
 #
 # Set the pipeline event ordering. Options are "auto" (the default), "true" or "false".
 # "auto" automatically enables ordering if the 'pipeline.workers' setting
@@ -64,7 +64,7 @@
 # if there are multiple workers.
 # "false" disables any extra processing necessary for preserving ordering.
 #
-# pipeline.ordered: auto
+pipeline.ordered: auto
 #
 # Sets the pipeline's default value for `ecs_compatibility`, a setting that is
 # available to plugins that implement an ECS Compatibility mode for use with
