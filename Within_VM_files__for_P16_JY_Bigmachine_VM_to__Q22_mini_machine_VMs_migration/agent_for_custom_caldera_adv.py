@@ -22,7 +22,7 @@ import zipfile
 
 save_directory = "C:\\Users\\puma-4\\Downloads"
 
-HOST_IP = '128.226.116.18' # P16 (Prof Gunahua's lab) 'JY-Big machine' Host machine IP
+HOST_IP = '10.32.139.114' # Q22 (Prof Ping's lab) 'Mini-machine 1' Host machine IP
 PORT = 9999
 
 def main():
@@ -58,6 +58,11 @@ def main():
     # try to resync until it works ! doing 2 times does not work when too big
     resync_attempt_cnt = 0
     while True:
+
+       if resync_attempt_cnt == 100:
+          print("failed to resync but proceed. this is temporary treatment (called when system time and actual time gap is too big), as dealing with windows resync is such a pain", flush=True)
+          break
+
        print(f"resync_attempt_cnt: {resync_attempt_cnt}", flush = True)
        resync_attempt_cnt += 1
 
@@ -74,9 +79,6 @@ def main():
        if "The command completed successfully." in decoded_result:
           break
 
-       if resync_attempt_cnt == 10:
-          print("failed to resync but proceed. this is temporary treatment (called when system time and actual time gap is too big), as dealing with windows resync is such a pain", flush=True)
-          break
 
 
     #os.system('w32tm /resync /force') # JY @ 2023-10-26: resync for compatiability with caldera-server time.
@@ -223,15 +225,25 @@ def main():
         print("\n VM-socket closed the connection\n", flush=True)
         break
 
-    if message_to_receive == "terminate__logstash__silkservice":
-        print(f"\n From Host, received message: {message_to_receive}\n", flush = True )
+    #if message_to_receive == "terminate__logstash__silkservice":
+    #    print(f"\n From Host, received message: {message_to_receive}\n", flush = True )
+    #else:
+    #    raise ValueError(f"Value-Error with received message: {message_to_receive}")
+    #s.close()
+
+    # Modified by JY @ 2024-1-14: Control the 'post-activity-wait-seconds' from Host machine
+    if message_to_receive.isdigit():
+        print(f"\n From Host, received message: {message_to_receive}, which corresponds to 'post_activity_wait_seconds'\n", flush = True )
     else:
         raise ValueError(f"Value-Error with received message: {message_to_receive}")
     s.close()
 
+
     # ---------------------------------------------------------------------------------------------------------------------
     # Wait after activity is done -- Added by JY @ 2023-12-19    
-    post_activity_wait_seconds = 3600
+    #post_activity_wait_seconds = 3600
+
+    post_activity_wait_seconds = int( message_to_receive ) # Added by JY @ 2024-1-14
 
     print(f"\n Now Wait {post_activity_wait_seconds} seconds for SilkETW to stream out after activity\n", flush = True)
     time.sleep(post_activity_wait_seconds)
