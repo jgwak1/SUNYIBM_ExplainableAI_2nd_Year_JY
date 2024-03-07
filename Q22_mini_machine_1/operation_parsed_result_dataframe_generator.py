@@ -1,3 +1,4 @@
+# JY @ 2023-11-26
 
 '''
  For each operation file produced by caldera-server after running a adversary-profile
@@ -15,8 +16,8 @@ from datetime import datetime
 if __name__ == "__main__":
 
     # SET
-    reports_dirpath = "/home/etw0/Desktop/caldera/etw/operation_reports_savedir/reports" 
-    result_dataframe_save_dirpath = "/home/etw0/Desktop/caldera/etw/operation_reports_savedir"
+    reports_dirpath = "/home/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/OPERATION_REPORTS_PARSER__MINI_MACHINE_1/reports_dir" 
+    result_dataframe_save_dirpath = "/home/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/OPERATION_REPORTS_PARSER__MINI_MACHINE_1"
 
     if not os.path.exists(result_dataframe_save_dirpath):
         os.makedirs(result_dataframe_save_dirpath)
@@ -25,7 +26,8 @@ if __name__ == "__main__":
     # ---------------------------------------------------------------------------------------------------------------------------
 
     # pandas -- columns [ 'ability name', 'status' , 'output -- stdout', 'output -- stderr', 'output -- exitcode' , 'attack', 'name', 'description', 'command', 'ability-id', 'executor', 'platform', ]
-    result_df = pd.DataFrame(columns = ["operation_fname", "adversary_id", "atomic_ordering", "number_of_abilities", "adversary_abilities_success_rate",
+    result_df = pd.DataFrame(columns = ["operation_fname", "adversary_id", "atomic_ordering", "number_of_abilities", 
+                                        "adversary_abilities_success_rate__status_code", "adversary_abilities_success_rate__exit_code",
                                         "all_steps__status", "all_steps__output_stdout", "all_steps__output_stderr", "all_steps__output_exitcode",
                                         "all_steps__ability_id", "all_steps__ability_command", "all_steps__ability_description", "all_steps__ability_name", 
                                         "all_steps__ability_tactic_techniquename_techniqueid", "all_steps__platform", "all_steps__executor"])
@@ -34,7 +36,7 @@ if __name__ == "__main__":
 
 
 
-    operation_fnames = [ x for x in os.listdir(reports_dirpath) if x.startswith("operation_") ]
+    operation_fnames = os.listdir(reports_dirpath)
 
     for operation_fname in operation_fnames:
 
@@ -43,6 +45,17 @@ if __name__ == "__main__":
 
         with open( operation_fpath, 'r' ) as fp:
             operation_dict = json.load( fp )
+        
+        if operation_dict == None:
+            new_row = { "operation_fname": operation_fname, 
+                        "adversary_id": "N/A", "atomic_ordering": "N/A", "number_of_abilities": "N/A", "adversary_abilities_success_rate__status_code": "N/A",
+                        "adversary_abilities_success_rate__exit_code": "N/A", "all_steps__status": "N/A", "all_steps__output_stdout": "N/A", 
+                        "all_steps__output_stderr": "N/A", "all_steps__output_exitcode": "N/A", "all_steps__ability_id": "N/A", "all_steps__ability_command": "N/A", 
+                        "all_steps__ability_description": "N/A", "all_steps__ability_name": "N/A", "all_steps__ability_tactic_techniquename_techniqueid": "N/A",
+                        "all_steps__platform": "N/A", "all_steps__executor": "N/A", }
+            result_df = pd.concat([result_df, pd.DataFrame([new_row])], ignore_index=True)             # Append the new row using concat
+            continue
+
 
         adversary_id = operation_dict['adversary']['adversary_id']
         atomic_ordering = operation_dict['adversary']['atomic_ordering']
@@ -100,9 +113,9 @@ if __name__ == "__main__":
                     step__output_stderr = step_dict['output']['stderr']
                     step__output_exitcode = step_dict['output']['exit_code']
                 else:
-                    step__output_stdout = "No Caldera Link-Output (Possible/Valid Case)"
-                    step__output_stderr = "No Caldera Link-Output (Possible/Valid Case)"
-                    step__output_exitcode = "No Caldera Link-Output (Possible/Valid Case)"
+                    step__output_stdout = "N/A Caldera Link-Output (Possible/Valid Case)"
+                    step__output_stderr = "N/A Caldera Link-Output (Possible/Valid Case)"
+                    step__output_exitcode = "N/A Caldera Link-Output (Possible/Valid Case)"
 
                 step__run = step_dict['run'] # if None, it means this step did not run properly (due to e.g. dead agent)
                 step__status = step_dict['status'] # if -3, it means this step did not run properly (due to e.g. dead agent)
@@ -131,13 +144,18 @@ if __name__ == "__main__":
                 # -------------------------------------------------------------------------------------
 
             success_status_code = 0
-            adversary_ability_success_rate = all_steps__status.count(success_status_code)/ len(all_steps__status) 
+            adversary_ability_success_rate__based_on_status_code = all_steps__status.count(success_status_code)/ len(all_steps__status) 
+
+            success_excide_code = '0'
+            adversary_ability_success_rate__based_on_exit_code = all_steps__output_exitcode.count(success_excide_code)/ len(all_steps__output_exitcode) 
+
 
             new_row = { "operation_fname": operation_fname, 
                         "adversary_id": adversary_id, 
                         "atomic_ordering": atomic_ordering, 
                         "number_of_abilities": number_of_techniques, 
-                        "adversary_abilities_success_rate": adversary_ability_success_rate,
+                        "adversary_abilities_success_rate__status_code": adversary_ability_success_rate__based_on_status_code,
+                        "adversary_abilities_success_rate__exit_code": adversary_ability_success_rate__based_on_exit_code,
                                                     
                         "all_steps__status": all_steps__status, 
                         "all_steps__output_stdout": all_steps__output_stdout, 
