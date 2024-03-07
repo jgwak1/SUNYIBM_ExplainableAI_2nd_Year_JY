@@ -28,8 +28,9 @@ if __name__ == "__main__":
     # pandas -- columns [ 'ability name', 'status' , 'output -- stdout', 'output -- stderr', 'output -- exitcode' , 'attack', 'name', 'description', 'command', 'ability-id', 'executor', 'platform', ]
     result_df = pd.DataFrame(columns = ["operation_fname", "adversary_id", "atomic_ordering", "number_of_abilities", 
                                         "adversary_abilities_success_rate__status_code", "adversary_abilities_success_rate__exit_code",
-                                        "all_steps__status", "all_steps__output_stdout", "all_steps__output_stderr", "all_steps__output_exitcode",
-                                        "all_steps__ability_id", "all_steps__ability_command", "all_steps__ability_description", "all_steps__ability_name", 
+                                        "all_steps__STATUSCODE", "all_steps__output_STDOUT", "all_steps__output_STDERR", "all_steps__output_EXITCODE",
+                                        #"all_steps__ability_id", 
+                                        "all_steps__ability_command", "all_steps__ability_description", "all_steps__ability_name", 
                                         "all_steps__ability_tactic_techniquename_techniqueid", "all_steps__platform", "all_steps__executor"])
 
 
@@ -49,8 +50,11 @@ if __name__ == "__main__":
         if operation_dict == None:
             new_row = { "operation_fname": operation_fname, 
                         "adversary_id": "N/A", "atomic_ordering": "N/A", "number_of_abilities": "N/A", "adversary_abilities_success_rate__status_code": "N/A",
-                        "adversary_abilities_success_rate__exit_code": "N/A", "all_steps__status": "N/A", "all_steps__output_stdout": "N/A", 
-                        "all_steps__output_stderr": "N/A", "all_steps__output_exitcode": "N/A", "all_steps__ability_id": "N/A", "all_steps__ability_command": "N/A", 
+                        "adversary_abilities_success_rate__exit_code": "N/A", 
+                        "all_steps__STATUSCODE": "N/A", "all_steps__output_STDOUT": "N/A", 
+                        "all_steps__output_STDERR": "N/A", "all_steps__output_EXITCODE": "N/A", 
+                        #"all_steps__ability_id": "N/A", 
+                        "all_steps__ability_command": "N/A", 
                         "all_steps__ability_description": "N/A", "all_steps__ability_name": "N/A", "all_steps__ability_tactic_techniquename_techniqueid": "N/A",
                         "all_steps__platform": "N/A", "all_steps__executor": "N/A", }
             result_df = pd.concat([result_df, pd.DataFrame([new_row])], ignore_index=True)             # Append the new row using concat
@@ -81,7 +85,7 @@ if __name__ == "__main__":
             print("-"*30,flush= True)
 
             # for all steps ( step == technique(ability) ) -- for multi-technique adversaries
-            all_steps__ability_id = []
+            # all_steps__ability_id = []
             all_steps__ability_command = []
             all_steps__ability_description = []
             all_steps__ability_name = []
@@ -126,7 +130,7 @@ if __name__ == "__main__":
                     continue
 
 
-                all_steps__ability_id.append(step__ability_id)
+                # all_steps__ability_id.append(step__ability_id) # -- Duplicate to atomic-ordering
                 all_steps__ability_command.append(step__ability_command)
                 all_steps__ability_description.append(step__ability_description)
                 all_steps__ability_name.append(step__ability_name)
@@ -156,13 +160,13 @@ if __name__ == "__main__":
                         "number_of_abilities": number_of_techniques, 
                         "adversary_abilities_success_rate__status_code": adversary_ability_success_rate__based_on_status_code,
                         "adversary_abilities_success_rate__exit_code": adversary_ability_success_rate__based_on_exit_code,
-                                                    
-                        "all_steps__status": all_steps__status, 
-                        "all_steps__output_stdout": all_steps__output_stdout, 
-                        "all_steps__output_stderr": all_steps__output_stderr, 
-                        "all_steps__output_exitcode": all_steps__output_exitcode,
 
-                        "all_steps__ability_id": all_steps__ability_id, 
+                        "all_steps__STATUSCODE": all_steps__status, 
+                        "all_steps__output_STDOUT": all_steps__output_stdout, 
+                        "all_steps__output_STDERR": all_steps__output_stderr, 
+                        "all_steps__output_EXITCODE": all_steps__output_exitcode,
+
+                        # "all_steps__ability_id": all_steps__ability_id, 
                         "all_steps__ability_command": all_steps__ability_command, 
                         "all_steps__ability_description": all_steps__ability_description, 
                         "all_steps__ability_name": all_steps__ability_name, 
