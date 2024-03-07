@@ -1,4 +1,3 @@
-# JY @ 2023-11-26
 
 '''
  For each operation file produced by caldera-server after running a adversary-profile
@@ -16,8 +15,8 @@ from datetime import datetime
 if __name__ == "__main__":
 
     # SET
-    reports_dirpath = "/home/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/OPERATION_REPORTS_PARSER__MINI_MACHINE_1/reports_dir" 
-    result_dataframe_save_dirpath = "/home/jgwak1/tabby/SUNYIBM_ExplainableAI_2nd_Year_JY/OPERATION_REPORTS_PARSER__MINI_MACHINE_1"
+    reports_dirpath = "/home/etw0/Desktop/caldera/etw/operation_reports_savedir/reports" 
+    result_dataframe_save_dirpath = "/home/etw0/Desktop/caldera/etw/operation_reports_savedir"
 
     if not os.path.exists(result_dataframe_save_dirpath):
         os.makedirs(result_dataframe_save_dirpath)
@@ -35,7 +34,7 @@ if __name__ == "__main__":
 
 
 
-    operation_fnames = os.listdir(reports_dirpath)
+    operation_fnames = [ x for x in os.listdir(reports_dirpath) if x.startswith("operation_") ]
 
     for operation_fname in operation_fnames:
 
