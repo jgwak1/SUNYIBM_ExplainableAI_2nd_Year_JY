@@ -294,7 +294,7 @@ def main():
     # 6. Tell Host that 'post_activity_wait_seconds' is over, 
     # 	 and logstash and silkservice terminated
     
-    print(f'Tell Host that 'post_activity_wait_seconds' is over and logstash/silk-service terminated', flush = True)
+    print(f"Tell Host that 'post_activity_wait_seconds' is over and logstash/silk-service terminated", flush = True)
     ss = socket.socket()
     SEND_PORT = 9998
     ss.connect((HOST_IP, SEND_PORT))
