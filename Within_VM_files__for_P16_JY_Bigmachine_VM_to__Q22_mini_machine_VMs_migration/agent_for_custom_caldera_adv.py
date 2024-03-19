@@ -59,7 +59,7 @@ def main():
     resync_attempt_cnt = 0
     while True:
 
-       if resync_attempt_cnt == 100:
+       if resync_attempt_cnt == 1:
           print("failed to resync but proceed. this is temporary treatment (called when system time and actual time gap is too big), as dealing with windows resync is such a pain", flush=True)
           break
 
@@ -212,7 +212,7 @@ def main():
     #    Wait and receive message of "terminate__logstash__silkservice" from Host
 
     s = socket.socket()     # Now we can create socket object
-    PORT = 9900             # Lets choose one port and start listening on that port
+    PORT = 9100             # Lets choose one port and start listening on that port
     print(f"\n VM-socket is listing on port : {PORT}\n", flush = True)
     s.bind(('', PORT)) # Now we need to bind socket to the above port 
     s.listen(10)    # Now we will put the binded socket listening mode
@@ -222,7 +222,8 @@ def main():
         conn, addr = s.accept()    # Now we can establish connection with client
         message_to_receive = conn.recv(1024).decode()
         conn.close()
-        print("\n VM-socket closed the connection\n", flush=True)
+        print("\n VM-socket closed the connection -- point-1 \n", flush=True)
+        print(f"\n From Host, received message -- point-1 : {message_to_receive}", flush = True)
         break
 
     #if message_to_receive == "terminate__logstash__silkservice":
@@ -235,7 +236,7 @@ def main():
     if message_to_receive.isdigit():
         print(f"\n From Host, received message: {message_to_receive}, which corresponds to 'post_activity_wait_seconds'\n", flush = True )
     else:
-        raise ValueError(f"Value-Error with received message: {message_to_receive}")
+        raise ValueError(f"Value-Error with received message -- point-2 : {message_to_receive}")
     s.close()
 
 
@@ -287,6 +288,21 @@ def main():
     time.sleep(3)
 
     # shutdown fakenet
+
+
+    #-----------------------------------------------------------------------------------------------------------------------
+    # 6. Tell Host that 'post_activity_wait_seconds' is over, 
+    # 	 and logstash and silkservice terminated
+    
+    print(f'Tell Host that 'post_activity_wait_seconds' is over and logstash/silk-service terminated', flush = True)
+    ss = socket.socket()
+    SEND_PORT = 9998
+    ss.connect((HOST_IP, SEND_PORT))
+    meesage_to_send = "post_activity_wait_seconds_is_over__logstash_silkservice_terminated"
+    ss.send(meesage_to_send.encode('utf-8'))
+    ss.close()  # CHECK IF NECESSARY
+
+    time.sleep(3)
 
     return
 
