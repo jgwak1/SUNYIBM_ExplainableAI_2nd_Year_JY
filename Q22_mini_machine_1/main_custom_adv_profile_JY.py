@@ -75,7 +75,7 @@ def interact_with_VM_for_logging( p, activity_wait_seconds, adversary_id, post_a
     # 2. Wait and receive message of "started__logstash__silkservice__caldera_agent" from VM
     s = socket.socket()     # Now we can create socket object
     PORT = 1100             # Lets choose one port and start listening on that port
-    print(f"\n HOST-socket is listing on port : {PORT}\n", flush = True)
+    print(f"\n HOST-socket is listening on port : {PORT}\n", flush = True)
     s.bind(('', PORT)) # Now we need to bind socket to the above port 
     s.listen(10)    # Now we will put the binded socket listening mode
 
@@ -117,12 +117,14 @@ def interact_with_VM_for_logging( p, activity_wait_seconds, adversary_id, post_a
     time.sleep(activity_wait_seconds)
     print(f'end attack for {adversary_id}, as activity_wait_seconds {activity_wait_seconds}s elapsed.', flush = True)
     #-----------------------------------------------------------------------------------------------------------------------        
-    # 6. Send message ("terminate__logstash__silkservice") to VM
+    # 5. Send message ("terminate__logstash__silkservice") to VM
 
     s = socket.socket() # Now we can create socket object 
-    SEND_PORT = 9900     # Lets choose one port and connect to that port
-    s.connect((VM_IP, SEND_PORT))   # Lets connect to that port where socket at VM side may be waiting
-    
+    SEND_PORT = 9100     # Lets choose one port and connect to that port
+    try:
+        s.connect((VM_IP, SEND_PORT))   # Lets connect to that port where socket at VM side may be waiting
+    except:
+        raise RuntimeError(f"Could not connect to {VM_IP} :: {SEND_PORT}")
 
     #message_to_send = "terminate__logstash__silkservice"
 
@@ -135,7 +137,6 @@ def interact_with_VM_for_logging( p, activity_wait_seconds, adversary_id, post_a
     s.send( message_to_send.encode('utf-8') )   # send 함수는 데이터를 해당 소켓으로 보내는 함수이고
     s.close()  # Close the connection from client side
 
-    
     #-----------------------------------------------------------------------------------------------------------------------        
     # 6. Shutdown caldera server
     control_server.shutdown_process(p)      # /home/jgwak1/tools__Copied_from_home_zhsu1_tools/etw/caldera/control_server.py
@@ -144,6 +145,28 @@ def interact_with_VM_for_logging( p, activity_wait_seconds, adversary_id, post_a
                                             #     p.terminate()
 
     #-----------------------------------------------------------------------------------------------------------------------        
+    # 7. Wait and receive message of "post_activity_wait_seconds__is_over" from VM
+    s = socket.socket()     # Now we can create socket object
+    PORT = 9998             # Lets choose one port and start listening on that port
+    print(f"\n HOST-socket is listening on port (to wait message from VM that post-activity-wait-seconds is over): {PORT}\n", flush = True)
+    s.bind(('', PORT)) # Now we need to bind socket to the above port 
+    s.listen(10)    # Now we will put the binded socket listening mode
+
+    message_to_receive = None 
+    while True: # We do not know when client will contact; so should be listening continously  
+        conn, addr = s.accept()    # Now we can establish connection with client
+        message_to_receive = conn.recv(1024).decode()
+        conn.close()
+        print("\n HOST-socket closed the connection\n", flush=True)
+        break
+
+    if message_to_receive == "post_activity_wait_seconds_is_over__logstash_silkservice_terminated":
+        print(f"\n From VM, received message: {message_to_receive}\n", flush = True )
+    else:
+        raise ValueError(f"Value-Error with received message: {message_to_receive}")
+ 
+    s.close()  
+    time.sleep(5)
  
 
 
@@ -402,13 +425,27 @@ def main():
 
     # SET 
     loop = True
-    activity_wait_seconds = 180 # 600
-    post_activity_wait_seconds = 5
+
+    if loop == False:
+        post_activity_wait_seconds = 5
+
+    activity_wait_seconds = 600 # 600
     vm_name = "win10"
     #snapshot_name = "snapshot_caldera_custom_adv_profile__filter_Silkservice_EventName_v2"    
     # snapshot_name = "snapshot_caldera_custom_adv_profile_splunkd_descendents_non_concurrent_v3" # this one is the good one    
-    snapshot_name = "snapshot_caldera_custom_adv_profile_splunkd_descendents_non_concurrent_v4" # tried to further handle time-sync issue  
+    # snapshot_name = "snapshot_caldera_custom_adv_profile_splunkd_descendents_non_concurrent_v4" # tried to further handle time-sync issue  
+    #snapshot_name = "snapshot_caldera_custom_adv_profile_splunkd_descendents_non_concurrent_v5" # 2024-3-8 (forced syncronization taskschedulor -run)  
 
+    # snapshot_name = "snapshot_caldera_custom_adv_profile_splunkd_descendents_non_concurrent_v6" # 2024-3-10 (same as v5 except for date)
+    # snapshot_name = "snapshot_caldera_custom_adv_profile_splunkd_descendents_non_concurrent_timesync_reg" # time resync reg MaxNeg/PosPhaseCorrection 0xffffffff -- Not effective.
+    # snapshot_name = "snapshot_caldera_custom_adv_profile_splunkd_descendents_non_concurrent_timesync_reg_v2"
+    # snapshot_name = "snapshot_caldera_custom_adv_profile_splunkd_descendents_non_concurrent_timesync_reg_v3" # time resync reg MaxNeg/PosPhaseCorrection 0xffffffff -- Not effective.
+
+    # snapshot_name = "snapshot_caldera_custom_adv_profile_splunkd_descendents_non_concurrent_timesync_reg_v4"
+
+    #snapshot_name = "snapshot_caldera__splunkd_tree_non_concurrent__timesync_reg__installed_some__v3"
+
+    snapshot_name = "snapshot_caldera__splunkd_tree_non_concurrent__timesync_reg__installed_apps__inetserv__v4"
 
     if loop == False:
 
@@ -431,7 +468,9 @@ def main():
 
         # adversary_id = "joonyoung_multi_technique_profile_for_fileregnet_event_custom_techniques_nine"
 
-        adversary_id = "atomic__t1003__credential-access__os_credential_dumping__2cc37a6cf2f1acdeaa6a6638016444d1__trial_1"
+        # adversary_id = "atomic__t1003__credential-access__os_credential_dumping__2cc37a6cf2f1acdeaa6a6638016444d1__trial_1"
+
+        # adversary_id = "atomic_windows_depfalse_pshtrue__t1134_004__multiple__access_token_manipulation-_parent_pid_spoofing__a515bb54fd6e14b78297814875f3c73b"
 
         procedure( pid, activity_wait_seconds, adversary_id, post_activity_wait_seconds, snapshot_name, vm_name )   
                                 # "receive_sample()" is to start collecting ETW logs. 
@@ -454,31 +493,67 @@ def main():
 
         loop_execution_progress_log_dirpath = os.path.split(operation_reports_savedir)[0]
         loop_execution_progress_log_fpath = os.path.join(loop_execution_progress_log_dirpath, loop_execution_progress_log_fname)
+        # Added by JY @ 2024-3-18
+        with open( loop_execution_progress_log_fpath,"a") as f:
+            f.write(f"\nVM-NAME: {vm_name} | SNAPSHOT-NAME: {snapshot_name}\n")
+
 
         # --------------------------
 
-        adversary_yml_fnames = [x for x in os.listdir(my_adversaries_dir) if x.endswith(".yml")]
-        adversary_ids = [ x.removesuffix(".yml") for x in adversary_yml_fnames]
+        # adversary_yml_fnames = [x for x in os.listdir(my_adversaries_dir) if x.endswith(".yml")]
+        # adversary_ids = [ x.removesuffix(".yml") for x in adversary_yml_fnames]
+
+        # from TTP_adversary_ids_to_rerun__2024_03_10 import TTP_adversary_ids_to_rerun__2024_03_10 -- DONE
+        #from Treatment_applied_TTP_adversary_ids__2024_03_12 import Treatment_applied_TTP_adversary_ids__2024_03_12
+        #adversary_ids = Treatment_applied_TTP_adversary_ids__2024_03_12
+
+
+        # JY @ 2024-03-18:  https://docs.google.com/spreadsheets/d/1cLlNZhshOT8QvMa1KcCu_xY24_tTG5HZopNpZ_eir3Q/edit#gid=1239105720
+        import pandas as pd
+        Secured_TTPs_Log_collection_df = pd.read_csv("/home/etw0/Desktop/caldera/etw/Secured TTPs Log-collection.csv")
+
+        mini_machine_1_collect_Indices = Secured_TTPs_Log_collection_df["COLLECT_MACHINE"] == "mini-machine-1"        
+        # adversary_ids = 
+
+        
+        adversary_ids__POST_ACTIVITY_WAIT_MINUTES__dict =\
+                 dict( zip(Secured_TTPs_Log_collection_df[ mini_machine_1_collect_Indices ]["adversary_id"],
+                           Secured_TTPs_Log_collection_df[ mini_machine_1_collect_Indices ]["POST-ACTIVITY-WAIT-MINUTES"]))
+        
+
+        # -------------------
 
         already_operation_generated_reports_fnames= [ x for x in os.listdir(operation_reports_savedir) if x.startswith("operation_") ]
         already_operation_generated_adversary_ids = [ x[:x.rfind("__SAVED")].removeprefix("operation__") for x in already_operation_generated_reports_fnames]
-
-
-        adversary_ids_to_generate = [ x for x in adversary_ids if ( x not in already_operation_generated_adversary_ids )\
-                                                               and ( x not in adversary_ids_to_explicitly_skip )\
-                                                               and ( not any( pattern in x for pattern in adversary_id_patterns_to_skip ) )  ]
-
+        # modified by JY @ 2024-03-18
+        adversary_ids_to_generate = [ x for x in adversary_ids__POST_ACTIVITY_WAIT_MINUTES__dict \
+                                        if ( x not in already_operation_generated_adversary_ids )\
+                                             and ( x not in adversary_ids_to_explicitly_skip )\
+                                             and ( not any( pattern in x for pattern in adversary_id_patterns_to_skip ) )  ]
         adversary_ids_to_generate = sorted(adversary_ids_to_generate)   # JY @ 2023-11-07: Sort it so that same technique's trial 1,2,3,4,5 are done.
 
+        # modified by JY @ 2024-03-18
+        TO_GENERATE__adversary_ids__POST_ACTIVITY_WAIT_MINUTES__dict =\
+            {k: v for k,v in adversary_ids__POST_ACTIVITY_WAIT_MINUTES__dict.items() if k in adversary_ids_to_generate }
+
+        # TTP -specific POST-ACTIVITY-WAIT-TIMES
+        # -- https://docs.google.com/spreadsheets/d/1cLlNZhshOT8QvMa1KcCu_xY24_tTG5HZopNpZ_eir3Q/edit#gid=1239105720
+
+
+
         cnt=0
-        for adversary_id in adversary_ids_to_generate:
+        for adversary_id, post_activity_wait_minutes in TO_GENERATE__adversary_ids__POST_ACTIVITY_WAIT_MINUTES__dict.items():
             cnt+=1
+            
+            # Added by JY @ 2024-3-18
+            post_activity_wait_seconds = post_activity_wait_minutes * 60
+            
 
             time.sleep(5) # wait things to wrap up for just in case
             
             print(f"\nStart {cnt}/{len(adversary_ids_to_generate)} : {adversary_id}  @ {datetime.datetime.now().strftime('%Y-%m-%d_%H%M%S')}\n", flush=True)
             with open( loop_execution_progress_log_fpath,"a") as f:
-                f.write(f"\nStart {cnt}/{len(adversary_ids_to_generate)} : {adversary_id}  @ {datetime.datetime.now().strftime('%Y-%m-%d_%H%M%S')}\n")
+                f.write(f"\nStart {cnt}/{len(adversary_ids_to_generate)} : '{adversary_id}' with 'post_activity_wait_seconds': {post_activity_wait_seconds} seconds @ {datetime.datetime.now().strftime('%Y-%m-%d_%H%M%S')}\n")
 
             start = datetime.datetime.now()            
             pid = run_caldera() 
